@@ -1,0 +1,74 @@
+{
+  "date": "2026-10-15",
+  "scope": "Google Stitch upsell and funnel screens; clickable visual prototype only",
+  "stitchProject": "https://stitch.withgoogle.com/projects/8460014353109836944",
+  "authority": {
+    "service": "KStore",
+    "document": "TOOLING_CONVENTIONS/stitch-first-ui-elucidation.md",
+    "version": "1.2",
+    "date": "2026-09-13",
+    "retrieved": true
+  },
+  "export": {
+    "originalHtmlScreens": 14,
+    "originalPngPreviews": 14,
+    "desktopScreens": 8,
+    "mobileCounterparts": 6,
+    "originalZipSha256": "a466e5c9455c54ccb305fef590f3907bd07081a2f7e937177d5e393d72962932",
+    "reviewPngLocalOnly": "screens/prepaid_06_review_your_reading/screen.png",
+    "originalZipLocalOnly": "exports/prepaid-funnels-20261015.zip"
+  },
+  "staticValidation": {
+    "all14SourcePathsAndHashesMatchManifest": true,
+    "all14InlineJavaScriptSyntaxChecksPassed": true,
+    "prototypeJavaScriptSyntaxPassed": true,
+    "noPaymentOrProductServiceImplementationAdded": true
+  },
+  "browser": {
+    "name": "Chrome",
+    "url": "http://127.0.0.1:49413/",
+    "desktop": {
+      "views": ["01", "02", "03", "04", "05", "06", "07", "08"],
+      "contentWidth": 1278,
+      "horizontalOverflowObserved": false,
+      "brokenImagesObserved": 0
+    },
+    "phoneMode": {
+      "views": ["01m", "02m", "03m", "04m", "05m", "06-responsive", "07m", "08-responsive"],
+      "contentWidth": 388,
+      "horizontalOverflowObserved": false,
+      "brokenImagesObserved": 0
+    },
+    "narrowPhone": {
+      "browserWidth": 360,
+      "browserHeight": 800,
+      "contentWidth": 331,
+      "viewsChecked": 8,
+      "horizontalOverflowObserved": false,
+      "visibleButtonsBelow44pxHeight": 0,
+      "viewportResetAfterCheck": true
+    },
+    "observedJourneys": [
+      "PDF only -> interactive upsell -> Keep PDF only -> home upsell -> Keep current package -> review",
+      "Review -> quote concept -> example delivery screen",
+      "Mobile PDF only -> Add interactive chart -> Choose Bring Natally home -> home package review",
+      "Alby marketplace -> Lightning quote review -> selected package retained",
+      "x402 entry -> request quote review -> distinct x402 quote concept",
+      "Expired quote -> request fresh quote -> selected x402 entry",
+      "Ready recovery state -> Access your reading -> example delivery screen",
+      "Mobile Alby -> home radio checked -> review retains home package",
+      "Review labels match PDF-only/direct, PDF+SPA/Alby, and home/x402 scenarios"
+    ],
+    "toolLimitations": [
+      "ZIP download events were not captured; the completed original archive was verified in the configured local downloads folder.",
+      "Transient browser command timeouts were followed by fresh state checks and successful interactions.",
+      "Console reports an injected wallet-extension sunWeb property error; this is external to the prototype source."
+    ]
+  },
+  "notClaimed": [
+    "Payment, wallet, account, entitlement or checkout service implementation",
+    "PDF generation, astrology calculation, inference or SPA product functionality",
+    "Physical-device acceptance, production deployment or marketplace listing approval",
+    "Final pricing, lifetime access, hosting terms or fixed reading length"
+  ]
+}

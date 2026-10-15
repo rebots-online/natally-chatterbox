@@ -1,0 +1,30 @@
+{
+  "deployment": "1791789600884-natally.surge.sh",
+  "artifacts": [
+    {
+      "file": "index.html",
+      "sha256": "59d325723f8a9e2659b5f36fe4501473edfce3d79b16650ac3117db9dc175be0",
+      "byteMatched": true
+    },
+    {
+      "file": "assets/app-BYFjGAV0.js",
+      "sha256": "57952ff3f4996b3d0b5750b70e88dc7a7b108557f0420dea723dba71a240fd76",
+      "byteMatched": true
+    },
+    {
+      "file": "assets/hostedInference-ovxaWwni.js",
+      "sha256": "61441ce9c5045b776887fa4f8be4841ebacd16892bd8bd6e92c7faebba6b6f52",
+      "byteMatched": true
+    },
+    {
+      "file": "assets/voiceService-Bvi_IZ1D.js",
+      "sha256": "4487240f1b38438910014e78fd0f1c367ac849814483d9a2f480e503907a33ac",
+      "byteMatched": true
+    },
+    {
+      "file": "assets/supertonic.worker-ClifY5qc.js",
+      "sha256": "d7de579809473e0d56517f3ab284d5f7db3b7a8509347803e51d312085e88283",
+      "byteMatched": true
+    }
+  ]
+}

@@ -1,0 +1,234 @@
+@import "tailwindcss";
+
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  body {
+    background-color: #120c1c;
+    color: #f1e8d8;
+    font-family: 'Nunito Sans', sans-serif;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+}
+
+.font-cinzel {
+  font-family: 'Cinzel', serif;
+}
+
+.font-fraunces {
+  font-family: 'Fraunces', serif;
+}
+
+.font-mono {
+  font-family: 'IBM Plex Mono', monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+.celestial-panel, .acrylic-card {
+  background: rgba(16, 10, 28, 0.33) !important; /* torus shows through expanded cards */
+  backdrop-filter: blur(32px) saturate(210%) contrast(105%) !important;
+  -webkit-backdrop-filter: blur(32px) saturate(210%) contrast(105%) !important;
+  border: 1px solid rgba(212, 175, 55, 0.28) !important;
+  box-shadow: 0 20px 48px -12px rgba(0, 0, 0, 0.65), inset 0 1px 1px rgba(255, 255, 255, 0.18), inset 0 -1px 1px rgba(0, 0, 0, 0.4) !important;
+}
+
+.natally-info-card[data-collapsed="false"] {
+  background: rgba(22, 14, 35, 0.78) !important;
+  backdrop-filter: blur(20px) saturate(115%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(115%) !important;
+}
+
+.natally-info-content {
+  overscroll-behavior-y: contain;
+  touch-action: pan-y pinch-zoom;
+}
+
+.natally-chat {
+  background: rgba(22, 14, 35, 0.92) !important;
+  overflow: hidden;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-left: env(safe-area-inset-left, 0px);
+  padding-right: env(safe-area-inset-right, 0px);
+}
+
+.natally-chat-composer {
+  padding-bottom: max(0.75rem, env(safe-area-inset-bottom, 0px));
+}
+
+.natally-chat-composer button {
+  flex-shrink: 0;
+}
+
+.natally-chat-messages {
+  overscroll-behavior-y: contain;
+  overflow-wrap: anywhere;
+  touch-action: pan-y pinch-zoom;
+  user-select: text;
+  cursor: auto;
+}
+
+.natally-chat[data-compact="true"] .natally-chat-timeline,
+.natally-chat[data-compact="true"] .natally-chat-detail {
+  display: none;
+}
+
+.natally-chat[data-compact="true"] .natally-chat-header,
+.natally-chat[data-compact="true"] .natally-chat-search {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+
+.natally-workspace {
+  min-height: 100dvh;
+}
+
+.natally-workspace-main > div > div {
+  pointer-events: none;
+}
+
+@media (max-width: 767px) {
+  .natally-info-card {
+    width: 100% !important;
+    height: auto !important;
+    transform: none !important;
+    max-height: min(65dvh, 600px) !important;
+    cursor: auto;
+  }
+
+  .natally-info-content {
+    max-height: min(50dvh, 480px) !important;
+    user-select: text;
+  }
+
+  .natally-info-card [data-resize-grip] {
+    display: none;
+  }
+
+  .natally-workspace-footer {
+    gap: 0.5rem;
+    padding-top: 0.5rem;
+    padding-bottom: max(0.5rem, env(safe-area-inset-bottom, 0px));
+  }
+
+  .natally-workspace-footer button {
+    white-space: normal;
+  }
+}
+
+.natally-chat[data-mobile="true"] {
+  cursor: auto;
+}
+
+.natally-chat[data-mobile="true"] .natally-chat-header {
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  padding: 0.375rem 0.5rem;
+}
+
+.natally-chat[data-mobile="true"] .natally-chat-detail {
+  display: none;
+}
+
+.natally-chat[data-mobile="true"] .natally-chat-identity {
+  gap: 0.25rem;
+}
+
+.natally-chat[data-mobile="true"] .natally-header-avatar {
+  width: 48px !important;
+  height: 48px !important;
+}
+
+.natally-chat[data-mobile="true"] .natally-chat-controls {
+  margin-left: auto;
+  gap: 0;
+}
+
+.natally-chat[data-mobile="true"] input[type="text"] {
+  font-size: 16px;
+}
+
+@supports not (backdrop-filter: blur(1px)) {
+  .natally-info-card[data-collapsed="false"] {
+    background: rgba(22, 14, 35, 0.88) !important;
+  }
+}
+
+.talisman-input {
+  background-color: rgba(26, 17, 38, 0.6) !important;
+  backdrop-filter: blur(12px) !important;
+  border: 1px solid #322641;
+  color: #f1e8d8;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.45);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.talisman-input:focus {
+  outline: none;
+  border-color: #f2ca50;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.45), 0 0 0 2px rgba(242, 202, 80, 0.25);
+}
+
+.brass-glow {
+  box-shadow: 0 0 24px rgba(212, 175, 55, 0.22);
+}
+
+/* Custom subtle scrollbars for planetary list */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(18, 12, 28, 0.4);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(212, 175, 55, 0.3);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(212, 175, 55, 0.55);
+}
+
+@keyframes floatWander {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  33% {
+    transform: translateY(-8px) rotate(2deg);
+  }
+  66% {
+    transform: translateY(-4px) rotate(-2deg);
+  }
+}
+
+@keyframes waveHand {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  20%, 60% {
+    transform: rotate(18deg);
+  }
+  40%, 80% {
+    transform: rotate(-12deg);
+  }
+}
+
+.animate-float-wander {
+  animation: floatWander 4.5s ease-in-out infinite;
+}
+
+.animate-wave-hand {
+  animation: waveHand 1.6s ease-in-out infinite;
+  transform-origin: 70% 70%;
+}
+@keyframes voice-measurement-ack {
+  from { opacity: 1; filter: brightness(1.8); }
+  to { opacity: .65; filter: brightness(1); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .voice-measurement-ack { animation: voice-measurement-ack .6s ease-out; }
+  progress::-webkit-progress-value { transition: width .12s linear; }
+}

@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="web_standard" name="shell-type"/>
+<title>PREPAID-02 · Make your chart interactive</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;family=Nunito+Sans:ital,wght@0,300..800;1,300..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+    @layer base {
+      html, body { margin:0; padding:0; }
+      body { overscroll-behavior:none; }
+      main>:first-child { margin-top:0!important; }
+      main>:last-child { margin-bottom:0!important; }
+    }
+    ::-webkit-scrollbar { display:none; }
+  </style>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            obs: "#18161B",
+            raised: "#242127",
+            starlight: "#F5F2E9",
+            brass: "#C9AA60",
+            "brass-light": "#DFC37D",
+            "brass-dark": "#937736",
+            "surface-dim": "#131115",
+            "surface-subtle": "#2e2a33",
+            "muted-text": "#A39EAA",
+            "soft-text": "#D2CECC"
+          },
+          fontFamily: {
+            serif: ["Fraunces", "serif"],
+            mono: ["IBM Plex Mono", "monospace"],
+            sans: ["Nunito Sans", "sans-serif"]
+          }
+        }
+      }
+    }
+  </script>
+<style data-prototype-touch-targets>@media(max-width:767px){button,a[href],label:has(input[type=radio]){min-height:44px}}</style></head>
+<body class="bg-obs font-sans text-starlight antialiased selection:bg-brass/20 selection:text-brass">
+<!-- Top Funnel Navigation -->
+<header class="fixed top-0 w-full z-50 bg-obs/90 backdrop-blur-md border-b border-white/5">
+<div class="h-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-brass text-2xl">auto_awesome</span>
+<span class="font-serif text-xl tracking-tight text-starlight font-semibold">Natally</span>
+</div>
+<span class="hidden sm:inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-mono bg-raised text-brass border border-brass/20">
+          Step 2 of 4 · Upgrade
+        </span>
+</div>
+<!-- Funnel Progress Breadcrumbs -->
+<nav class="hidden md:flex items-center gap-1 font-mono text-xs text-muted-text">
+<span class="px-2.5 py-1 text-muted-text/70">1. Reading Options</span>
+<span class="text-white/20">/</span>
+<span class="px-2.5 py-1 text-brass font-medium bg-raised/80 rounded-md border border-brass/20">2. Interactive Chart</span>
+<span class="text-white/20">/</span>
+<span class="px-2.5 py-1 text-muted-text/70">3. Personalization</span>
+<span class="text-white/20">/</span>
+<span class="px-2.5 py-1 text-muted-text/70">4. Review</span>
+</nav>
+<!-- Natally Companion Pill -->
+<div class="flex items-center gap-2.5 bg-raised/90 border border-white/5 pl-2 pr-3 py-1.5 rounded-full shadow-sm">
+<div class="relative w-7 h-7 rounded-full overflow-hidden ring-1 ring-brass/40 shrink-0">
+<img alt="Natally" class="w-full h-full object-cover" src="../../assets/natally-mascot.webp"/>
+</div>
+<div class="flex flex-col text-left">
+<span class="text-xs font-serif font-medium leading-none text-starlight">Natally</span>
+<span class="text-[10px] font-mono text-brass leading-tight">Your Seer</span>
+</div>
+</div>
+</div>
+</header>
+<main class="w-full pt-20 pb-16 min-h-screen flex flex-col justify-between">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full pt-4">
+<!-- Hero Section -->
+<div class="text-center max-w-3xl mx-auto mb-10">
+<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-raised text-brass font-mono text-xs mb-4 border border-brass/20">
+<span class="w-1.5 h-1.5 rounded-full bg-brass animate-pulse"></span>
+<span>Enhance your astrological reading</span>
+</div>
+<h1 class="font-serif text-3xl sm:text-4xl md:text-5xl text-starlight font-medium tracking-tight leading-tight">
+          Bring your natal chart to life.
+        </h1>
+<p class="mt-3 text-base sm:text-lg text-soft-text max-w-2xl mx-auto leading-relaxed">
+          Add the interactive chart web experience to your downloadable reading.
+        </p>
+</div>
+<!-- Friendly Natally Voice Note -->
+<div class="max-w-3xl mx-auto bg-raised/60 border border-white/5 rounded-2xl p-4 sm:p-5 mb-10 flex items-center gap-4">
+<div class="relative w-14 h-14 sm:w-16 sm:h-16 rounded-full overflow-hidden ring-2 ring-brass/30 shrink-0 shadow-md">
+<img alt="Natally companion" class="w-full h-full object-cover" src="../../assets/natally-mascot.webp"/>
+</div>
+<div class="space-y-1">
+<div class="flex items-center gap-2">
+<span class="font-serif text-sm font-semibold text-brass">Natally’s Note</span>
+<span class="text-xs font-mono text-muted-text">· Friendly Advice</span>
+</div>
+<p class="font-serif text-sm sm:text-base text-starlight/90 italic leading-snug">
+            “Your PDF is lovely to keep and print, but touching each planetary line and watching your houses illuminate directly in your browser makes exploring your astrology feel effortless and intuitive.”
+          </p>
+</div>
+</div>
+<!-- Side-by-Side Comparison -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-12">
+<!-- Left: PDF Only -->
+<div class="bg-raised/70 border border-white/10 rounded-2xl p-6 sm:p-7 flex flex-col justify-between relative overflow-hidden group hover:border-white/20 transition-all">
+<div>
+<div class="flex items-center justify-between pb-4 border-b border-white/5 mb-5">
+<div>
+<span class="text-xs font-mono text-muted-text uppercase tracking-wider block">Standard Format</span>
+<h2 class="font-serif text-xl sm:text-2xl text-starlight font-medium mt-0.5">Natal chart — PDF only</h2>
+</div>
+<span class="px-2.5 py-1 rounded bg-obs text-muted-text text-xs font-mono border border-white/5">
+                Sample reading
+              </span>
+</div>
+<!-- PDF Visual Graphic / Illustration -->
+<div class="bg-obs/90 border border-white/5 rounded-xl p-5 mb-5">
+<div class="flex items-center justify-between font-mono text-xs text-muted-text pb-3 border-b border-white/5">
+<span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-sm">picture_as_pdf</span> Downloadable reading folio</span>
+<span>Static overview</span>
+</div>
+<!-- Clean Mock Document Representation -->
+<div class="py-4 space-y-2.5 font-mono text-xs">
+<div class="flex justify-between items-center py-1.5 px-2.5 rounded bg-raised/40 text-soft-text">
+<span class="text-starlight font-medium">☉ Sun in Taurus</span>
+<span class="text-muted-text">House 9</span>
+</div>
+<div class="flex justify-between items-center py-1.5 px-2.5 rounded bg-raised/20 text-soft-text">
+<span class="text-starlight font-medium">☽ Moon in Scorpio</span>
+<span class="text-muted-text">House 3</span>
+</div>
+<div class="flex justify-between items-center py-1.5 px-2.5 rounded bg-raised/40 text-soft-text">
+<span class="text-starlight font-medium">↑ Ascendant in Virgo</span>
+<span class="text-muted-text">Rising Sign</span>
+</div>
+</div>
+<!-- Static wheel sketch -->
+<div class="mt-2 pt-3 border-t border-white/5 flex items-center justify-center py-3">
+<div class="w-32 h-32 rounded-full border border-dashed border-white/20 flex items-center justify-center relative">
+<div class="w-20 h-20 rounded-full border border-white/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-muted-text text-xl">menu_book</span>
+</div>
+<span class="absolute top-2 text-[10px] font-mono text-muted-text">12 Houses</span>
+<span class="absolute bottom-2 text-[10px] font-mono text-muted-text">Fixed Print Layout</span>
+</div>
+</div>
+</div>
+<ul class="space-y-2 text-sm text-soft-text font-sans">
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-muted-text text-base shrink-0 mt-0.5">check_circle</span>
+<span>Full illustrated natal reading in downloadable PDF format</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-muted-text text-base shrink-0 mt-0.5">check_circle</span>
+<span>Easy to save, archive, or print for personal keepsakes</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-muted-text text-base shrink-0 mt-0.5">check_circle</span>
+<span>Static natal wheel and comprehensive interpretation chapters</span>
+</li>
+</ul>
+</div>
+<div class="pt-6 mt-6 border-t border-white/5 text-xs text-muted-text font-mono flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm">check</span>
+<span>Included in your current selection</span>
+</div>
+</div>
+<!-- Right: PDF + SPA Upgrade -->
+<div class="bg-raised border-2 border-brass/40 rounded-2xl p-6 sm:p-7 flex flex-col justify-between relative overflow-hidden shadow-[0_4px_30px_rgba(201,170,96,0.1)] group">
+<div class="absolute top-0 right-0 w-44 h-44 bg-brass/10 rounded-full blur-2xl pointer-events-none -mr-10 -mt-10"></div>
+<div>
+<div class="flex items-center justify-between pb-4 border-b border-white/5 mb-5">
+<div>
+<span class="text-xs font-mono text-brass font-medium uppercase tracking-wider block">Recommended Upgrade</span>
+<h2 class="font-serif text-xl sm:text-2xl text-starlight font-medium mt-0.5">Natal chart — PDF + SPA</h2>
+</div>
+<span class="px-2.5 py-1 rounded bg-brass/20 text-brass text-xs font-mono border border-brass/30">
+                Sample reading
+              </span>
+</div>
+<!-- Interactive Chart Preview Simulation -->
+<div class="bg-obs border border-brass/20 rounded-xl p-5 mb-5 relative overflow-hidden">
+<div class="flex items-center justify-between font-mono text-xs text-brass pb-3 border-b border-white/5">
+<span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-sm">touch_app</span> Interactive chart experience in your browser</span>
+<span class="text-xs bg-raised px-2 py-0.5 rounded text-starlight">Live view</span>
+</div>
+<!-- Interactive Chart Visual Wheel -->
+<div class="py-3 flex flex-col items-center justify-center relative">
+<div class="relative w-40 h-40 flex items-center justify-center my-2 cursor-pointer group/wheel" id="interactive-wheel">
+<!-- Ambient Ring Glow -->
+<div class="absolute inset-0 rounded-full bg-brass/5 group-hover/wheel:bg-brass/15 transition-all"></div>
+<!-- Outer Dial -->
+<div class="absolute inset-0 rounded-full border border-brass/30"></div>
+<div class="absolute inset-3 rounded-full border border-dashed border-brass/20"></div>
+<!-- Aspect Lines -->
+<svg class="absolute inset-0 w-full h-full" viewbox="0 0 160 160">
+<line stroke="#C9AA60" stroke-opacity="0.3" stroke-width="0.75" x1="80" x2="80" y1="20" y2="140"></line>
+<line stroke="#C9AA60" stroke-opacity="0.3" stroke-width="0.75" x1="20" x2="140" y1="80" y2="80"></line>
+<line stroke="#C9AA60" stroke-dasharray="3 3" stroke-width="1.2" x1="40" x2="120" y1="40" y2="120"></line>
+<line stroke="#DFC37D" stroke-width="1.2" x1="120" x2="40" y1="40" y2="120"></line>
+<!-- Nodes with gentle glow -->
+<circle class="animate-pulse" cx="80" cy="24" fill="#C9AA60" r="5"></circle>
+<circle cx="132" cy="80" fill="#F5F2E9" r="4"></circle>
+<circle cx="40" cy="120" fill="#DFC37D" r="4.5"></circle>
+<circle cx="120" cy="40" fill="#C9AA60" r="3.5"></circle>
+</svg>
+<!-- Center Compass -->
+<div class="w-12 h-12 rounded-full bg-raised border border-brass/40 flex items-center justify-center text-brass shadow-inner">
+<span class="material-symbols-outlined text-lg">explore</span>
+</div>
+</div>
+<div class="w-full bg-raised/80 rounded-lg py-2 px-3 flex items-center justify-between text-xs font-mono text-soft-text border border-white/5">
+<span class="flex items-center gap-1.5 text-brass">
+<span class="w-2 h-2 rounded-full bg-brass"></span>
+<span>Tactile planetary inspection</span>
+</span>
+<span class="text-muted-text">Placidus houses &amp; aspect chords</span>
+</div>
+</div>
+</div>
+<ul class="space-y-2 text-sm text-soft-text font-sans">
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-brass text-base shrink-0 mt-0.5">check_circle</span>
+<span>Everything in the PDF reading, plus instant web app access</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-brass text-base shrink-0 mt-0.5">check_circle</span>
+<span>Tap any planet or house cusp to view plain-language meanings</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-brass text-base shrink-0 mt-0.5">check_circle</span>
+<span>Highlight harmony, challenge, and major aspect lines smoothly</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-brass text-base shrink-0 mt-0.5">check_circle</span>
+<span>Works on your phone, tablet, and computer with no installation</span>
+</li>
+</ul>
+</div>
+<div class="pt-6 mt-6 border-t border-white/5 text-xs text-brass font-mono flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm">stars</span>
+<span>Seamless upgrade with one click below</span>
+</div>
+</div>
+</div>
+<!-- Concise Approachable Customer Benefits -->
+<div class="mb-12">
+<div class="text-center mb-6">
+<h3 class="font-serif text-2xl text-starlight font-medium">Why explore your chart interactively?</h3>
+<p class="text-soft-text text-sm mt-1">Simple, intuitive discovery designed for everyone</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+<!-- Benefit 1 -->
+<div class="bg-raised/60 border border-white/5 rounded-xl p-5 hover:border-white/10 transition-colors">
+<div class="w-10 h-10 rounded-lg bg-obs border border-brass/20 flex items-center justify-center text-brass mb-3.5">
+<span class="material-symbols-outlined">touch_app</span>
+</div>
+<h4 class="font-serif text-lg text-starlight font-medium mb-1.5">Interactive Discovery</h4>
+<p class="text-soft-text text-sm leading-relaxed">
+              Touch or click any planet to reveal how its placements shape your strengths, relationships, and everyday rhythm.
+            </p>
+</div>
+<!-- Benefit 2 -->
+<div class="bg-raised/60 border border-white/5 rounded-xl p-5 hover:border-white/10 transition-colors">
+<div class="w-10 h-10 rounded-lg bg-obs border border-brass/20 flex items-center justify-center text-brass mb-3.5">
+<span class="material-symbols-outlined">visibility</span>
+</div>
+<h4 class="font-serif text-lg text-starlight font-medium mb-1.5">Clear Planetary Aspect Chords</h4>
+<p class="text-soft-text text-sm leading-relaxed">
+              Unclutter the sky. Isolate pairings like Sun and Moon with a single click to easily see your astrological connections.
+            </p>
+</div>
+<!-- Benefit 3 -->
+<div class="bg-raised/60 border border-white/5 rounded-xl p-5 hover:border-white/10 transition-colors">
+<div class="w-10 h-10 rounded-lg bg-obs border border-brass/20 flex items-center justify-center text-brass mb-3.5">
+<span class="material-symbols-outlined">devices</span>
+</div>
+<h4 class="font-serif text-lg text-starlight font-medium mb-1.5">Ready on Any Device</h4>
+<p class="text-soft-text text-sm leading-relaxed">
+              Open your private link on your mobile phone or laptop browser whenever you want to reference your natal alignments.
+            </p>
+</div>
+</div>
+</div>
+<!-- Pricing Terms & Decision Console -->
+<div class="max-w-3xl mx-auto bg-raised border border-brass/30 rounded-2xl p-6 sm:p-8 shadow-xl">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-white/10">
+<div>
+<div class="flex items-center gap-2">
+<span class="font-mono text-xs uppercase tracking-wider text-brass font-medium">One-time prepaid</span>
+<span class="text-white/20">·</span>
+<span class="text-xs text-muted-text">Simple and transparent</span>
+</div>
+<h3 class="font-serif text-xl sm:text-2xl text-starlight font-medium mt-1">Upgrade your natal reading</h3>
+<p class="text-sm text-soft-text mt-0.5">Price shown in your quote</p>
+</div>
+<div class="bg-obs/80 border border-white/5 rounded-xl px-4 py-3 sm:text-right shrink-0">
+<span class="text-[11px] font-mono uppercase text-muted-text block">Selected reading option</span>
+<span class="text-sm font-serif font-medium text-brass">PDF + Interactive SPA Available</span>
+</div>
+</div>
+<!-- Balanced Action Controls: No Preselected Paid Upgrade -->
+<div class="pt-6 flex flex-col sm:flex-row items-center justify-center gap-4">
+<!-- Plainly visible secondary decline button -->
+<a class="w-full sm:w-1/2 py-3.5 px-6 rounded-xl bg-surface-subtle hover:bg-white/10 text-starlight font-sans text-sm font-semibold transition-all border border-white/10 flex items-center justify-center gap-2 text-center" href="#" role="button">
+<span class="material-symbols-outlined text-muted-text text-base">arrow_back</span>
+<span>Keep PDF only</span>
+</a>
+<!-- Primary CTA: Brass upgrade button -->
+<a class="w-full sm:w-1/2 py-3.5 px-6 rounded-xl bg-brass hover:bg-brass-light text-obs font-sans text-sm font-bold transition-all shadow-lg hover:shadow-brass/20 flex items-center justify-center gap-2 text-center" href="#" role="button">
+<span class="material-symbols-outlined text-base">auto_awesome</span>
+<span>Add the interactive chart</span>
+</a>
+</div>
+<p class="text-center text-xs text-muted-text mt-4">
+          Your choice can be reviewed again before final order confirmation.
+        </p>
+</div>
+</div>
+<!-- Quiet Footer -->
+<footer class="mt-12 text-center py-6 border-t border-white/5">
+<p class="font-mono text-xs text-muted-text/80">
+        Design prototype · no payment is collected
+      </p>
+</footer>
+</main>
+</body></html>

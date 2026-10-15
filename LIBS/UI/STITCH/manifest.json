@@ -1,0 +1,127 @@
+{
+  "project": "https://stitch.withgoogle.com/projects/8460014353109836944",
+  "scope": "Upsell and funnel screen prototype only",
+  "authority": "KStore TC12 v1.2, 2026-09-13",
+  "source_archive_sha256": "a466e5c9455c54ccb305fef590f3907bd07081a2f7e937177d5e393d72962932",
+  "adjustments": [
+    "Corrected unapproved commercial claims and fictional sample details",
+    "Reused the supplied Natally mascot locally",
+    "Added screen navigation in the prototype viewer; no product functionality"
+  ],
+  "screens": [
+    {
+      "screen_id": "6ce59ec7256a42428cabd5383a142001",
+      "name": "prepaid_01_choose_your_reading",
+      "source": "screens/prepaid_01_choose_your_reading/code.html",
+      "preview": "screens/prepaid_01_choose_your_reading/screen.png",
+      "original_html_sha256": "6f6816ecc39f2c9010276e1af479109d69442b8bd37fa68c7540974220876dab",
+      "review_html_sha256": "6e83ba7ead0faa73da19956285a71aea6973a9950b76fbcc48dc9e18115e739b"
+    },
+    {
+      "screen_id": "089e0b2677734763b70a945ab0b16c11",
+      "name": "prepaid_02_make_your_chart_interactive",
+      "source": "screens/prepaid_02_make_your_chart_interactive/code.html",
+      "preview": "screens/prepaid_02_make_your_chart_interactive/screen.png",
+      "original_html_sha256": "451a37edccda934ad00714132bad1abcffd6d601421c4bbe89534b0432fe24ab",
+      "review_html_sha256": "fc1ebad04316a4d2c64578d12308b024da7f4d10e1813bcfdcac91ee945f381a"
+    },
+    {
+      "screen_id": "2359dc249dc04ac5935cfc2693fe1f99",
+      "name": "prepaid_03_bring_natally_home",
+      "source": "screens/prepaid_03_bring_natally_home/code.html",
+      "preview": "screens/prepaid_03_bring_natally_home/screen.png",
+      "original_html_sha256": "81a8d2ccdd07d15770b5bc87d39a79000bcec60daeb91fe5686e84f578d52442",
+      "review_html_sha256": "ca14e336703ba89020c3fb173504e0eec4cc42d5a713a6b75c37be3477267934"
+    },
+    {
+      "screen_id": "baa258f3a9a242e6a9fd4c79b2b0fc23",
+      "name": "prepaid_04_alby_marketplace",
+      "source": "screens/prepaid_04_alby_marketplace/code.html",
+      "preview": "screens/prepaid_04_alby_marketplace/screen.png",
+      "original_html_sha256": "ac2efa6c19ea791688b75ff8f57969f0023e3d4cc50911bb8eb3cafc6f88bdcd",
+      "review_html_sha256": "ae1ab2140aab25c8e57f6eee1fee10412524d6d539b783ef80bc1eddf79fe0dc"
+    },
+    {
+      "screen_id": "5f74c5bbe1704a6a989cdae9a9627f6c",
+      "name": "prepaid_05_x402_protocol",
+      "source": "screens/prepaid_05_x402_protocol/code.html",
+      "preview": "screens/prepaid_05_x402_protocol/screen.png",
+      "original_html_sha256": "b2a3ed838afa553613b1a1401ff8b9043acdc8c0ef6debad3972b24ddefab722",
+      "review_html_sha256": "043cee47f9d5a6531d3a5f37307f107ee1975ee029e271d902ff869d19257092"
+    },
+    {
+      "screen_id": "3459e42ac652474390b118670584245b",
+      "name": "prepaid_06_review_your_reading",
+      "source": "screens/prepaid_06_review_your_reading/code.html",
+      "preview": "screens/prepaid_06_review_your_reading/screen.png",
+      "original_html_sha256": "4e8e3ad825ec9ac089b7347c752e560d84918f4f1f5d8bb0b3e09fd7fdecfda6",
+      "review_html_sha256": "4af3116aa68f381196087291537f32d540f05ce34e1b7e22532da8d72b8c1179",
+      "original_preview_local_only": true,
+      "preview_note": "The original Stitch PNG retains the earlier personal example; the runnable HTML uses fictional data."
+    },
+    {
+      "screen_id": "5c3881b20007487eb93597b57a4209d2",
+      "name": "prepaid_07_your_reading_is_ready",
+      "source": "screens/prepaid_07_your_reading_is_ready/code.html",
+      "preview": "screens/prepaid_07_your_reading_is_ready/screen.png",
+      "original_html_sha256": "293fb6ee89f62d3f61ddd1797c6918dabdcdeed01b167ac4e6dba5f3be5e80aa",
+      "review_html_sha256": "df65d71cd2c64c94988bb8ccc7fd5df00a61e84ff1def4b48ba90eba812321c9"
+    },
+    {
+      "screen_id": "c366de70b1484dfc90114d81d05eb12e",
+      "name": "prepaid_08_pick_up_where_you_left_off",
+      "source": "screens/prepaid_08_pick_up_where_you_left_off/code.html",
+      "preview": "screens/prepaid_08_pick_up_where_you_left_off/screen.png",
+      "original_html_sha256": "b6848784b2bf009f6504331130ec6c0b85c119877e2e6f5bf6fabefc4e54b7c3",
+      "review_html_sha256": "05636b6ea330e48f4138c355a1f6b85e375957f05a3d132742915d4327b424a0"
+    },
+    {
+      "screen_id": "dafb95e2f54345959ec39f7c6116dc5a",
+      "name": "prepaid_01m_choose_your_reading_mobile",
+      "source": "screens/prepaid_01m_choose_your_reading_mobile/code.html",
+      "preview": "screens/prepaid_01m_choose_your_reading_mobile/screen.png",
+      "original_html_sha256": "972716b69823f2ea9b382acdcace9a1a8206d98ed95e14a5863e992e65df6219",
+      "review_html_sha256": "66f2a248f80b5163f3b2a6a82572209cd38bcbd0893cba71ff75bb6602f06bb1"
+    },
+    {
+      "screen_id": "816de4daca7444e4954580e61505a75e",
+      "name": "prepaid_02m_make_your_chart_interactive_mobile",
+      "source": "screens/prepaid_02m_make_your_chart_interactive_mobile/code.html",
+      "preview": "screens/prepaid_02m_make_your_chart_interactive_mobile/screen.png",
+      "original_html_sha256": "684126a435e883a83469b8001b24ed247a352af872efdd5f6861153e04176534",
+      "review_html_sha256": "dd52d2062398c1b875332a14f63f59301fe6cad630daf799d05e78c75045b42a"
+    },
+    {
+      "screen_id": "a78db57092344a39b5e8dac69e05ca31",
+      "name": "prepaid_03m_bring_natally_home_mobile",
+      "source": "screens/prepaid_03m_bring_natally_home_mobile/code.html",
+      "preview": "screens/prepaid_03m_bring_natally_home_mobile/screen.png",
+      "original_html_sha256": "da3c64636963c36b3253c31bc815606ece1f16882219258af2657667189ee4f9",
+      "review_html_sha256": "5713740fa8471f3ba8845e7ef8ab8f054574b77dba655d3c320bf41b6d33d7d3"
+    },
+    {
+      "screen_id": "bd4f5cd9553348aab76a5f5df710c8fc",
+      "name": "prepaid_04m_alby_marketplace_mobile",
+      "source": "screens/prepaid_04m_alby_marketplace_mobile/code.html",
+      "preview": "screens/prepaid_04m_alby_marketplace_mobile/screen.png",
+      "original_html_sha256": "237167e5089fedb872d962a371067b657890c3dea2b184b9e2dd49865ec24bff",
+      "review_html_sha256": "514bb8c1c7543768d1ce26a4a41003761bd35e8cccb6f4f381711ee8260981bf"
+    },
+    {
+      "screen_id": "7bf6b460b99b4916b4cd70d6421891bd",
+      "name": "prepaid_05m_x402_protocol_mobile",
+      "source": "screens/prepaid_05m_x402_protocol_mobile/code.html",
+      "preview": "screens/prepaid_05m_x402_protocol_mobile/screen.png",
+      "original_html_sha256": "a31dbec764a404cb2859ab2f0439b56f2da39fb091e300eea43e009eb946183b",
+      "review_html_sha256": "d2d7eada8548ae485cab2d4218a08e9ec5834889dd0dd87fe29a6765f7592484"
+    },
+    {
+      "screen_id": "8fb2bb8593cb43119e7c739be755f380",
+      "name": "prepaid_07m_your_reading_is_ready_mobile",
+      "source": "screens/prepaid_07m_your_reading_is_ready_mobile/code.html",
+      "preview": "screens/prepaid_07m_your_reading_is_ready_mobile/screen.png",
+      "original_html_sha256": "670061ee45e2e8336ef91f6cc29d17ee00f3330b3dfb0256ac6bf65c71eebb8d",
+      "review_html_sha256": "9c9de333ef133a4faf3c6995b5b5b591c45eba73b0014c7ca75f2ef1b12bdf7a"
+    }
+  ]
+}

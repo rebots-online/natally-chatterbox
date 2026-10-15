@@ -1,0 +1,33 @@
+{
+  "recordedAt": "2026-10-12T06:51:02.316Z",
+  "runtime": "Node native ONNX CPU; NOT browser WASM or a phone",
+  "node": "v24.14.1",
+  "model": "onnx-community/Supertonic-TTS-ONNX",
+  "revision": "cff123c84b0655d9d647641f1b532c3cbb8f7faa",
+  "voice": "F4",
+  "synthesisSpeed": 0.85,
+  "playbackPitch": 1.3,
+  "inferenceThreads": 1,
+  "loadSeconds": 5.075967707,
+  "maxRssMiB": 858.4140625,
+  "chunks": [
+    {
+      "characters": 213,
+      "synthesisSeconds": 2.8960186450000003,
+      "playbackSeconds": 10.875649747078318,
+      "realTimeFactor": 0.2662846553860379
+    },
+    {
+      "characters": 303,
+      "synthesisSeconds": 4.345788199,
+      "playbackSeconds": 16.529809872667016,
+      "realTimeFactor": 0.2629061212728169
+    },
+    {
+      "characters": 267,
+      "synthesisSeconds": 3.886480213000001,
+      "playbackSeconds": 14.73113553113553,
+      "realTimeFactor": 0.2638276054677244
+    }
+  ]
+}

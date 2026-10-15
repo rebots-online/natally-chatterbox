@@ -1,0 +1,77 @@
+
+> react-example@0.0.0 lint
+> tsc --noEmit
+
+
+> react-example@0.0.0 build
+> vite build
+
+vite v8.3.4 building client environment for production...
+transforming...
+[plugin rolldown:vite-resolve] Module "url" has been externalized for browser compatibility, imported by "/home/robin/Desktop/DevProjects/natally-ai-studio/src/vendor/swisseph/src/swisseph.js". See https://vite.dev/guide/troubleshooting.html#module-externalized-for-browser-compatibility for more details.
+[plugin rolldown:vite-resolve] Module "path" has been externalized for browser compatibility, imported by "/home/robin/Desktop/DevProjects/natally-ai-studio/src/vendor/swisseph/src/swisseph.js". See https://vite.dev/guide/troubleshooting.html#module-externalized-for-browser-compatibility for more details.
+[plugin rolldown:vite-resolve] Module "node:module" has been externalized for browser compatibility, imported by "/home/robin/Desktop/DevProjects/natally-ai-studio/src/vendor/swisseph/wasm/swisseph.js". See https://vite.dev/guide/troubleshooting.html#module-externalized-for-browser-compatibility for more details.
+✓ 1929 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/tests/voice-browser.html                                   1.06 kB │ gzip:     0.54 kB
+dist/index.html                                                 4.22 kB │ gzip:     1.54 kB
+dist/assets/supertonic.worker-C3y_Y_7U.js                     554.10 kB
+dist/assets/swisseph-BqKK9TOX.wasm                            561.87 kB │ gzip:   264.20 kB
+dist/assets/ort-wasm-simd-threaded.asyncify-CxOG5pUO.wasm  26,861.77 kB │ gzip: 6,762.79 kB
+dist/assets/app-fbSOHZUI.css                                   11.47 kB │ gzip:     3.06 kB
+dist/assets/src-DdipIUgh.css                                   61.69 kB │ gzip:    11.53 kB
+dist/assets/__vite-browser-external-E9jxZlHE.js                 0.09 kB │ gzip:     0.10 kB
+dist/assets/astrology-tools-6HLwduul.js                         0.23 kB │ gzip:     0.18 kB
+dist/assets/voiceVerification-NQ83elvZ.js                       1.06 kB │ gzip:     0.41 kB
+dist/assets/hostedInference-BZa7Uxqp.js                         2.75 kB │ gzip:     1.27 kB
+dist/assets/purify.es-Dn3VvdGh.js                              28.01 kB │ gzip:    11.07 kB
+dist/assets/index.es-6gV_jHRs.js                              151.40 kB │ gzip:    48.89 kB
+dist/assets/html2canvas-BVRg6muP.js                           199.45 kB │ gzip:    46.76 kB
+dist/assets/src-dcm4gaOM.js                                   238.16 kB │ gzip:    76.03 kB
+dist/assets/app-DCX16ppn.js                                 1,809.91 kB │ gzip:   523.48 kB
+
+[INEFFECTIVE_DYNAMIC_IMPORT] src/services/ephemeris.ts is dynamically imported by src/services/transits.ts but also statically imported by src/App.tsx, src/components/Astrolabe3D.tsx, src/components/ReadingsModal.tsx, src/services/calculationTools.ts, dynamic import will not move module into another chunk.
+
+[plugin builtin:vite-reporter] 
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 1.08s
+
+   Running as [deployment account redacted] (Free)
+
+        project: dist
+         domain: natally.surge.sh
+           size: 22 files, 33.5 MB
+(node:1803625) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+
+
+
+  ┌──────────────────────────────────────────────────────────────────────────────┬────────────────────┐
+  │  Certificate: Sectigo Public Server Authentication CA DV R36                 │  Valid             │
+  │   *.surge.sh, surge.sh                                                       │  64 more days      │
+  └──────────────────────────────────────────────────────────────────────────────┴────────────────────┘
+  ┌──────────┬──────────────────────────────────────────────────────────────────────────────┬─────────┐
+  │          │   ns1.surge.world   ns2.surge.world     or CNAME…                            │         │
+  │    NS    │   ns3.surge.world   ns4.surge.world     geo.surge.world                      │         │
+  ├──────────┼──────────────────┬───────────────────────┬─────────────────────┬─────────────┼─────────┤
+  │   HTTP   │   sfo.surge.sh   │   US, San Francisco   │   138.197.235.123   │   D.Ocean   │   ✔ ◍   │
+  │   HTTP   │   lhr.surge.sh   │   GB, London          │   46.101.67.123     │   D.Ocean   │   ✔ ◍   │
+  │   HTTP   │   yyz.surge.sh   │   CA, Toronto         │   159.203.50.177    │   D.Ocean   │   ✔ ◍   │
+  │   HTTP   │   jfk.surge.sh   │   US, New York        │   159.203.159.100   │   D.Ocean   │   ✔ ◍   │
+  │   HTTP   │   ams.surge.sh   │   NL, Amsterdam       │   188.166.132.94    │   D.Ocean   │   ✔ ◍   │
+  │   HTTP   │   fra.surge.sh   │   DE, Frankfurt       │   138.68.112.220    │   D.Ocean   │   ✔ ◍   │
+  │   HTTP   │   sgp.surge.sh   │   SG, Singapore       │   139.59.195.30     │   D.Ocean   │   ✔ ◍   │
+  │   HTTP   │   blr.surge.sh   │   IN, Bangalore       │   139.59.50.135     │   D.Ocean   │   ✔ ◍   │
+  │   HTTP   │   syd.surge.sh   │   AU, Sydney          │   45.76.126.95      │   Vultr     │   ✔ ◍   │
+  │   HTTP   │   nrt.surge.sh   │   JP, Tokyo           │   172.104.96.133    │   Linode    │   ✔ ◍   │
+  └──────────┴──────────────────┴───────────────────────┴─────────────────────┴─────────────┴─────────┘
+   Live preview ....................................................... 1791945552584-natally.surge.sh
+   Production ....................................................................... natally.surge.sh
+
+   Success! - Published to natally.surge.sh
+

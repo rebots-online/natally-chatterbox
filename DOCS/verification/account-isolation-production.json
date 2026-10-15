@@ -1,0 +1,44 @@
+{
+  "verified_at_utc": "2026-10-14T02:39:31.857587+00:00",
+  "source_commit": "260770d7a8cfc0ca41b137e614be62f271368748",
+  "production": "https://natally.surge.sh",
+  "preview": "https://1791945552584-natally.surge.sh",
+  "assets": [
+    {
+      "path": "index.html",
+      "bytes": 4220,
+      "sha256": "95fc8db809f2d9889421179d83718bab759610befcc69652af1d5d6ec0147988",
+      "matches_build": true
+    },
+    {
+      "path": "assets/app-DCX16ppn.js",
+      "bytes": 1809919,
+      "sha256": "5eb7d30d9170e7ae49eb51c85d9d2307d3a7f92d8ef89504667d65667f5f72ed",
+      "matches_build": true
+    },
+    {
+      "path": "assets/hostedInference-BZa7Uxqp.js",
+      "bytes": 2758,
+      "sha256": "140f9a0179037ade5fefc0eb93a9befb87ff862e7b938dc87dc3ebb4e8e509f7",
+      "matches_build": true
+    },
+    {
+      "path": "assets/app-fbSOHZUI.css",
+      "bytes": 11475,
+      "sha256": "fbf9d9c4c1a0c3ad057fb364ec68eec5bd689ad576654ab710873d7fa333705f",
+      "matches_build": true
+    }
+  ],
+  "browser_scope": "Real React chat with synthetic identities and stubbed inference; actual Firebase accounts and physical devices unverified.",
+  "productionBrowser": {
+    "productionLoginRendered": true,
+    "errors": [],
+    "contactedHosts": [
+      "natally.surge.sh",
+      "fonts.googleapis.com",
+      "fonts.gstatic.com",
+      "firestore.googleapis.com"
+    ],
+    "initialAttempt": "networkidle timed out after 30s; repeated using actual login-render acceptance"
+  }
+}

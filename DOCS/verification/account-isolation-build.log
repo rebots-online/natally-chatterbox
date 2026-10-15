@@ -1,0 +1,37 @@
+
+> react-example@0.0.0 build
+> vite build
+
+vite v8.3.4 building client environment for production...
+transforming...
+[plugin rolldown:vite-resolve] Module "url" has been externalized for browser compatibility, imported by "/home/robin/Desktop/DevProjects/natally-ai-studio/src/vendor/swisseph/src/swisseph.js". See https://vite.dev/guide/troubleshooting.html#module-externalized-for-browser-compatibility for more details.
+[plugin rolldown:vite-resolve] Module "path" has been externalized for browser compatibility, imported by "/home/robin/Desktop/DevProjects/natally-ai-studio/src/vendor/swisseph/src/swisseph.js". See https://vite.dev/guide/troubleshooting.html#module-externalized-for-browser-compatibility for more details.
+[plugin rolldown:vite-resolve] Module "node:module" has been externalized for browser compatibility, imported by "/home/robin/Desktop/DevProjects/natally-ai-studio/src/vendor/swisseph/wasm/swisseph.js". See https://vite.dev/guide/troubleshooting.html#module-externalized-for-browser-compatibility for more details.
+✓ 1929 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/tests/voice-browser.html                                   1.06 kB │ gzip:     0.54 kB
+dist/index.html                                                 4.22 kB │ gzip:     1.54 kB
+dist/assets/supertonic.worker-C3y_Y_7U.js                     554.10 kB
+dist/assets/swisseph-BqKK9TOX.wasm                            561.87 kB │ gzip:   264.20 kB
+dist/assets/ort-wasm-simd-threaded.asyncify-CxOG5pUO.wasm  26,861.77 kB │ gzip: 6,762.79 kB
+dist/assets/app-fbSOHZUI.css                                   11.47 kB │ gzip:     3.06 kB
+dist/assets/src-DdipIUgh.css                                   61.69 kB │ gzip:    11.53 kB
+dist/assets/__vite-browser-external-E9jxZlHE.js                 0.09 kB │ gzip:     0.10 kB
+dist/assets/astrology-tools-6HLwduul.js                         0.23 kB │ gzip:     0.18 kB
+dist/assets/voiceVerification-NQ83elvZ.js                       1.06 kB │ gzip:     0.41 kB
+dist/assets/hostedInference-BZa7Uxqp.js                         2.75 kB │ gzip:     1.27 kB
+dist/assets/purify.es-Dn3VvdGh.js                              28.01 kB │ gzip:    11.07 kB
+dist/assets/index.es-6gV_jHRs.js                              151.40 kB │ gzip:    48.89 kB
+dist/assets/html2canvas-BVRg6muP.js                           199.45 kB │ gzip:    46.76 kB
+dist/assets/src-dcm4gaOM.js                                   238.16 kB │ gzip:    76.03 kB
+dist/assets/app-DCX16ppn.js                                 1,809.91 kB │ gzip:   523.48 kB
+
+[33m[INEFFECTIVE_DYNAMIC_IMPORT] [0msrc/services/ephemeris.ts is dynamically imported by src/services/transits.ts but also statically imported by src/App.tsx, src/components/Astrolabe3D.tsx, src/components/ReadingsModal.tsx, src/services/calculationTools.ts, dynamic import will not move module into another chunk.
+
+[plugin builtin:vite-reporter] 
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 1.29s

@@ -1,0 +1,2 @@
+# Release artifacts must retain the exact bytes verified against production.
+/dist/** -text

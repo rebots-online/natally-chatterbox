@@ -1,0 +1,32 @@
+{
+  "checked_at_utc": "2026-10-12T20:02:15.663866+00:00",
+  "source_commit": "54647c9394695d276585cd7a63acd9dc1ed76a7d",
+  "production": "https://natally.surge.sh",
+  "preview": "https://1791835298684-natally.surge.sh",
+  "assets": [
+    {
+      "path": "index.html",
+      "status": 200,
+      "bytes": 4182,
+      "sha256": "d41125c39951fc6a4f25d1132ab234e4b49ffd64b177454497c57da12e61e8dd",
+      "matches_local": true
+    },
+    {
+      "path": "assets/app-BwpJDYp5.js",
+      "status": 200,
+      "bytes": 2024593,
+      "sha256": "0e1d360a2e16723f063160977ef01efdf2f16590177239a7ba7f14c3676ba657",
+      "matches_local": true
+    },
+    {
+      "path": "assets/app-DOtofgty.css",
+      "status": 200,
+      "bytes": 72505,
+      "sha256": "805d094610e07abb0ce06ce340cd57e106f35b382dbac962bb42781424215990",
+      "matches_local": true
+    }
+  ],
+  "tests_passed": 55,
+  "android_keyboard_verified": false,
+  "browser_verification": "CUA: Browser is not available: iab"
+}

@@ -1,0 +1,11 @@
+# Dependencies
+node_modules
+.env
+.env.local
+.voice-benchmark-cache/
+DOCS/PRD.md.bak.20261010-pre-minimum
+DOCS/ARCHITECTURE-MERGED-10oct2026-15h00.md
+DOCS/MIGRATION-PLAN-10oct2026-15h00.md
+# Original Stitch exports retain personal example input from the existing canvas.
+LIBS/UI/STITCH/exports/prepaid-funnels-20261015.zip
+LIBS/UI/STITCH/screens/prepaid_06_review_your_reading/screen.png

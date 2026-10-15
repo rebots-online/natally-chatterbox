@@ -1,0 +1,32 @@
+{
+  "checked_at": "2026-10-12T14:21:37.802736+00:00",
+  "source_commit": "6883b755b865ff1dae391f8a4d09ea180376b218",
+  "preview": "https://1791814839886-natally.surge.sh",
+  "production": "https://natally.surge.sh",
+  "assets": [
+    {
+      "path": "index.html",
+      "status": 200,
+      "bytes": 4182,
+      "sha256": "675f9e8e57c5f14d17cc0b2f12dd9fc723318f69923bbb9e1e56088c9289e873",
+      "matches_local": true
+    },
+    {
+      "path": "assets/app-B-WWuZPV.css",
+      "status": 200,
+      "bytes": 71279,
+      "sha256": "785c7d0ca9822322ecfdace6d1b2690d5cf9edc374edf7d883a44e1d7b1db1e4",
+      "matches_local": true
+    },
+    {
+      "path": "assets/app-nX6Vbe2g.js",
+      "status": 200,
+      "bytes": 2020134,
+      "sha256": "71ad839656435caa97d1d72f576d9f3ff84c9caec2f0655b0a1b1871197faebb",
+      "matches_local": true
+    }
+  ],
+  "android_device_verified": false,
+  "browser_verification": "CUA has no available browser; iab creation failed",
+  "automated_tests": { "passed": 48, "failed": 0, "new_viewport_and_gesture_tests": 9 }
+}

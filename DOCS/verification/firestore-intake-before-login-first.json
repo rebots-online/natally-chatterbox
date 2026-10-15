@@ -1,0 +1,7 @@
+{
+  "release": "projects/gen-lang-client-0714568880/releases/cloud.firestore/ai-studio-remixastrosphere-1ee57c33-6487-411a-a872-59fbf4cbfc63",
+  "previous_ruleset": "projects/gen-lang-client-0714568880/rulesets/221b78e8-2d9c-4c17-a54d-57f374cbeacc",
+  "previous_update_time": "2026-10-09T18:06:50.335038Z",
+  "previous_source": "rules_version = '2';\n\n// Deny read/write access to all users under any conditions\nservice cloud.firestore {\n  match /databases/{database}/documents {\n    match /{document=**} {\n      allow read, write: if false;\n    }\n  }\n}\n",
+  "rollback": "Set this named release rulesetName to previous_ruleset; never change other database releases."
+}

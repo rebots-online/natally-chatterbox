@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<script type="module" crossorigin src="/assets/voiceVerification-D1M4ixyM.js"></script>
+<link rel="modulepreload" crossorigin href="/assets/src-BO9lpVVU.js">
+<link rel="stylesheet" crossorigin href="/assets/src-DVLnrnrA.css">
+
+<meta charset="utf-8">
+<title>Natally voice comparison</title>
+<h1>Natally voice comparison</h1>
+<p>This exercises the application's real speech service without chat or sign-in.</p>
+<p>Uses the application's configured youthful voice, pitch and synthesis speed. This is a technical playback check, not a listening approval gate.</p>
+<label>Speaker <select id="voice"><option>F1</option><option>F2</option><option>F3</option><option>F4</option><option>F5</option></select></label>
+<p><label>Resource use <select id="resource"><option value="auto">Auto</option><option value="gentle">Gentle</option></select></label>
+<label>Tone <select id="tone"><option value="soft">Soft</option><option value="natural">Natural</option><option value="warm">Warm</option></select></label>
+<label><input type="checkbox" id="natural"> Original pitch and speed</label></p>
+<p><label>Sample <textarea id="sample" rows="4" cols="55"></textarea></label></p>
+<button id="speak">Speak test sentence</button>
+<button id="stop">Stop speech</button>
+<p id="status" role="status"></p>
+<p id="playback">Not started</p>
+<pre id="errors"></pre>
+<div id="measurements"></div>
+<div id="progress"></div>
+</html>

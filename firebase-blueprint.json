@@ -1,0 +1,63 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User account profile and saved preferences",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Auth UID" },
+        "email": { "type": "string", "description": "Email address" },
+        "displayName": { "type": "string", "description": "Display name" },
+        "phoneNumber": { "type": "string", "description": "Optional phone number" },
+        "photoURL": { "type": "string", "description": "User avatar" },
+        "createdAt": { "type": "string", "description": "Account creation timestamp" },
+        "updatedAt": { "type": "string", "description": "Last update timestamp" }
+      },
+      "required": ["uid"]
+    },
+    "SavedChart": {
+      "title": "SavedChart",
+      "description": "Saved natal or synastry charts for a user",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Owner user UID" },
+        "name": { "type": "string", "description": "Native name or chart label" },
+        "birthDate": { "type": "string", "description": "YYYY-MM-DD" },
+        "birthTime": { "type": "string", "description": "HH:MM" },
+        "placeName": { "type": "string", "description": "Birthplace" },
+        "latitude": { "type": "number", "description": "Latitude" },
+        "longitude": { "type": "number", "description": "Longitude" },
+        "timezoneOffset": { "type": "number", "description": "Timezone offset" },
+        "houseSystem": { "type": "string", "description": "House system code" },
+        "createdAt": { "type": "string", "description": "Creation timestamp" }
+      },
+      "required": ["userId", "name", "birthDate", "birthTime", "placeName"]
+    },
+    "UserLore": {
+      "title": "UserLore",
+      "description": "Natally memory memory store / notes for personalization",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Owner user UID" },
+        "topic": { "type": "string", "description": "Topic or category" },
+        "content": { "type": "string", "description": "Lore or memory detail" },
+        "timestamp": { "type": "string", "description": "Created timestamp" }
+      },
+      "required": ["userId", "content"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "Private user account documents"
+    },
+    "/users/{userId}/charts/{chartId}": {
+      "schema": "SavedChart",
+      "description": "Charts saved by this user"
+    },
+    "/users/{userId}/lore/{loreId}": {
+      "schema": "UserLore",
+      "description": "Conversational memory / user lore for Natally"
+    }
+  }
+}

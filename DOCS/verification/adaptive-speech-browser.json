@@ -1,0 +1,122 @@
+{
+  "recordedAt": "2026-10-14T04:54:27.187Z",
+  "url": "https://natally.surge.sh/tests/voice-browser.html",
+  "host": "msi4090",
+  "device": {
+    "title": "Natally voice comparison",
+    "cores": 32,
+    "memory": 32
+  },
+  "runtime": "Playwright Chromium; real pinned Supertonic; no synthetic speech",
+  "limits": "Playback lifecycle and PCM validity; not listening or physical Android acceptance",
+  "gentle": {
+    "requests": [
+      {
+        "id": 1,
+        "text": "Okay, that tracks. You want closeness, but you also need room to breathe. We can take both seriously without turning your whole life into a project.",
+        "at": 1374.199999988079
+      },
+      {
+        "id": 2,
+        "text": "Honestly, that is a lot to hold at once. Let us start with one small next step, then give the rest a little space. This is the final sentence, and these are the final words.",
+        "at": 18666.09999999404
+      }
+    ],
+    "completions": [
+      {
+        "id": 1,
+        "at": 10581.199999988079,
+        "samples": 409698,
+        "sampleRate": 44100,
+        "backend": "wasm",
+        "generationMs": 2004.0999999940395,
+        "clipReuse": false,
+        "finite": true
+      },
+      {
+        "id": 2,
+        "at": 21068.79999998212,
+        "samples": 510384,
+        "sampleRate": 44100,
+        "backend": "wasm",
+        "generationMs": 2398.5999999940395,
+        "clipReuse": false,
+        "finite": true
+      }
+    ],
+    "starts": [
+      {
+        "at": 10584.59999999404,
+        "duration": 9.290204081632654,
+        "pitch": 1.149999976158142
+      },
+      {
+        "at": 21072.19999998808,
+        "duration": 11.573333333333334,
+        "pitch": 1.149999976158142
+      }
+    ],
+    "ends": [
+      18666,
+      31125.19999998808
+    ],
+    "errors": [],
+    "result": "Local playback completed successfully",
+    "status": "Supertonic ready · wasm · no speech API calls"
+  },
+  "auto": {
+    "requests": [
+      {
+        "id": 3,
+        "text": "Your Moon and your rising sign can want different things. That does not make you inconsistent. It gives us something useful to explore. We can look at what feels safe, and what helps you feel seen. No need to solve everything tonight.",
+        "at": 31177.40000000596
+      },
+      {
+        "id": 4,
+        "text": "The last words of this reading are still here.",
+        "at": 34183.5
+      }
+    ],
+    "completions": [
+      {
+        "id": 3,
+        "at": 34180.19999998808,
+        "samples": 652077,
+        "sampleRate": 44100,
+        "backend": "wasm",
+        "generationMs": 2995.5999999940395,
+        "clipReuse": false,
+        "finite": true
+      },
+      {
+        "id": 4,
+        "at": 34854.5,
+        "samples": 146546,
+        "sampleRate": 44100,
+        "backend": "wasm",
+        "generationMs": 669.5,
+        "clipReuse": false,
+        "finite": true
+      }
+    ],
+    "starts": [
+      {
+        "at": 34184.5,
+        "duration": 14.786326530612245,
+        "pitch": 1.149999976158142
+      },
+      {
+        "at": 47041.29999998212,
+        "duration": 3.3230385487528347,
+        "pitch": 1.149999976158142
+      }
+    ],
+    "ends": [
+      47040.79999998212,
+      49942.19999998808
+    ],
+    "errors": [],
+    "result": "Local playback completed successfully"
+  },
+  "failures": []
+}

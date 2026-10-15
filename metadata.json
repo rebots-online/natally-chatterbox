@@ -1,0 +1,8 @@
+{
+  "name": "Remix AstroSphere 3D",
+  "description": "Calculate your precise natal chart and visualize it on an interactive 3D astrolabe using Swiss Ephemeris data.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

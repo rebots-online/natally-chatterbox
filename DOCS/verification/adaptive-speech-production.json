@@ -1,0 +1,97 @@
+{
+  "recordedAt": "2026-10-14T04:53:40.325838+00:00",
+  "sourceCommit": "44c6709d4a09c3448947a4267cc892f329c036d5",
+  "url": "https://natally.surge.sh",
+  "assets": [
+    {
+      "path": "index.html",
+      "match": true,
+      "sha256": "c6d229037e37a57f0d1ef0add442b245f93d2482c7fcadc0a2e7a9cd20878b25",
+      "bytes": 4220
+    },
+    {
+      "path": "assets/app-B0fNyDid.js",
+      "match": true,
+      "sha256": "e0d1cf47b4a29967ec9954fa61e954d8b09c51de1ca69be8687e519e5647124a",
+      "bytes": 1811097
+    },
+    {
+      "path": "assets/voiceVerification-B9g_gwmY.js",
+      "match": true,
+      "sha256": "3f70ee6d2d48fd8a96dc39beaa994c72f04984ffc989abe4d09d0c8acd267593",
+      "bytes": 1237
+    },
+    {
+      "path": "assets/__vite-browser-external-DZadZOwA.js",
+      "match": true,
+      "sha256": "ecde0d07b6fd55f0d5c7773d0511b24d919716c7eff5ee7ab333f210c84ef723",
+      "bytes": 90
+    },
+    {
+      "path": "assets/astrology-tools-6HLwduul.js",
+      "match": true,
+      "sha256": "d755824fcc73f881b52dc0c93e37575fe7be2efac08000e6bfc0a08068ef7dd7",
+      "bytes": 238
+    },
+    {
+      "path": "assets/hostedInference-Ghy-avvk.js",
+      "match": true,
+      "sha256": "1fe33e9e4f293aa29033e236409ffabbf1977e2cb6bd39b36a05d5a918ad1030",
+      "bytes": 2758
+    },
+    {
+      "path": "assets/html2canvas-7dVFC6WQ.js",
+      "match": true,
+      "sha256": "9ec4d18d827d1f443cdc21a2c2532ccbd55f2ecaf6802130f08faa96f37d4491",
+      "bytes": 199455
+    },
+    {
+      "path": "assets/index.es-aGZYPznU.js",
+      "match": true,
+      "sha256": "68559ca5477364f3aa9472801e559c0b0ae2e9b27e5cde1cb3eaec19b37586c3",
+      "bytes": 151406
+    },
+    {
+      "path": "assets/purify.es-Dn3VvdGh.js",
+      "match": true,
+      "sha256": "37ef4b20a8d7efc7def9bd5d68900773f834c9797cb67a81d3740752470f1030",
+      "bytes": 28012
+    },
+    {
+      "path": "assets/src-BdfKzrwG.js",
+      "match": true,
+      "sha256": "0b77d167dddc6818f7726d52b39b690681244d109df674869241853a2ca2f56b",
+      "bytes": 239894
+    },
+    {
+      "path": "assets/app-fbSOHZUI.css",
+      "match": true,
+      "sha256": "fbf9d9c4c1a0c3ad057fb364ec68eec5bd689ad576654ab710873d7fa333705f",
+      "bytes": 11475
+    },
+    {
+      "path": "assets/src-DdipIUgh.css",
+      "match": true,
+      "sha256": "ac61479dafad8418c76645e548235e9c2b6a0a56548faa111025ebdcbad949f4",
+      "bytes": 61698
+    },
+    {
+      "path": "assets/supertonic.worker-BQarrr-O.js",
+      "match": true,
+      "sha256": "5316c1451a4eecf906c19583d221f01b66cf1303e89e05f9a66ec385765d39ee",
+      "bytes": 554366
+    },
+    {
+      "path": "tests/voice-browser.html",
+      "match": true,
+      "sha256": "ee9ea671dcf8f96f5316dd0702fad39c17e7574485631f55f50b216d54512dd4",
+      "bytes": 1436
+    },
+    {
+      "path": "vendor/swisseph/swisseph.js",
+      "match": true,
+      "sha256": "f645827dc8620c058101aa2373bd1254c679c2eeb5a6a80e97a1528bfac5df36",
+      "bytes": 74272
+    }
+  ]
+}

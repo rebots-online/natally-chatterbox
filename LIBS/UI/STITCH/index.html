@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Natally — prepaid funnel prototype</title>
+  <style>
+    :root{color-scheme:dark;font:16px/1.45 system-ui,sans-serif;background:#18161b;color:#f5f2e9}
+    *{box-sizing:border-box}body{margin:0}header{padding:12px 20px;border-bottom:1px solid #514953;display:grid;gap:10px}
+    .row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}strong{margin-right:auto}small{color:#b8b2ba}
+    button,select{font:inherit;min-height:44px;border:1px solid #514953;border-radius:8px;background:#242127;color:inherit;padding:7px 12px;cursor:pointer}
+    button[aria-pressed=true]{background:#c9aa60;color:#18161b}button:focus-visible,select:focus-visible{outline:3px solid #c9aa60;outline-offset:2px}
+    label{display:flex;align-items:center;gap:8px}select{max-width:100%}#screen-select{min-width:220px}
+    main{padding:12px;display:grid;justify-items:center}iframe{background:#18161b;width:100%;max-width:1280px;height:calc(100dvh - 185px);min-height:480px;border:1px solid #514953;border-radius:10px}
+    body.mobile iframe{max-width:390px}dialog{max-width:580px;width:calc(100% - 32px);background:#242127;color:#f5f2e9;border:1px solid #c9aa60;border-radius:16px;padding:24px}dialog::backdrop{background:#18161bcc}
+    dialog h2{margin-top:0}dialog p{max-width:60ch}#dialog-actions{display:flex;gap:12px;flex-wrap:wrap}
+    @media(max-width:767px){header{padding:10px}#screen-select{min-width:0;flex:1;width:100%}label{width:100%}small{font-size:12px}.row{gap:6px}button,select{font-size:14px;padding:6px 9px}iframe{height:calc(100dvh - 255px);min-height:480px}main{padding:6px}}
+  </style>
+</head>
+<body>
+  <header aria-label="Prototype controls">
+    <div class="row"><strong>Natally · prepaid funnel</strong><small>Screen prototype · no payments or products delivered</small></div>
+    <nav class="row" aria-label="Acquisition channel">
+      <button data-channel="direct">Natally direct</button><button data-channel="alby">Alby marketplace</button><button data-channel="x402">x402</button>
+      <button id="mobile-toggle" aria-pressed="false">Mobile view</button><button id="restart">Restart funnel</button>
+    </nav>
+    <div class="row"><label>Screen <select id="screen-select"></select></label><small id="selection" aria-live="polite"></small></div>
+  </header>
+  <main><iframe id="screen" title="Natally funnel screen"></iframe></main>
+  <dialog id="preview"><h2 id="dialog-title"></h2><p id="dialog-copy"></p><div id="dialog-actions"></div></dialog>
+  <script src="prototype.js"></script>
+</body>
+</html>

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PREPAID-04 · Alby marketplace</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;family=Nunito+Sans:ital,wght@0,300..800;1,300..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+    @layer base {
+      html, body { margin:0; padding:0; }
+      body { overscroll-behavior: none; }
+      main > :first-child { margin-top:0 !important; }
+      main > :last-child { margin-bottom:0 !important; }
+    }
+    ::-webkit-scrollbar { display:none; }
+  </style>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "obs-bg": "#18161B",
+            "obs-card": "#242127",
+            "obs-card-high": "#2e2a33",
+            "obs-light": "#F5F2E9",
+            "obs-gold": "#C9AA60",
+            "obs-gold-muted": "#967f44",
+            "obs-muted": "#a69eaf",
+            "obs-border": "#36323d"
+          },
+          fontFamily: {
+            "fraunces": ["Fraunces", "serif"],
+            "mono": ["IBM Plex Mono", "monospace"],
+            "body": ["Nunito Sans", "sans-serif"]
+          }
+        }
+      }
+    }
+  </script>
+<style data-prototype-touch-targets>@media(max-width:767px){button,a[href],label:has(input[type=radio]){min-height:44px}}</style></head>
+<body class="bg-obs-bg font-body text-obs-light antialiased min-h-screen flex flex-col justify-between selection:bg-obs-gold/25 selection:text-obs-gold">
+<!-- Minimal Observatory Chrome -->
+<header class="w-full border-b border-obs-border/60 bg-obs-bg/90 backdrop-blur-md sticky top-0 z-40">
+<div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-obs-gold text-2xl">astrophotography_mode</span>
+<span class="font-fraunces font-semibold text-xl tracking-tight text-obs-light">Natally</span>
+<span class="text-obs-border font-mono text-sm">/</span>
+<span class="font-mono text-xs uppercase tracking-widest text-obs-muted">Prepaid Edition</span>
+</div>
+<a class="inline-flex items-center gap-1.5 text-xs font-mono text-obs-muted hover:text-obs-gold transition-colors" href="#">
+<span class="material-symbols-outlined text-sm">west</span>
+<span>Choose another payment channel</span>
+</a>
+</div>
+</header>
+<!-- Main Acquisition Surface -->
+<main class="w-full flex-grow py-12 md:py-16">
+<div class="max-w-6xl mx-auto px-6">
+<!-- Framing & Header -->
+<div class="max-w-3xl mb-12">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-obs-card border border-obs-border text-obs-gold font-mono text-xs uppercase tracking-wider mb-4">
+<span class="w-1.5 h-1.5 rounded-full bg-obs-gold"></span>
+<span>PREPAID-04 · Alby marketplace</span>
+</div>
+<h1 class="font-fraunces text-4xl sm:text-5xl font-medium text-obs-light tracking-tight leading-tight mb-4">
+          Welcome from Alby
+        </h1>
+<p class="font-body text-lg text-obs-muted leading-relaxed">
+          You are acquiring your personalized astrological reading directly from <strong class="text-obs-light font-medium">Natally</strong>.
+          Alby is utilized strictly as your payment and direct distribution channel—connecting you to the Bitcoin Lightning Network for a frictionless, non-custodial prepaid reading.
+        </p>
+</div>
+<!-- Main Layout: 3 Canonical Offers + Selected Package Breakdown -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<!-- Left: Canonical Offers & Lightning Explanation (7 Cols) -->
+<div class="lg:col-span-7 flex flex-col gap-8">
+<!-- Canonical Offers Exploration -->
+<div>
+<div class="flex items-center justify-between mb-4">
+<span class="font-mono text-xs uppercase tracking-widest text-obs-gold">Available Natally Editions</span>
+<span class="font-mono text-xs text-obs-muted">Select or review below</span>
+</div>
+<div class="space-y-3.5">
+<!-- Offer 1 -->
+<label class="group relative flex items-start gap-4 p-5 rounded-xl bg-obs-card/70 border border-obs-border hover:border-obs-gold/40 transition-all cursor-pointer">
+<input class="mt-1 text-obs-gold focus:ring-0 bg-obs-bg border-obs-border cursor-pointer" name="edition" type="radio" value="pdf"/>
+<div class="flex-grow">
+<div class="flex items-baseline justify-between">
+<h3 class="font-fraunces text-lg text-obs-light font-medium group-hover:text-obs-gold transition-colors">
+                      Natal chart — PDF only
+                    </h3>
+<span class="font-mono text-xs text-obs-muted uppercase">Digital Print</span>
+</div>
+<p class="text-sm text-obs-muted mt-1 leading-normal">
+                    Complete, print-ready celestial dossier with high-precision Swiss Ephemeris coordinates, planetary transits, and natal aspect interpretations.
+                  </p>
+</div>
+</label>
+<!-- Offer 2 (Selected by default) -->
+<label class="group relative flex items-start gap-4 p-5 rounded-xl bg-obs-card border-2 border-obs-gold shadow-lg shadow-black/20 cursor-pointer">
+<input checked="" class="mt-1 text-obs-gold focus:ring-0 bg-obs-bg border-obs-gold cursor-pointer" name="edition" type="radio" value="pdf_spa"/>
+<div class="flex-grow">
+<div class="flex items-baseline justify-between">
+<div class="flex items-center gap-2">
+<h3 class="font-fraunces text-lg text-obs-gold font-medium">
+                        Natal chart — PDF + SPA
+                      </h3>
+<span class="text-[10px] font-mono tracking-widest px-2 py-0.5 rounded-full bg-obs-gold/15 text-obs-gold border border-obs-gold/30 uppercase">Selected</span>
+</div>
+<span class="font-mono text-xs text-obs-muted uppercase">Recommended</span>
+</div>
+<p class="text-sm text-obs-light/90 mt-1 leading-normal">
+                    The archival dossier alongside an interactive Single Page Application (SPA). Dynamically rotate degrees, inspect orbital transits, and query harmonic aspects.
+                  </p>
+</div>
+</label>
+<!-- Offer 3 -->
+<label class="group relative flex items-start gap-4 p-5 rounded-xl bg-obs-card/70 border border-obs-border hover:border-obs-gold/40 transition-all cursor-pointer">
+<input class="mt-1 text-obs-gold focus:ring-0 bg-obs-bg border-obs-border cursor-pointer" name="edition" type="radio" value="home"/>
+<div class="flex-grow">
+<div class="flex items-baseline justify-between">
+<h3 class="font-fraunces text-lg text-obs-light font-medium group-hover:text-obs-gold transition-colors">
+                      Bring Natally home
+                    </h3>
+<span class="font-mono text-xs text-obs-muted uppercase">Physical Artifact</span>
+</div>
+<p class="text-sm text-obs-muted mt-1 leading-normal">
+                    Museum-grade archival parchment chart hand-compiled for permanence, bundled with full digital and interactive astrolabe access.
+                  </p>
+</div>
+</label>
+</div>
+</div>
+<!-- Plain, warm customer explanation of Lightning & sats -->
+<div class="p-6 rounded-xl bg-obs-card/40 border border-obs-border flex flex-col gap-3">
+<div class="flex items-center gap-2 text-obs-gold">
+<span class="material-symbols-outlined text-lg">bolt</span>
+<span class="font-mono text-xs uppercase tracking-wider font-semibold">How Alby &amp; Lightning settlement works</span>
+</div>
+<p class="text-sm text-obs-muted leading-relaxed">
+              We settle your Natally reading using the <strong class="text-obs-light font-normal">Bitcoin Lightning Network</strong>. Instead of card fees and identity forms, settlement takes place instantly and privately in tiny units of Bitcoin known as <strong class="text-obs-light font-normal">satoshis (sats)</strong>.
+            </p>
+<p class="text-sm text-obs-muted leading-relaxed">
+              When you proceed, you will review your simple prepaid quote and confirm payment directly with your connected Alby account in seconds.
+            </p>
+</div>
+</div>
+<!-- Right: Summary Card & Action (5 Cols) -->
+<div class="lg:col-span-5 flex flex-col gap-4">
+<div class="bg-obs-card border border-obs-border rounded-2xl p-6 md:p-8 shadow-2xl relative overflow-hidden">
+<!-- Subtle accent glow -->
+<div class="absolute -top-16 -right-16 w-36 h-36 bg-obs-gold/10 rounded-full blur-2xl pointer-events-none"></div>
+<div class="flex items-center justify-between pb-4 border-b border-obs-border/70 mb-6">
+<span class="font-mono text-xs uppercase tracking-widest text-obs-muted">Package Selection</span>
+<span class="font-mono text-xs px-2.5 py-1 rounded bg-obs-bg text-obs-gold border border-obs-border">One-time prepaid</span>
+</div>
+<!-- Selected Offer Manifest -->
+<div class="mb-6">
+<h2 class="font-fraunces text-2xl font-medium text-obs-light mb-1" id="summary-title">
+                Natal chart — PDF + SPA
+              </h2>
+<p class="text-xs font-mono text-obs-gold">Product: Natally Celestial Reading</p>
+<div class="mt-4 pt-4 border-t border-obs-border/40 space-y-2 text-sm text-obs-muted">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-obs-gold text-base">check</span>
+<span data-prototype-offer-description>A natal chart reading to download</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-obs-gold text-base">check</span>
+<span data-prototype-spa-included>Interactive chart in your browser</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-obs-gold text-base">check</span>
+<span>Delivery follows your selected package</span>
+</div>
+</div>
+</div>
+<!-- Price Specification Block -->
+<div class="p-4 rounded-xl bg-obs-bg border border-obs-border/80 mb-6">
+<span class="block font-mono text-[11px] uppercase tracking-wider text-obs-muted mb-1">
+                Price shown in your quote
+              </span>
+<div class="flex items-baseline gap-2">
+<span class="font-fraunces text-2xl text-obs-gold font-semibold">Prepaid in sats</span>
+</div>
+<p class="text-xs text-obs-muted mt-2">
+                A fixed quote in satoshis will be prepared on the next step for review before settlement.
+              </p>
+</div>
+<!-- Primary Call to Action -->
+<button class="w-full bg-obs-gold hover:bg-[#d8b96f] text-obs-bg font-fraunces text-lg font-semibold py-3.5 px-6 rounded-xl shadow-lg transition-colors flex items-center justify-center gap-2 group cursor-pointer" type="button">
+<span>Review Lightning quote</span>
+<span class="material-symbols-outlined text-xl group-hover:translate-x-0.5 transition-transform">arrow_forward</span>
+</button>
+<!-- Back Route -->
+<div class="mt-6 text-center">
+<a class="inline-flex items-center gap-1 text-xs font-mono text-obs-muted hover:text-obs-light transition-colors" href="#">
+<span class="material-symbols-outlined text-xs">arrow_back</span>
+<span>Choose another payment channel</span>
+</a>
+</div>
+<!-- Channel Notice -->
+<div class="mt-6 pt-4 border-t border-obs-border/50 text-[11px] text-obs-muted/70 leading-normal text-center">
+              Settlement route provided via Alby extension and Lightning wallets. The product and calculations are provided independently by Natally.
+            </div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Quiet Footer -->
+<footer class="w-full border-t border-obs-border/40 py-8 bg-obs-bg">
+<div class="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-obs-muted">
+<div class="flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-obs-gold/60"></span>
+<span>Design prototype · no payment is collected</span>
+</div>
+<div>
+<span>Natally Celestial Cartography</span>
+</div>
+</div>
+</footer>
+<script>
+    // Synchronize radio selection to summary card text
+    const radioButtons = document.querySelectorAll('input[name="edition"]');
+    const summaryTitle = document.getElementById('summary-title');
+    const labels = {
+      'pdf': 'Natal chart — PDF only',
+      'pdf_spa': 'Natal chart — PDF + SPA',
+      'home': 'Bring Natally home'
+    };
+
+    radioButtons.forEach(radio => {
+      radio.addEventListener('change', (e) => {
+        if (labels[e.target.value]) {
+          summaryTitle.textContent = labels[e.target.value];
+        }
+      });
+    });
+  </script>
+</body></html>

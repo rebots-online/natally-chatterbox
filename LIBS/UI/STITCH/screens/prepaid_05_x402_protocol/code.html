@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="web_standard" name="shell-type"/>
+<title>PREPAID-05 · x402 Protocol</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;family=Nunito+Sans:ital,wght@0,300..800;1,300..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+    @layer base {
+      html, body { margin: 0; padding: 0; }
+      body { overscroll-behavior: none; }
+      main > :first-child { margin-top: 0 !important; }
+      main > :last-child { margin-bottom: 0 !important; }
+    }
+    ::-webkit-scrollbar { display: none; }
+  </style>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "dark-bg": "#18161B",
+            "dark-card": "#242127",
+            "dark-card-muted": "#1F1D23",
+            "brand-gold": "#C9AA60",
+            "brand-gold-soft": "#DEC17A",
+            "brand-gold-dim": "#352F22",
+            "light-text": "#F5F2E9",
+            "light-muted": "#A8A296",
+            "border-subtle": "#36323B"
+          },
+          fontFamily: {
+            "serif": ["Fraunces", "serif"],
+            "mono": ["IBM Plex Mono", "monospace"],
+            "sans": ["Nunito Sans", "sans-serif"]
+          }
+        }
+      }
+    };
+  </script>
+<style data-prototype-touch-targets>@media(max-width:767px){button,a[href],label:has(input[type=radio]){min-height:44px}}</style></head>
+<body class="bg-[#18161B] text-[#F5F2E9] font-sans antialiased min-h-screen flex flex-col selection:bg-[#C9AA60] selection:text-[#18161B]">
+<!-- Header -->
+<header class="sticky top-0 z-40 w-full border-b border-[#36323B] bg-[#18161B]/90 backdrop-blur-md">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="relative w-9 h-9 rounded-full overflow-hidden ring-1 ring-[#C9AA60]/40 shadow-sm">
+<img alt="Natally Mascot" class="w-full h-full object-cover" src="../../assets/natally-mascot.webp"/>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="font-serif text-lg font-semibold tracking-tight text-[#F5F2E9]">Natally</span>
+<span class="font-mono text-[11px] tracking-wider uppercase text-[#C9AA60] font-medium">Celestial Cartography</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-mono font-medium bg-[#242127] text-[#C9AA60] border border-[#36323B]">
+<span class="w-1.5 h-1.5 rounded-full bg-[#C9AA60]"></span>
+          x402 Protocol
+        </span>
+<a class="hidden sm:inline-flex items-center gap-1.5 text-xs font-mono text-[#A8A296] hover:text-[#F5F2E9] transition-colors" href="#">
+<span class="material-symbols-outlined text-sm">arrow_back</span>
+<span>Return to offers</span>
+</a>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-1 w-full max-w-6xl mx-auto px-4 sm:px-6 py-8 md:py-12 flex flex-col gap-8">
+<!-- Title and Description -->
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-2 font-mono text-xs text-[#C9AA60] tracking-wider uppercase">
+<span class="material-symbols-outlined text-sm">lock</span>
+<span>PREPAID-05 · x402 Protocol</span>
+</div>
+<h1 class="font-serif text-3xl sm:text-4xl text-[#F5F2E9] font-medium tracking-tight">
+        Request-Based x402 Checkout
+      </h1>
+<p class="font-sans text-[#A8A296] text-base max-w-2xl">
+        A separate request-based purchase journey for Natally. Review a quote, authorize the bounded request, and receive the selected package.
+      </p>
+</div>
+<!-- Main Grid: Left Column (Package + Steps) & Right Column (Parameters + CTA) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<!-- Left Column (7 cols) -->
+<div class="lg:col-span-7 flex flex-col gap-6">
+<!-- Chosen Package Summary Card -->
+<div class="bg-[#242127] border border-[#36323B] rounded-2xl p-6 shadow-lg relative overflow-hidden">
+<div class="flex items-center justify-between mb-4 border-b border-[#36323B] pb-3">
+<span class="font-mono text-xs uppercase tracking-wider text-[#C9AA60] flex items-center gap-1.5">
+<span class="material-symbols-outlined text-base">verified_user</span>
+              Selected Natal Reading
+            </span>
+<span class="font-mono text-xs text-[#A8A296] bg-[#18161B] px-2.5 py-0.5 rounded-full border border-[#36323B]">
+              One-time prepaid
+            </span>
+</div>
+<div class="flex flex-col sm:flex-row items-start sm:items-center gap-5">
+<div class="w-20 h-20 sm:w-24 sm:h-24 rounded-xl overflow-hidden shrink-0 border border-[#36323B] bg-[#18161B]">
+<img alt="Natally Oracle Companion" class="w-full h-full object-cover" src="../../assets/natally-mascot.webp"/>
+</div>
+<div class="flex-1 flex flex-col gap-1.5">
+<h2 class="font-serif text-xl sm:text-2xl text-[#F5F2E9] font-medium">
+                Natal chart — PDF + SPA
+              </h2>
+<p class="text-sm text-[#A8A296] leading-relaxed">
+                <span data-prototype-offer-description>A natal reading to download, plus an interactive chart in your browser.</span>
+              </p>
+<div class="mt-2 flex items-center gap-2">
+<span class="font-mono text-xs text-[#DEC17A] bg-[#352F22] border border-[#C9AA60]/30 px-2.5 py-1 rounded">
+                  Price shown in your quote
+                </span>
+<span class="text-xs text-[#A8A296] font-mono">· Review terms at quote</span>
+</div>
+</div>
+</div>
+</div>
+<!-- 4-Step Sequence Explained for Customers -->
+<div class="bg-[#242127] border border-[#36323B] rounded-2xl p-6 shadow-lg flex flex-col gap-5">
+<div class="flex items-center justify-between border-b border-[#36323B] pb-3">
+<h3 class="font-serif text-lg font-medium text-[#F5F2E9] flex items-center gap-2">
+<span class="material-symbols-outlined text-[#C9AA60]">checklist</span>
+              How x402 Checkout Works
+            </h3>
+<span class="text-xs font-mono text-[#A8A296]">4 Simple Steps</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<!-- Step 1 -->
+<div class="bg-[#1F1D23] border border-[#36323B]/80 p-4 rounded-xl flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<span class="w-6 h-6 rounded-full bg-[#352F22] text-[#C9AA60] font-mono text-xs font-semibold flex items-center justify-center border border-[#C9AA60]/30">
+                  1
+                </span>
+<span class="font-mono text-[11px] text-[#A8A296] uppercase">Inquire</span>
+</div>
+<h4 class="font-serif text-base text-[#F5F2E9] font-medium">1. Request</h4>
+<p class="text-xs text-[#A8A296] leading-relaxed">
+                Solicit your reading quote directly from the celestial reading service.
+              </p>
+</div>
+<!-- Step 2 -->
+<div class="bg-[#1F1D23] border border-[#36323B]/80 p-4 rounded-xl flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<span class="w-6 h-6 rounded-full bg-[#352F22] text-[#C9AA60] font-mono text-xs font-semibold flex items-center justify-center border border-[#C9AA60]/30">
+                  2
+                </span>
+<span class="font-mono text-[11px] text-[#A8A296] uppercase">Terms</span>
+</div>
+<h4 class="font-serif text-base text-[#F5F2E9] font-medium">2. Quote</h4>
+<p class="text-xs text-[#A8A296] leading-relaxed">
+                Receive fee terms and settlement parameters immediately for this discrete reading.
+              </p>
+</div>
+<!-- Step 3 -->
+<div class="bg-[#1F1D23] border border-[#36323B]/80 p-4 rounded-xl flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<span class="w-6 h-6 rounded-full bg-[#352F22] text-[#C9AA60] font-mono text-xs font-semibold flex items-center justify-center border border-[#C9AA60]/30">
+                  3
+                </span>
+<span class="font-mono text-[11px] text-[#A8A296] uppercase">Approve</span>
+</div>
+<h4 class="font-serif text-base text-[#F5F2E9] font-medium">3. Authorize</h4>
+<p class="text-xs text-[#A8A296] leading-relaxed">
+                Review and authorize the quoted request using a compatible client.
+              </p>
+</div>
+<!-- Step 4 -->
+<div class="bg-[#1F1D23] border border-[#36323B]/80 p-4 rounded-xl flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<span class="w-6 h-6 rounded-full bg-[#352F22] text-[#C9AA60] font-mono text-xs font-semibold flex items-center justify-center border border-[#C9AA60]/30">
+                  4
+                </span>
+<span class="font-mono text-[11px] text-[#A8A296] uppercase">Delivery</span>
+</div>
+<h4 class="font-serif text-base text-[#F5F2E9] font-medium">4. Receive</h4>
+<p class="text-xs text-[#A8A296] leading-relaxed">
+                Instant delivery of your natal chart package (PDF folio + offline interactive app).
+              </p>
+</div>
+</div>
+</div>
+<!-- Plain explanation of bounded request -->
+<div class="bg-[#1F1D23] border border-[#36323B] rounded-xl p-5 flex items-start gap-3.5">
+<span class="material-symbols-outlined text-[#C9AA60] text-xl shrink-0 mt-0.5">info</span>
+<div class="flex flex-col gap-1">
+<h4 class="text-sm font-semibold text-[#F5F2E9]">Single bounded request</h4>
+<p class="text-xs text-[#A8A296] leading-relaxed">
+              x402 functions as a one-time HTTP authorization standard. It operates strictly on an individual request basis—handling only this discrete generation rather than an open-ended wallet balance, continuous stream, or recurring payment mandate.
+            </p>
+</div>
+</div>
+</div>
+<!-- Right Column (5 cols) -->
+<div class="lg:col-span-5 flex flex-col gap-6">
+<!-- Quoted Parameters Box -->
+<div class="bg-[#242127] border border-[#36323B] rounded-2xl p-6 shadow-lg flex flex-col gap-5">
+<div class="flex items-center justify-between border-b border-[#36323B] pb-3">
+<h3 class="font-serif text-lg font-medium text-[#F5F2E9] flex items-center gap-2">
+<span class="material-symbols-outlined text-[#C9AA60]">receipt_long</span>
+              Parameter Summary
+            </h3>
+<span class="font-mono text-xs text-[#A8A296]">SPECIFICATION</span>
+</div>
+<div class="flex flex-col divide-y divide-[#36323B]">
+<div class="py-3 flex items-center justify-between">
+<span class="text-sm text-[#A8A296]">Quoted Asset</span>
+<span class="font-mono text-xs font-medium text-[#DEC17A] bg-[#18161B] px-2.5 py-1 rounded border border-[#36323B]">
+                Provided at quote
+              </span>
+</div>
+<div class="py-3 flex items-center justify-between">
+<span class="text-sm text-[#A8A296]">Settlement Network</span>
+<span class="font-mono text-xs font-medium text-[#DEC17A] bg-[#18161B] px-2.5 py-1 rounded border border-[#36323B]">
+                Provided at quote
+              </span>
+</div>
+<div class="py-3 flex items-center justify-between">
+<span class="text-sm text-[#A8A296]">Facilitator Agent</span>
+<span class="font-mono text-xs font-medium text-[#DEC17A] bg-[#18161B] px-2.5 py-1 rounded border border-[#36323B]">
+                Provided at quote
+              </span>
+</div>
+<div class="py-3 flex items-center justify-between">
+<span class="text-sm text-[#A8A296]">Nonce &amp; Expiry</span>
+<span class="font-mono text-xs font-medium text-[#DEC17A] bg-[#18161B] px-2.5 py-1 rounded border border-[#36323B]">
+                Provided at quote
+              </span>
+</div>
+</div>
+<!-- Actions -->
+<div class="flex flex-col gap-3 pt-2">
+<button class="w-full bg-[#C9AA60] hover:bg-[#DEC17A] text-[#18161B] font-semibold text-sm py-3 px-4 rounded-xl transition-all shadow-md hover:shadow-[#C9AA60]/10 flex items-center justify-center gap-2 active:scale-[0.99]" id="reviewQuoteBtn">
+<span class="material-symbols-outlined text-lg">visibility</span>
+<span>Review request quote</span>
+</button>
+<a class="w-full bg-[#1F1D23] hover:bg-[#2B2730] text-[#F5F2E9] border border-[#36323B] font-mono text-xs py-3 px-4 rounded-xl transition-colors text-center flex items-center justify-center gap-2" href="#">
+<span class="material-symbols-outlined text-sm">arrow_back</span>
+<span>Return to offers</span>
+</a>
+</div>
+</div>
+<!-- Trust Note -->
+<div class="p-4 rounded-xl bg-[#18161B] border border-[#36323B] flex items-center gap-3">
+<span class="material-symbols-outlined text-[#C9AA60] text-lg">shield</span>
+<p class="text-xs text-[#A8A296]">
+            No credit card required. No credentials stored. You only authorize what is requested in the explicit quote challenge.
+          </p>
+</div>
+</div>
+</div>
+<!-- Modal for Quote Review -->
+<div class="hidden fixed inset-0 z-50 bg-[#18161B]/85 backdrop-blur-sm flex items-center justify-center p-4" id="quoteModalOverlay">
+<div class="bg-[#242127] border border-[#36323B] max-w-lg w-full rounded-2xl p-6 shadow-2xl flex flex-col gap-4">
+<div class="flex items-center justify-between border-b border-[#36323B] pb-3">
+<div class="flex items-center gap-2 text-[#F5F2E9] font-serif text-lg font-medium">
+<span class="material-symbols-outlined text-[#C9AA60]">request_quote</span>
+<span>Request Quote Preview</span>
+</div>
+<button class="text-[#A8A296] hover:text-[#F5F2E9] transition-colors" id="closeModalBtn">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<div class="bg-[#18161B] p-4 rounded-xl border border-[#36323B] space-y-2.5 font-mono text-xs">
+<div class="flex justify-between">
+<span class="text-[#A8A296]">Target:</span>
+<span class="text-[#F5F2E9]">Natal Chart Folio + Standalone SPA</span>
+</div>
+<div class="flex justify-between">
+<span class="text-[#A8A296]">Protocol:</span>
+<span class="text-[#C9AA60]">HTTP 402 Micropayment</span>
+</div>
+<div class="flex justify-between">
+<span class="text-[#A8A296]">Parameters:</span>
+<span class="text-[#DEC17A]">Provided at quote on request invocation</span>
+</div>
+<div class="flex justify-between">
+<span class="text-[#A8A296]">Commitment:</span>
+<span class="text-[#F5F2E9]">One-time bounded execution</span>
+</div>
+</div>
+<p class="text-xs text-[#A8A296] leading-relaxed">
+          This is an interactive simulation demonstrating the x402 payment negotiation protocol. No live payment is submitted or processed.
+        </p>
+<div class="flex gap-3 justify-end pt-2">
+<button class="px-4 py-2 rounded-lg bg-[#1F1D23] hover:bg-[#2B2730] text-xs font-mono text-[#F5F2E9] border border-[#36323B]" id="dismissModalBtn">
+            Close
+          </button>
+<button class="px-4 py-2 rounded-lg bg-[#C9AA60] hover:bg-[#DEC17A] text-[#18161B] text-xs font-semibold" id="confirmQuoteBtn">
+            Proceed with Quote
+          </button>
+</div>
+</div>
+</div>
+</main>
+<!-- Quiet Footer -->
+<footer class="w-full border-t border-[#36323B] bg-[#18161B] py-6 mt-12">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-[#A8A296]">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-[#C9AA60]/60"></span>
+<span>Design prototype · no payment is collected</span>
+</div>
+<div>
+<span>Natally Celestial Cartography</span>
+</div>
+</div>
+</footer>
+<script>
+    (function() {
+      const reviewBtn = document.getElementById('reviewQuoteBtn');
+      const modal = document.getElementById('quoteModalOverlay');
+      const closeBtn = document.getElementById('closeModalBtn');
+      const dismissBtn = document.getElementById('dismissModalBtn');
+      const confirmBtn = document.getElementById('confirmQuoteBtn');
+
+      function openModal() {
+        if (modal) modal.classList.remove('hidden');
+      }
+
+      function closeModal() {
+        if (modal) modal.classList.add('hidden');
+      }
+
+      if (reviewBtn) reviewBtn.addEventListener('click', openModal);
+      if (closeBtn) closeBtn.addEventListener('click', closeModal);
+      if (dismissBtn) dismissBtn.addEventListener('click', closeModal);
+      if (confirmBtn) {
+        confirmBtn.addEventListener('click', function() {
+          alert('Design prototype notice: Quote requested. No payment is collected.');
+          closeModal();
+        });
+      }
+    })();
+  </script>
+</body></html>

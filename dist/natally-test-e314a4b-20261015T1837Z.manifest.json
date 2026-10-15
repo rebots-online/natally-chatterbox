@@ -1,0 +1,123 @@
+{
+  "sourceCommit": "e314a4bf9c5ad42d98daff6a7c22562147dffb0f",
+  "frontend": "https://natally-test.surge.sh",
+  "surgeRelease": "1792089428952",
+  "backend": "https://natally-test--natally-hosted-chat.netlify.app/.netlify/functions/chat",
+  "netlifyDeploy": "6ad11d1918b73dbc427a9cd6",
+  "mode": "test",
+  "buildCommand": "npm run build -- --mode test --outDir dist/natally-test-site --emptyOutDir false",
+  "archive": "natally-test-e314a4b-20261015T1837Z.zip",
+  "archiveSha256": "3f599aa034aabc5df440a0736ff16641efd1e849bf942ec3503466df9c6f30a9",
+  "files": [
+    {
+      "path": "assets/__vite-browser-external-C_qzToIx.js",
+      "bytes": 90,
+      "sha256": "a10979e1d2a5283d511470db3b74e965dd04db5a3c6e3035de59be7a301eaaf6"
+    },
+    {
+      "path": "assets/app-BkBU_iAp.js",
+      "bytes": 1829562,
+      "sha256": "9735031f5b1048a498fa59e7ab5f0b69c64b7960fe5bf589809d6cb7ee1b8850"
+    },
+    {
+      "path": "assets/app-fbSOHZUI.css",
+      "bytes": 11475,
+      "sha256": "fbf9d9c4c1a0c3ad057fb364ec68eec5bd689ad576654ab710873d7fa333705f"
+    },
+    {
+      "path": "assets/astrology-tools-6HLwduul.js",
+      "bytes": 238,
+      "sha256": "d755824fcc73f881b52dc0c93e37575fe7be2efac08000e6bfc0a08068ef7dd7"
+    },
+    {
+      "path": "assets/hostedInference-XsNl4P_d.js",
+      "bytes": 2772,
+      "sha256": "6636b679767e69ce99b9453ec5401ad8fd72313daef4cf374130ef5ebe214e05"
+    },
+    {
+      "path": "assets/html2canvas-DIan0Sjz.js",
+      "bytes": 199455,
+      "sha256": "dfe973a31b78ba563193baa1b2973d3ef96bfdd5e2e93803fe338c8fcda8df53"
+    },
+    {
+      "path": "assets/index.es-BxDgVVr_.js",
+      "bytes": 151406,
+      "sha256": "300c1da74a9f0555bf6a13a5ed44dfd114da1fc64bff4f22ed2623aeceddcddf"
+    },
+    {
+      "path": "assets/ort-wasm-simd-threaded.asyncify-CxOG5pUO.wasm",
+      "bytes": 26861777,
+      "sha256": "49871f5a4409519797e127440868a6d1923339d9185907f301a5b2a1d90af082"
+    },
+    {
+      "path": "assets/purify.es-Dn3VvdGh.js",
+      "bytes": 28012,
+      "sha256": "37ef4b20a8d7efc7def9bd5d68900773f834c9797cb67a81d3740752470f1030"
+    },
+    {
+      "path": "assets/src-DKSRP5U6.js",
+      "bytes": 239902,
+      "sha256": "fe8a23792c7b64a39dbb20c2bb56899b2e218cdb0eef1f0165981dc31aee0228"
+    },
+    {
+      "path": "assets/src-DVLnrnrA.css",
+      "bytes": 87036,
+      "sha256": "76c6bdb28cc7296c5f90bbfe329a4c79536aff0033f9c0909c0af36be6f3a4ad"
+    },
+    {
+      "path": "assets/supertonic.worker-BQarrr-O.js",
+      "bytes": 554366,
+      "sha256": "5316c1451a4eecf906c19583d221f01b66cf1303e89e05f9a66ec385765d39ee"
+    },
+    {
+      "path": "assets/swisseph-BqKK9TOX.wasm",
+      "bytes": 561871,
+      "sha256": "a6e5f53cc39bac07f44b4ce54e5f90f6bd1e25b6d20df2ea0bc4c1374d09842c"
+    },
+    {
+      "path": "assets/voiceVerification-BP7TLtdJ.js",
+      "bytes": 1237,
+      "sha256": "5f63b64b0f233daa9b688f48be11f4e795587d31e2f8f86d85811f8e92ea1770"
+    },
+    {
+      "path": "fonts/OFL-PlayfairDisplay.txt",
+      "bytes": 4448,
+      "sha256": "0bb2b43ffd21233963b5d0c0eb6f1abffa776ec53c56131b5818708f2730ffd6"
+    },
+    {
+      "path": "fonts/playfair-display-latin.woff2",
+      "bytes": 38404,
+      "sha256": "e0c764a8e9e1cce92163c55bac4b2ad6cd4cf8c696ce2289ab5c41565e65b7e2"
+    },
+    {
+      "path": "index.html",
+      "bytes": 4220,
+      "sha256": "b44dd4f67cf328457822d93770880918745c5d05b8045248159c80749a56ea14"
+    },
+    {
+      "path": "natally-mascot.webp",
+      "bytes": 1777004,
+      "sha256": "a40780bad977525afdd6c7f92ed47a4b0ba090b1453921a0ad4248208301f873"
+    },
+    {
+      "path": "tests/voice-browser.html",
+      "bytes": 1436,
+      "sha256": "5f522e829474888992c023f19ada9e67e9b7120a354faf8fe8a5146d034b9be4"
+    },
+    {
+      "path": "vendor/swisseph/swisseph.data",
+      "bytes": 2151204,
+      "sha256": "1aac44b2ea3dfe668a063ed29dada99a7a96d8fa22fdce626cdf9e270b084ed0"
+    },
+    {
+      "path": "vendor/swisseph/swisseph.js",
+      "bytes": 74272,
+      "sha256": "f645827dc8620c058101aa2373bd1254c679c2eeb5a6a80e97a1528bfac5df36"
+    },
+    {
+      "path": "vendor/swisseph/swisseph.wasm",
+      "bytes": 561871,
+      "sha256": "a6e5f53cc39bac07f44b4ce54e5f90f6bd1e25b6d20df2ea0bc4c1374d09842c"
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "recordedAt": "2026-10-12T07:13:44.144Z",
+  "runtime": "Hosted model + Firebase; local Node Swiss WASM; NOT browser UI",
+  "failure": "The model returned an invalid calculation request.",
+  "diagnostics": [
+    {
+      "status": 502,
+      "error": "The model returned an invalid calculation request.",
+      "calculationDiagnostic": {
+        "count": 2,
+        "firstCallValid": true,
+        "truncated": false,
+        "limitReached": false
+      }
+    }
+  ],
+  "calls": [
+    {
+      "name": "calculate_astrology",
+      "args": {
+        "operation": "lookup_place",
+        "query": "Toronto Canada"
+      },
+      "result": {
+        "ok": true,
+        "operation": "lookup_place",
+        "places": [],
+        "note": "No match in local gazetteer. Ask for another supported city; do not invent coordinates or a place ID."
+      }
+    },
+    {
+      "name": "calculate_astrology",
+      "args": {
+        "operation": "lookup_place",
+        "query": "Toronto"
+      },
+      "result": {
+        "ok": true,
+        "operation": "lookup_place",
+        "places": [
+          {
+            "id": "geonames:6167865",
+            "name": "Toronto",
+            "countryCode": "CA",
+            "lat": 43.70643,
+            "lon": -79.39864,
+            "tzid": "America/Toronto"
+          }
+        ],
+        "note": "Resolve ambiguous matches with the user before natal calculation."
+      }
+    },
+    {
+      "name": "calculate_astrology",
+      "args": {
+        "date": "1992-05-15",
+        "name": "Alex",
+        "operation": "natal",
+        "placeId": "geonames:6167865",
+        "time": "unknown"
+      },
+      "result": {
+        "ok": true,
+        "operation": "natal",
+        "chartId": "chart-1",
+        "facts": "[VERIFIED NATAL BLUEPRINT (Swiss Ephemeris)]\nNative: Alex | Born: 1992-05-15 at 12:00 in Toronto, CA (latitude 43.70643°, longitude -79.39864°; signed north/east positive)\nAngles: Unknown birth time: no reliable angles or house placements.\nCore: Sun: 25°03' Taurus (♉) | Moon: 12°46' Scorpio (♏) (noon estimate, Moon may change sign)\nPlacements: ☉ Sun: 25° 03' Taurus (birth time unknown; approximate); ☽ Moon: 12° 46' Scorpio (birth time unknown; approximate); ♂ Mars: 07° 28' Aries (birth time unknown; approximate); ☿ Mercury: 07° 45' Taurus (birth time unknown; approximate); ♀ Venus: 17° 14' Taurus (birth time unknown; approximate); ♇ Pluto: 21° 28' Scorpio (birth time unknown; approximate) (Rx); ♃ Jupiter: 04° 58' Virgo (birth time unknown; approximate); ⚷ Chiron: 04° 43' Leo (birth time unknown; approximate); ♄ Saturn: 18° 21' Aquarius (birth time unknown; approximate); ♅ Uranus: 17° 47' Capricorn (birth time unknown; approximate) (Rx); ♆ Neptune: 18° 47' Capricorn (birth time unknown; approximate) (Rx); ☊ TrueNode: 01° 04' Capricorn (birth time unknown; approximate) (Rx)\nHouses: Not supplied: birth time unknown.\nAspect Chords: Venus △ Uranus (120°) (Orb 0.6°); Venus □ Saturn (90°) (Orb 1.1°); Venus △ Neptune (120°) (Orb 1.6°); Pluto ⚹ Neptune (60°) (Orb 2.7°); Mars △ Chiron (120°) (Orb 2.7°); Mercury △ Jupiter (120°) (Orb 2.8°); Mercury □ Chiron (90°) (Orb 3.0°); Pluto □ Saturn (90°) (Orb 3.1°); Sun ☍ Pluto (180°) (Orb 3.6°); Pluto ⚹ Uranus (60°) (Orb 3.7°); Venus ☍ Pluto (180°) (Orb 4.2°)\nDetected Geometric Patterns: Use approximate planetary positions only, not house/angle themes.\nLife Path: Number 5 (The Alchemical Pilgrim — Yearning for sovereign liberty, dynamic change, sensual adventure, and expansive horizons.)\n\n[STORED BIOGRAPHICAL LORE & MEMORIES]\nNo past lore recorded yet."
+      }
+    }
+  ]
+}

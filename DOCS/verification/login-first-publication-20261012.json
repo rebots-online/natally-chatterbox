@@ -1,0 +1,27 @@
+{
+  "checked_at_utc": "2026-10-12T20:25:36.995041+00:00",
+  "source_commit": "5e9d2e4ecb522c792dbc8fb32be9a1c9f8e87d5e",
+  "deployment_revision": "564a602",
+  "production": "https://natally.surge.sh",
+  "preview": "https://1791836717418-natally.surge.sh",
+  "node_tests_passed": 61,
+  "firebase_rules_evaluations_passed": 13,
+  "firestore": {
+    "release": "projects/gen-lang-client-0714568880/releases/cloud.firestore/ai-studio-remixastrosphere-1ee57c33-6487-411a-a872-59fbf4cbfc63",
+    "previous_ruleset": "projects/gen-lang-client-0714568880/rulesets/221b78e8-2d9c-4c17-a54d-57f374cbeacc",
+    "new_ruleset": "projects/gen-lang-client-0714568880/rulesets/a583141a-50cd-4699-8bab-a1283e8e528e",
+    "updateTime": "2026-10-12T20:24:57.486577Z",
+    "source_sha256": "bf519ce706c67d6020a276db859d6f91cd37451b4125d5b74f3fa140462981b2",
+    "other_releases_unchanged": true
+  },
+  "assets": [
+    {"path": "index.html", "status": 200, "bytes": 4182, "sha256": "06ad9ec9a1c51bcf75e395253bd16348119663f17c7b0f7cc99397c6fb65ddcb", "matches_local": true},
+    {"path": "assets/app-DKBQ3O-g.js", "status": 200, "bytes": 2028541, "sha256": "65b93bf5a06c60abdba93a73fdd5646dd1103cbc31c9665ec31f5a1e27a78934", "matches_local": true},
+    {"path": "assets/app-BUzBPCGn.css", "status": 200, "bytes": 72596, "sha256": "4a9f88da339ceeb290cc502cfebf3d813f3acf908bcdc65490f81ae6c21b8ea7", "matches_local": true}
+  ],
+  "browser_verification": "Unavailable: CUA Browser is not available: iab",
+  "physical_login_verified": false,
+  "full_lore_sync_implemented": false,
+  "device_only_hosted_access_implemented": false,
+  "credit_packs_implemented": false
+}
