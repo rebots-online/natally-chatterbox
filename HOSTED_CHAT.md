@@ -1,3 +1,15 @@
+## Background preload correction — 15 October 2026
+
+Surge accepted release `1792092095076` at https://natally-chatterbox.surge.sh,
+built directly into root `dist/` from source
+`5a0ed4b6a8799603d760f1bbe6e46774b8775e63`.
+
+Preload was mounted only in FirstLight onboarding, so returning users could
+bypass it. It now mounts in the app-wide VoiceDownloadStatus at page entry,
+including signed-out and returning sessions. The onboarding-specific mount was
+removed. Idle scheduling, shared initialization and Save-Data handling remain.
+No unit tests or browser tests were run for this correction. Robin evaluates
+the refreshed deployed app on the actual device. No device acceptance is claimed.
 ## Natally Chatterbox deployment — 15 October 2026
 
 Standalone repo: https://github.com/rebots-online/natally-chatterbox

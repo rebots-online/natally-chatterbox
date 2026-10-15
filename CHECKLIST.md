@@ -10,7 +10,7 @@
   pending Robin's evaluation. See `DOCS/CHATTERBOX.md`.
 - 🟨 Marketplace architecture and existing Stitch billing screens are carried
   forward unchanged. The screens remain a prototype, not integrated payments.
-- 🟫 Surge accepted release `1792091868387` from root `dist/`; source `2adb96d` was pushed and the remote SHA matched. No automated tests are authorized; Robin performs device evaluation.
+- 🟫 Surge accepted release `1792092095076` from root `dist/`; app-wide preload source `5a0ed4b` was pushed and the remote SHA matched. No automated tests are authorized; Robin performs device evaluation.
 - ⬜ Deferred SOUL/two-lore remains unauthorized.
 # IMPLEMENTATION CHECKLIST & TASK RECIPE
 
