@@ -1,4 +1,5 @@
-import { supertonicSpeak, splitSpeechText, reportVoiceStatus } from './supertonicTts';
+import { chatterboxSpeak, planChatterboxSpeech, initChatterbox, cancelChatterbox, reportVoiceStatus } from './chatterboxTts';
+import type { VoiceId, SpeechUnit } from './chatterboxTypes';
 
 export const NATALLY_VOICE_SAMPLE = "Okay, tiny cosmic plot twist. Your psychic is still figuring things out too. Let's take it one thing at a time. Honestly, the planets can wait. Let’s make this make sense.";
 
@@ -10,7 +11,7 @@ export interface VoiceSettings {
   accentMode: 'moldavian' | 'slavic' | 'standard';
   rate: number; // 0.8 - 1.4
   pitch: number; // 0.8 - 1.4
-  ttsModel: 'supertonic-onnx';
+  ttsModel: 'chatterbox-nano-onnx';
   aiVoiceName: string; // 'The Cheeky Sidekick 2'
   kawaiiMode: 'cheeky_sidekick' | 'kawaii_chibi' | 'moldavian_confidante' | 'celestial_oracle' | 'natural_companion';
   kawaiiIntensity: number; // 0 - 100
@@ -59,7 +60,7 @@ export const DEFAULT_VOICE_SETTINGS: VoiceSettings = {
   language: 'en-US',
   accentMode: 'standard',
   ...voicePreset,
-  ttsModel: 'supertonic-onnx',
+  ttsModel: 'chatterbox-nano-onnx',
   kawaiiMode: 'kawaii_chibi',
   kawaiiIntensity: 85,
   spriteMode: 'wander',
@@ -77,7 +78,7 @@ export function loadVoiceSettings(): VoiceSettings {
         ...DEFAULT_VOICE_SETTINGS, ...parsed,
         resourceMode: parsed.resourceMode === 'gentle' ? 'gentle' : 'auto',
         tone: ['natural', 'soft', 'warm'].includes(parsed.tone) ? parsed.tone : DEFAULT_VOICE_SETTINGS.tone,
-        ttsModel: 'supertonic-onnx', language: 'en-US', accentMode: 'standard',
+        ttsModel: 'chatterbox-nano-onnx', language: 'en-US', accentMode: 'standard',
         aiVoiceName: currentPreset && SUPPORTED_VOICES.includes(parsed.aiVoiceName) ? parsed.aiVoiceName : voicePreset.aiVoiceName,
         pitch: currentPreset && Number.isFinite(parsed.pitch) && parsed.pitch >= 0.8 && parsed.pitch <= 1.4 ? parsed.pitch : voicePreset.pitch,
         rate: currentPreset && Number.isFinite(parsed.rate) && parsed.rate >= 0.8 && parsed.rate <= 1.4 ? parsed.rate : voicePreset.rate,
@@ -96,6 +97,7 @@ export function saveVoiceSettings(settings: VoiceSettings): void {
   } catch (e) {
     console.warn('Could not save voice settings to localStorage:', e);
   }
+  void initChatterbox(settings.aiVoiceName as VoiceId).catch(() => {});
 }
 
 // Clean text for speech synthesis so raw markdown symbols and provenance aren't read out literally
@@ -117,10 +119,12 @@ export function prepareSpeechWithOffsets(rawText: string): { text: string; sourc
   const compact: typeof characters = [];
   for (const item of characters) {
     if (/\s/.test(item.char)) {
-      if (compact.length && compact[compact.length - 1].char !== ' ') compact.push({ char: ' ', index: item.index });
+      const separator = /[\r\n]/.test(item.char) ? '\n' : ' ';
+      if (compact.length && !/\s/.test(compact[compact.length - 1].char)) compact.push({ char: separator, index: item.index });
+      else if (compact.length && separator === '\n') compact[compact.length - 1].char = '\n';
     } else compact.push(item);
   }
-  if (compact[compact.length - 1]?.char === ' ') compact.pop();
+  if (/\s/.test(compact[compact.length - 1]?.char || '')) compact.pop();
   return { text: compact.map(item => item.char).join(''), sourceOffsets: compact.map(item => item.index) };
 }
 
@@ -150,6 +154,7 @@ if (typeof window !== 'undefined') {
 }
 export function stopSpeaking(): void {
   generation++;
+  cancelChatterbox();
   if (currentBufferSource) {
     try { currentBufferSource.stop(); currentBufferSource.disconnect(); } catch {}
     currentBufferSource = null;
@@ -189,14 +194,16 @@ export async function speakNatallyText(
     const capabilities = typeof navigator === 'undefined' ? {} : navigator;
     let realTimeFactor: number | undefined;
     let policy = getSpeechPolicy(settings.resourceMode, capabilities, realTimeFactor);
-    let offset = 0;
     let started = false;
     const pitch = Number.isFinite(settings.pitch) ? Math.max(0.8, Math.min(1.4, settings.pitch)) : 1;
-    const synthesize = (chunk: string) => supertonicSpeak(chunk, { voice: settings.aiVoiceName, speed: settings.rate })
+    const units = await planChatterboxSpeech(clean, settings.aiVoiceName as VoiceId);
+    if (requestGeneration !== generation) return false;
+    let unitIndex = 0;
+    const synthesize = (unit: SpeechUnit) => chatterboxSpeak(unit.text, { voice: settings.aiVoiceName as VoiceId, speed: settings.rate })
       .then(audio => ({ audio, error: null }), error => ({ audio: null, error }));
-    let chunk = splitSpeechText(clean, policy.chunkChars)[0];
-    let pendingAudio = synthesize(chunk);
-    while (chunk) {
+    let pendingAudio = synthesize(units[0]);
+    while (unitIndex < units.length) {
+      const unit = units[unitIndex];
       if (requestGeneration !== generation) return false;
       const result = await pendingAudio;
       if (requestGeneration !== generation) return false;
@@ -209,11 +216,9 @@ export async function speakNatallyText(
         realTimeFactor = realTimeFactor === undefined ? observed : Math.max(observed, realTimeFactor * 0.75 + observed * 0.25);
       }
       policy = getSpeechPolicy(settings.resourceMode, capabilities, realTimeFactor);
-      const chunkOffset = clean.indexOf(chunk, offset);
-      offset = chunkOffset + chunk.length;
-      const nextChunk = splitSpeechText(clean.slice(offset), policy.chunkChars)[0];
-      const prefetch = !!nextChunk && policy.prefetch;
-      if (prefetch) pendingAudio = synthesize(nextChunk);
+      const nextUnit = units[unitIndex + 1];
+      const prefetch = !!nextUnit && policy.prefetch;
+      if (prefetch) pendingAudio = synthesize(nextUnit);
       await context.resume();
       if (requestGeneration !== generation) return false;
       if (context.state !== 'running') throw new Error('Audio is paused. Tap replay to resume speech.');
@@ -236,14 +241,14 @@ export async function speakNatallyText(
         filters.push(low, high, headroom);
       } else source.connect(context.destination);
       currentBufferSource = source;
-      const words = [...chunk.matchAll(/\S+/g)];
+      const words = [...unit.text.matchAll(/\S+/g)];
       await new Promise<void>((resolve, reject) => {
         let wordIndex = 0;
         let finished = false;
         const emitWord = () => {
           const word = words[wordIndex++];
           if (word) {
-            const position = chunkOffset + word.index!;
+            const position = unit.start + word.index!;
             const rawStart = prepared.sourceOffsets[position];
             const rawEnd = prepared.sourceOffsets[position + word[0].length - 1] + 1;
             onWordBoundary?.(rawStart, rawEnd - rawStart);
@@ -268,8 +273,8 @@ export async function speakNatallyText(
         if (!started) { started = true; onStart?.(); }
       });
       if (requestGeneration !== generation) return false;
-      chunk = nextChunk;
-      if (chunk && !prefetch) pendingAudio = synthesize(chunk);
+      unitIndex++;
+      if (nextUnit && !prefetch) pendingAudio = synthesize(nextUnit);
     }
     return requestGeneration === generation;
   } catch (error) {

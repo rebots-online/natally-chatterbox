@@ -23,7 +23,7 @@ import {
   speakNatallyText,
   stopSpeaking,
 } from '../services/voiceService';
-import { subscribeVoiceStatus, type VoiceStatus } from '../services/supertonicTts';
+import { subscribeVoiceStatus, type VoiceStatus } from '../services/chatterboxTts';
 import { VoiceMeasurementPanel } from './VoiceMeasurementPanel';
 import {
   NatallyAvatar,
@@ -233,16 +233,16 @@ export const NatallyConfigModal: React.FC<NatallyConfigModalProps> = ({
 
           <div className="p-3 rounded-xl bg-[#221636] border border-[#3b2954] space-y-3">
             <label className="block text-[11px] text-[#f2ca50] font-semibold">
-              Supertonic · On-device neural voice
+              Chatterbox Nano · On-device neural voice
             </label>
             <p className="text-[10px] text-[#a99dae]">
-              English voice. First use downloads about 265 MB of model files plus the runtime; subsequent use can reuse the browser cache.
+              English voice. Background loading starts when the app opens: about 573 MB of model files plus the runtime. Later sessions reuse saved files.
               Text stays on this device. No Gemini key, account, or per-reading speech charge.
             </p>
-            <select aria-label="Supertonic voice" value={localSettings.aiVoiceName}
+            <select aria-label="Chatterbox Nano voice" value={localSettings.aiVoiceName}
               className="w-full bg-[#1a1224] border border-[#322641] rounded p-2"
               onChange={event => {
-                const updated = { ...localSettings, ttsModel: 'supertonic-onnx' as const, aiVoiceName: event.target.value };
+                const updated = { ...localSettings, ttsModel: 'chatterbox-nano-onnx' as const, aiVoiceName: event.target.value };
                 setLocalSettings(updated);
                 onUpdateSettings(updated);
                 saveVoiceSettings(updated);

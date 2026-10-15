@@ -1,3 +1,29 @@
+# Natally Chatterbox browser-use acceptance — 15 October 2026
+
+Released by Robin's instruction to complete the actual browser-use gauntlet.
+Run the published normal application at `https://natally-chatterbox.surge.sh`;
+no injected identity/state, unit suite, coded browser harness or substitute audio.
+Record source/deployment/browser and actual results before making a completion
+claim. Inherited signed-out voice page may provide supporting engine evidence;
+it does not replace authenticated ordinary-app acceptance.
+
+| ID | Direct observation required | Result rule |
+|---|---|---|
+| CB-UI | Normal app loads with readable sign-in and existing controls; Google/email forms switch normally. | Any blocked normal entry is a defect. |
+| CB-READY | On opening the app, before login or a speech action, actual model loading starts and reaches readiness only after sessions/tokenizer/selected voice preparation. | Loading/restarting around 87 MB, silent failure, or ready before reference preparation fails. |
+| CB-CACHE | Reload after successful loading; existing file panel identifies cache reads; readiness returns without repeating model-file network downloads. | Missing cache persistence or hidden storage failure fails. |
+| CB-SPEAK | Existing authorized account: completed reply and existing saved replay produce audible complete speech through the real UI. Whole long reply uses complete sentences/logical units and retains its ending. | PCM generation alone is not audible completeness. Login-required steps are pending operator until a real account is used. |
+| CB-STOP | Stop actual synthesis/playback, observe no obsolete speech; replay completes, with explicit loading state if sessions restart. | Stale audio, hanging busy state or silent repeated model download fails. |
+| CB-ERROR | Existing UI preserves concrete download/cache/session failure and last operation; retry is explicit and does not conceal a loop. | Generic failure without the failing stage is insufficient. |
+| CB-DEVICE | Robin's target phone/browser completes the ordinary-app journey. | Desktop evidence is not phone acceptance. |
+
+Overall verdict remains DEFECTIVE on any observed failing row; required
+unobserved account/device rows remain explicitly pending, never inferred PASS.
+The inherited deployment rubric follows as historical scope, not a claim that
+its login-only rows prove Chatterbox voice readiness or speech.
+
+---
+
 # Public test deployment rubric
 
 Scope: publish the existing built Natally web app at

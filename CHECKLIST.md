@@ -1,3 +1,21 @@
+# CHATTERBOX COMPLETION — released 15 October 2026
+
+Contract: DOCS/ARCHITECTURE.md CB-ARCH-1 and §8. Robin: "you should just complete it".
+Closed tasks CB01–CB09. No unit tests, new harness, provider change or ad hoc entities.
+
+- [X] 🟪 CB01 — M01/M02: declare T01–T18, exact immutable model/graph/reference/limit/sampling contracts. Targets src/services/chatterboxTypes.ts and chatterboxModel.ts. Preserve graph metadata and asset identities exactly.
+- [X] 🟪 CB02 — M05/M06: implement F22–F26 using only declared bindings. Exact token sampler/tensor helpers; whole-turn/sentence/logical-unit planning with source offsets; oversize unit fails before any speech. No arbitrary cuts.
+- [X] 🟪 CB03 — M04: implement F12–F21 and declared worker state. Verify/cache assets, initialize sessions and tokenizer, prepare selected reference before ready; serialize plan/speak; retain complete-unit PCM; dispose temporaries; explicit errors and no automatic retry loop.
+- [X] 🟪 CB04 — M03: implement F01–F11 and declared client state. Immediate shared per-voice readiness; measured inactivity watchdog; typed responses; cancellation and restart; no swallowed cache/runtime failures.
+- [X] 🟪 CB05 — B01–B11: wire entry before render, migrate engine literals, preserve existing settings/playback/callbacks, replace character chunks with planned units, preserve adaptive scheduling; remove onboarding preload ownership. Existing page gets import wiring only.
+- [X] 🟪 CB06 — A01/B12: restore exact seven reference blobs and NOTICE, direct-pin declared runtime version, configure existing authorized host/endpoint. No generated voices, new UI, DSP or provider.
+- [X] 🟫 CB07 — Source review and build: compare authored declarations to PUML, resolve material findings through architecture/checklist amendments, normal production build directly root dist/. No unit suite or coded browser tests.
+- [ ] 🟫 CB08 — Publish/deploy: commit/push, verify GitHub SHA, build from published source and deploy root dist/ to natally-chatterbox.surge.sh using existing credentials. Keep source, deployment and runtime claims separate.
+- [ ] 🟪 CB09 — Runtime acceptance: run actual browser-use rubric, observe startup through voice playback/cache retry/stop, record defects and remedy within released contract; retain observed outcome/evidence in HOSTED_CHAT. Do not claim phone or account acceptance from desktop/signed-out observations.
+
+Execution record: begun from published blueprint 9cf3594. No unit tests authorized.
+
+---
 # IMPLEMENTATION CHECKLIST & TASK RECIPE
 
 ## Public test deployment — 15 October 2026
@@ -798,3 +816,5 @@ clauses. This queue belongs to Studio/full companion, not the separate Alby kit.
 - **Task ID**: `TASK-012-ONBOARDING-PICKERS-V2`
 - **Fixes**: (1) native date input presented no picker anywhere → hybrid typed field (inputMode numeric, Android keyboard, YYYY-MM-DD ours — never locale-reversed) + 🗓️ CalendarPicker popover (new component, 1800–2400 clamp); time likewise typed HH:MM. (2) Sign-in now precedes onboarding (AuthModal gate; authResolved loading state). (3) Geo combobox confirmed reaching the live bundle. Deployed bundle index-DtYeFI3j verified.
 - **Dependencies**: Tasks 8, 11.
+
+CB07 evidence: TypeScript compiler and root dist build passed. Whole-change review found preload-replacement deletion and oversized cached-file recovery defects; both corrected using existing declared entities. No unit tests or browser harness run.

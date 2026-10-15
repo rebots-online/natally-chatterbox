@@ -3,7 +3,7 @@
 | Contract | Fixed value |
 |---|---|
 | Revision / date | CB-ARCH-1 / 2026-10-15 |
-| Design state | Finished blueprint submitted for Robin's sign-off; no implementation released |
+| Design state | CB-ARCH-1 released for completion by Robin's subsequent instruction, "you should just complete it"; execute through the derived CHECKLIST |
 | Repository / baseline | rebots-online/natally-chatterbox / f190a5ff64f2aa6b5ab3423022045343c4e22077 |
 | Checkout / deployment target | E:/devProjects/natally-chatterbox / https://natally-chatterbox.surge.sh |
 | Permitted product delta | Browser-local Chatterbox Nano ONNX replaces Supertonic; immediate background readiness; whole-turn/sentence/logical-unit speech |
@@ -11,7 +11,7 @@
 | Authority | Approve ARCHITECTURE → derive/release CHECKLIST → execute only CHECKLIST |
 | Unlisted declaration | Forbidden, including a helper, temporary, callback, class, method, parameter, import or library; approved architecture amendment must precede checklist amendment |
 | Existing source | Immutable template baseline except the exact binding edits B01–B12; inherited declarations are not permission to modify their bodies |
-| Current work | This document only; no source, assets, dependencies, configuration, checklist recipe, tests, build or deployment |
+| Current work | Execute the closed declaration set through the released CHECKLIST; no unit tests or invented harness; real browser acceptance required before handback |
 | Incident | Admin-Manual INC-19 / urn:uuid:8ca00c68-2e6e-453a-bdd0-ebf85b7318e2 |
 
 ## 1. PlantUML AST — closed declarations and wiring
@@ -263,6 +263,8 @@ note bottom of M04
       loaded:number; bytes:Uint8Array; offset:number; chunk:Uint8Array;
       digest:ArrayBuffer; hex:string; byte:number;
       source:'cache'|'network'; started:number; error:unknown
+      byte-total reduce callbacks: loaded:number,part:VoiceFileProgress;
+      fixed-total reduce callback: loaded:number,spec:ModelFile.
   F16 adapter:WebGpuAdapter|null; backend:Backend; sessions:Sessions;
       role:GraphRole; file:keyof CHATTERBOX_FILES; model:Uint8Array;
       data:Uint8Array; tokenizer:Tokenizer; session:ort.InferenceSession;
@@ -643,11 +645,11 @@ behavior. No additional application class or external service is introduced.
 | ID | Exact library/import/version | Closed symbol/method contract |
 |---|---|---|
 | L01 | react 19.3.0; react-dom 19.3.0; react-dom/client | Existing useState/useEffect and createRoot/render; no new hooks/components. |
-| L02 | @huggingface/transformers 4.3.1 | AutoTokenizer.from_pretrained, tokenizer callable/input_ids, env.useBrowserCache/cacheKey/remotePathTemplate; tokenizer only. |
+| L02 | @huggingface/transformers 4.3.1 | AutoTokenizer.from_pretrained, tokenizer callable/input_ids, env.allowLocalModels/useBrowserCache/cacheKey/remotePathTemplate; tokenizer only. |
 | L03 | onnxruntime-web 1.31.0-dev.20260914-8d85527a0, import namespace ort from onnxruntime-web/webgpu | Tensor constructor/data/dims/type/size/getData/dispose; InferenceSession.create and session.run/release/inputMetadata/inputNames; env.wasm.numThreads. Direct dependency pin equals existing transitive lock version. |
 | L04 | Vite 8.3.4; TypeScript 7.0.2; existing React/Tailwind/onnxProgressPlugin | Existing compilation/worker bundling only; no new plugins/scripts or output override. |
-| L05 | Browser-owned APIs; no package | Worker constructor/onmessage/onerror/onmessageerror/postMessage/terminate; MessageEvent.data/currentTarget; self.onmessage/postMessage with transfer; URL constructor; import.meta.url/env.BASE_URL; fetch; Response.ok/body/arrayBuffer/clone; reader.read; caches.open; Cache.match/put/delete; crypto.subtle.digest SHA-256; navigator.gpu.requestAdapter; adapter.features.has. |
-| L06 | ECMAScript/browser built-ins; no package | Promise constructor/resolve/then/catch/finally/allSettled; Map/Set constructor/get/set/add/has/delete/clear/values/keys/size; Array iteration/push/slice/sort/reduce/from/fill/every; Object keys/values/entries; JSON stringify; Math random/exp/min/max/pow; Number isFinite/isInteger; BigInt; Date.now/performance.now; timers and cancellation; typed arrays constructor/set/slice; DataView getUint16/getUint32/getInt16; strings slice/trim/matchAll/includes/padStart; numeric toString; RegExp exec/test; Intl.Segmenter constructor/segment; Error constructor. Only purposes §4. |
+| L05 | Browser-owned APIs; no package | Worker constructor/onmessage/onerror/onmessageerror/postMessage/terminate; MessageEvent.data/currentTarget; ErrorEvent.message for preserving native worker failure; self.onmessage/postMessage with transfer; URL constructor; import.meta.url/env.BASE_URL; fetch; Response constructor/ok/body/arrayBuffer/clone; reader.read/cancel; caches.open; Cache.match/put/delete; crypto.subtle.digest SHA-256; navigator.gpu.requestAdapter; adapter.features.has. |
+| L06 | ECMAScript/browser built-ins; no package | Promise constructor/resolve/then/catch/finally/allSettled; Map/Set constructor/get/set/add/has/delete/clear/values/keys/size; Array iteration/push/slice/sort/reduce/from/fill/every; Object keys/values/entries; JSON stringify; Math random/exp/min/max/pow; Number isFinite/isInteger; BigInt and String conversion; Date.now/performance.now; timers and cancellation; typed arrays constructor/set/slice; DataView getUint16/getUint32/getInt16; strings slice/trim/matchAll/includes/lastIndexOf/padStart; numeric toString; RegExp exec/test; Intl.Segmenter constructor/segment; Error constructor. Only purposes §4. |
 | L07 | Existing Web Audio/storage | Existing AudioContext.resume/createBuffer/createBufferSource/createBiquadFilter/createGain; buffer.getChannelData; source.connect/start/stop/disconnect/onended/playbackRate; filter/gain connect/disconnect and existing gain/frequency/type; localStorage getItem/setItem. No microphone/DSP additions. |
 | L08 | Existing internal APIs, unchanged | App; NatallyChatbot/NatallySprite/ReadingsModal callers; chart callbacks; loadVoiceSettings/saveVoiceSettings; VoiceMeasurement and voiceMeasurements.record. No inference/auth/chart/account/billing API changes. |
 | Imports | Closed aliases | ort; AutoTokenizer; env; createRoot; model constants by exact names; types T01–T18 including T13S/T13M/T13T; functions F01–F26 by exact names. Existing imports retained except explicit status replacements and removed onboarding preload import. |
@@ -708,8 +710,17 @@ behavior. No additional application class or external service is introduced.
 | Startup | Immediate application entry, no auth/onboarding/settings dependency, no idle delay or Save-Data skip. Shared initialization also owns selected reference preparation. |
 | Old source | Inactive Supertonic modules retained unchanged; no engine toggle or unlisted cleanup. |
 | Existing preview/measurement | Binding changes B10/B11 only; no new page, harness, benchmark, survey, submission service or evaluation protocol. |
-| Verification | No unit/automated browser tests. Robin evaluates normal device-browser app. No claim of audible completeness or low-resource-phone suitability before that. |
+| Verification | No unit tests or coded browser harness. Robin's later instruction requires the real browser-use gauntlet before handback; use the existing rubric with explicit voice acceptance rows. Record actual UI/runtime outcomes; authenticated and physical-phone acceptance remain separate observations. |
 | Build | Later released task only: normal build directly into root dist/. Historical build subfolders only if semantically versioned; no temporary/nested active deployment output. |
-| Approval | Robin signs off this entire closed blueprint; only then derive CHECKLIST. Any missing declaration means architecture amendment, not coder discretion. |
-| Current action | DOCS/ARCHITECTURE.md only. No CHECKLIST/source/assets/package/environment changes, build or deployment. Existing Surge build remains prior deployment. |
+| Approval | Robin's "you should just complete it" releases completion through this blueprint and its derived CHECKLIST. Missing declarations still require a visible architecture amendment before a checklist/code amendment. |
+| Current action | Derive CHECKLIST, implement declared entities, build root dist/, deploy the authorized domain, and perform recorded real-browser acceptance. No replacement unit suite or test harness. |
 | Sources | [Pinned model conversion](https://huggingface.co/owensong/chatterbox-nano-ONNX/blob/4a66d7dab72a9e98f24b515d49a1d7a81632df2e/README.md); [ONNX Runtime browser external-data contract](https://onnxruntime.ai/docs/tutorials/web/large-models.html#external-data) |
+
+## 8. Released completion amendment — 15 October 2026
+
+| Authority / observed defect | Released action |
+|---|---|
+| Robin: repeated loading around 87 MB with no voice | Diagnose the deployed startup/cache/session boundary; preserve explicit failure, avoid silently discarding cache errors or looping retries. The 87,304,704-byte embedding file is the first large asset, not completion of the 573 MB package. |
+| Robin: browser-use gauntlet required; "you should just complete it" | Complete the declared replacement and existing real-browser acceptance, rather than ending after build/deploy. No unit tests or added automation scripts. |
+| Documentation closure | CHECKLIST records execution; DOCS/TEST_RUBRIC.md adds named actual voice-readiness/playback/cache/stop rows; HOSTED_CHAT.md records source/deploy and observed results. These are administrative records, not executable entities. |
+| Error visibility | F15 must not swallow Cache.put/Cache.open failures. Report the concrete storage error rather than promising saved weights. F05/F06 preserve actual runtime failure context; a failed load does not trigger an automatic retry loop. |
