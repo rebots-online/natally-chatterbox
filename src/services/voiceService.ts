@@ -1,4 +1,4 @@
-import { supertonicSpeak, splitSpeechText, reportVoiceStatus } from './supertonicTts';
+import { chatterboxSpeak, cancelChatterbox, reportVoiceStatus } from './chatterboxTts';
 
 export const NATALLY_VOICE_SAMPLE = "Okay, tiny cosmic plot twist. Your psychic is still figuring things out too. Let's take it one thing at a time. Honestly, the planets can wait. Let’s make this make sense.";
 
@@ -10,7 +10,7 @@ export interface VoiceSettings {
   accentMode: 'moldavian' | 'slavic' | 'standard';
   rate: number; // 0.8 - 1.4
   pitch: number; // 0.8 - 1.4
-  ttsModel: 'supertonic-onnx';
+  ttsModel: 'chatterbox-nano-onnx';
   aiVoiceName: string; // 'The Cheeky Sidekick 2'
   kawaiiMode: 'cheeky_sidekick' | 'kawaii_chibi' | 'moldavian_confidante' | 'celestial_oracle' | 'natural_companion';
   kawaiiIntensity: number; // 0 - 100
@@ -59,7 +59,7 @@ export const DEFAULT_VOICE_SETTINGS: VoiceSettings = {
   language: 'en-US',
   accentMode: 'standard',
   ...voicePreset,
-  ttsModel: 'supertonic-onnx',
+  ttsModel: 'chatterbox-nano-onnx',
   kawaiiMode: 'kawaii_chibi',
   kawaiiIntensity: 85,
   spriteMode: 'wander',
@@ -77,7 +77,7 @@ export function loadVoiceSettings(): VoiceSettings {
         ...DEFAULT_VOICE_SETTINGS, ...parsed,
         resourceMode: parsed.resourceMode === 'gentle' ? 'gentle' : 'auto',
         tone: ['natural', 'soft', 'warm'].includes(parsed.tone) ? parsed.tone : DEFAULT_VOICE_SETTINGS.tone,
-        ttsModel: 'supertonic-onnx', language: 'en-US', accentMode: 'standard',
+        ttsModel: 'chatterbox-nano-onnx', language: 'en-US', accentMode: 'standard',
         aiVoiceName: currentPreset && SUPPORTED_VOICES.includes(parsed.aiVoiceName) ? parsed.aiVoiceName : voicePreset.aiVoiceName,
         pitch: currentPreset && Number.isFinite(parsed.pitch) && parsed.pitch >= 0.8 && parsed.pitch <= 1.4 ? parsed.pitch : voicePreset.pitch,
         rate: currentPreset && Number.isFinite(parsed.rate) && parsed.rate >= 0.8 && parsed.rate <= 1.4 ? parsed.rate : voicePreset.rate,
@@ -117,10 +117,12 @@ export function prepareSpeechWithOffsets(rawText: string): { text: string; sourc
   const compact: typeof characters = [];
   for (const item of characters) {
     if (/\s/.test(item.char)) {
-      if (compact.length && compact[compact.length - 1].char !== ' ') compact.push({ char: ' ', index: item.index });
+      const separator = /[\r\n]/.test(item.char) ? '\n' : ' ';
+      if (compact.length && !/\s/.test(compact[compact.length - 1].char)) compact.push({ char: separator, index: item.index });
+      else if (compact.length && separator === '\n') compact[compact.length - 1].char = '\n';
     } else compact.push(item);
   }
-  if (compact[compact.length - 1]?.char === ' ') compact.pop();
+  if (/\s/.test(compact[compact.length - 1]?.char || '')) compact.pop();
   return { text: compact.map(item => item.char).join(''), sourceOffsets: compact.map(item => item.index) };
 }
 
@@ -150,6 +152,7 @@ if (typeof window !== 'undefined') {
 }
 export function stopSpeaking(): void {
   generation++;
+  cancelChatterbox();
   if (currentBufferSource) {
     try { currentBufferSource.stop(); currentBufferSource.disconnect(); } catch {}
     currentBufferSource = null;
@@ -192,9 +195,10 @@ export async function speakNatallyText(
     let offset = 0;
     let started = false;
     const pitch = Number.isFinite(settings.pitch) ? Math.max(0.8, Math.min(1.4, settings.pitch)) : 1;
-    const synthesize = (chunk: string) => supertonicSpeak(chunk, { voice: settings.aiVoiceName, speed: settings.rate })
+    const synthesize = (chunk: string) => chatterboxSpeak(chunk, { voice: settings.aiVoiceName, speed: settings.rate })
       .then(audio => ({ audio, error: null }), error => ({ audio: null, error }));
-    let chunk = splitSpeechText(clean, policy.chunkChars)[0];
+    // The worker keeps a whole turn or groups whole sentence units using its tokenizer.
+    let chunk = clean;
     let pendingAudio = synthesize(chunk);
     while (chunk) {
       if (requestGeneration !== generation) return false;
@@ -211,7 +215,7 @@ export async function speakNatallyText(
       policy = getSpeechPolicy(settings.resourceMode, capabilities, realTimeFactor);
       const chunkOffset = clean.indexOf(chunk, offset);
       offset = chunkOffset + chunk.length;
-      const nextChunk = splitSpeechText(clean.slice(offset), policy.chunkChars)[0];
+      const nextChunk = '';
       const prefetch = !!nextChunk && policy.prefetch;
       if (prefetch) pendingAudio = synthesize(nextChunk);
       await context.resume();

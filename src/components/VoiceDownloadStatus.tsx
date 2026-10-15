@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { subscribeVoiceStatus, type VoiceStatus } from '../services/supertonicTts';
+import { subscribeVoiceStatus, type VoiceStatus } from '../services/chatterboxTts';
 
 export function VoiceDownloadStatus() {
   const [status, setStatus] = useState<VoiceStatus>({ phase: 'idle', message: '' });

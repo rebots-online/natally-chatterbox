@@ -68,7 +68,7 @@ export class VoiceMeasurementStore {
     if (event.state === 'start') this.starts.add(key);
     else { clean.capturedStart = this.starts.delete(key); }
     for (const key of ['durationMs', 'bytes', 'speed', 'steps'] as const) if (Number.isFinite(event[key]) && event[key]! >= 0) clean[key] = event[key];
-    if (event.file && /^(?:onnx\/)?(?:text_encoder|latent_denoiser|voice_decoder)\.onnx(?:_data)?$|^(?:config|tokenizer|tokenizer_config)\.json$|^voices\/[FM][1-5]\.bin$/.test(event.file)) clean.file = event.file;
+    if (event.file && /^(?:onnx\/)?(?:text_encoder|latent_denoiser|voice_decoder|embed_tokens_fp16|speech_encoder_q4f16|language_model_q4f16|conditional_decoder_q4)\.onnx(?:_data)?$|^(?:config|tokenizer|tokenizer_config)\.json$|^voices\/[FM][1-5]\.bin$/.test(event.file)) clean.file = event.file;
     if (['wasm', 'webgpu'].includes(event.backend || '')) clean.backend = event.backend;
     if (['cache', 'network', 'unknown'].includes(event.source || '')) clean.source = event.source;
     if (['preload', '1-100', '101-300', '301-1000'].includes(event.workload || '')) clean.workload = event.workload;
@@ -85,7 +85,7 @@ export class VoiceMeasurementStore {
     }
     this.reportId ||= crypto.randomUUID();
     const snapshot = this.snapshot();
-    return { schema: 'natally-voice-measurements/v1', reportId: this.reportId, snapshotSequence: ++this.snapshotSequence, runtime: '@huggingface/transformers@4.3.1',
+    return { schema: 'natally-voice-measurements/v1', reportId: this.reportId, snapshotSequence: ++this.snapshotSequence, runtime: '@huggingface/transformers@4.3.1 + onnxruntime-web@1.31.0-dev.20260914-8d85527a0',
       scope: 'voluntary session sample; observed spreads are not population confidence intervals',
       survey: cleanSurvey, events: snapshot.events, omittedEvents: snapshot.omittedEvents, summary: summarizeMeasurements(snapshot.events) };
   }

@@ -1,4 +1,30 @@
-# Public test deployment rubric
+# Chatterbox device-evaluation deployment rubric
+
+Current target: `https://natally-chatterbox.surge.sh`, standalone repository
+`rebots-online/natally-chatterbox`, cloned from the full Natally template to
+`E:/devProjects/natally-chatterbox`. The only product changes are the local TTS
+engine replacement and whole-turn/sentence/logical-unit splitting. Existing
+marketplace and billing prototype assets are retained without integration changes.
+
+| ID | Requirement | Driver | Steps / PASS criteria | Severity |
+|---|---|---|---|---|
+| CB-1 | New public site renders the existing Natally entry | AUTO | Open the deployed HTTPS site; observe the normal Google/email entry and Natally branding. | BLOCKER |
+| CB-2 | Real local voice path works in the built site | AUTO | Open `/tests/voice-browser.html`, use the existing sample, press Speak, observe actual model/cache/session/run stages followed by playback and completion. No replacement audio or provider stubs. | BLOCKER |
+| CB-3 | Stop cancels preparation and permits retry | AUTO | While real inference is running press Stop. Observe stopped state; retry and observe fresh measured work, then Stop again. No late playback may start. | HIGH |
+| CB-4 | Complete turns or whole units are the only split boundaries | AUTO + OPERATOR | Read the exact source planning path; operator listens to a full turn and a longer reading on the actual device. No skipped words, phrase tails or units. Pauses are acceptable. | BLOCKER |
+| CB-5 | Ordinary phone browser performs acceptably | OPERATOR | Robin evaluates initial load, cached replay, complete audio, interruptions, and responsiveness on the intended lower-resource phone. Desktop results do not certify this. | BLOCKER |
+| CB-6 | Existing authentication and hosted flow remain usable | AUTO + OPERATOR | Observe the real Google chooser on the new hostname without entering credentials; Robin completes sign-in and obtains an actual hosted reading. | BLOCKER |
+
+Record agent-driven UI checks under `dist/rubric-runs/`, with a report and indexed
+recording. Robin explicitly owns device/listening evaluation. Until CB-4/5/6's
+operator portions are observed, report INCOMPLETE—pending-operator, not SHIP-READY.
+Compilation and file hashes support deployment reproducibility; they do not
+substitute for listening or device acceptance. Do not run a unit suite as this
+deployment's acceptance protocol.
+
+The historical template deployment rubric follows for provenance.
+
+# Historical public test deployment rubric
 
 Scope: publish the existing built Natally web app at
 `https://natally-test.surge.sh` while retaining the working production site.
