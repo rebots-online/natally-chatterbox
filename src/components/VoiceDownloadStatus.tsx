@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
-import { subscribeVoiceStatus, type VoiceStatus } from '../services/chatterboxTts';
+import { scheduleChatterboxPreload, subscribeVoiceStatus, type VoiceStatus } from '../services/chatterboxTts';
 
 export function VoiceDownloadStatus() {
   const [status, setStatus] = useState<VoiceStatus>({ phase: 'idle', message: '' });
   useEffect(() => subscribeVoiceStatus(setStatus), []);
+  useEffect(scheduleChatterboxPreload, []);
   return <VoiceProgress status={status} />;
 }
 

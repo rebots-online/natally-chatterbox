@@ -20,6 +20,11 @@ All synthesis runs in a browser worker; WebGPU is selected when supported,
 otherwise WASM is attempted. Backend viability/performance on the phone is an
 evaluation result, not inferred from a browser exposing an API.
 
+Background preload is mounted in the app-wide `VoiceDownloadStatus`, which is
+present at page entry, including login, returning workspaces and the existing
+voice preview. It is not tied to the onboarding screen. Idle scheduling, coalesced
+initialization, saved-cache reuse and the existing Save-Data exception remain.
+
 The complete reply is synthesized together when it fits the 768-input-token
 operational budget. Longer replies are packed from complete sentences or logical
 line units. A single over-budget unit fails explicitly; no arbitrary cut is made.
