@@ -1,0 +1,158 @@
+{
+  "source": "4f6530c1d5729e957f82e42e7a4c857f3f49f03f",
+  "surgeRelease": "1792103121721",
+  "url": "https://natally-chatterbox.surge.sh",
+  "verifiedAt": "2026-10-15T22:43:27.2258320Z",
+  "files": [
+    {
+      "path": "index.html",
+      "bytes": 4301,
+      "sha256": "0cfe741de941bf7d56a8fa6ce954c871de740b938b27bbc23398fabdd0e2d81c"
+    },
+    {
+      "path": "natally-mascot.webp",
+      "bytes": 1777004,
+      "sha256": "a40780bad977525afdd6c7f92ed47a4b0ba090b1453921a0ad4248208301f873"
+    },
+    {
+      "path": "assets/__vite-browser-external-DH4A8OTR.js",
+      "bytes": 90,
+      "sha256": "ea5d8b2259d8208487ef52e727e1c7d911bdc76735fbeb9e0949ecc4d42f3052"
+    },
+    {
+      "path": "assets/app-B0Z5CX5y.js",
+      "bytes": 1829591,
+      "sha256": "d974f11bef899aa36b24356a32060cbbea68e73f72bf38110fe4597fabb5e6ce"
+    },
+    {
+      "path": "assets/app-fbSOHZUI.css",
+      "bytes": 11475,
+      "sha256": "fbf9d9c4c1a0c3ad057fb364ec68eec5bd689ad576654ab710873d7fa333705f"
+    },
+    {
+      "path": "assets/astrology-tools-6HLwduul.js",
+      "bytes": 238,
+      "sha256": "d755824fcc73f881b52dc0c93e37575fe7be2efac08000e6bfc0a08068ef7dd7"
+    },
+    {
+      "path": "assets/chatterbox.worker-BRiIPwnX.js",
+      "bytes": 556408,
+      "sha256": "72f26b59682bd4577bbe4d624218798b62f04ae0d3add421e45f6bd8b85b24c5"
+    },
+    {
+      "path": "assets/hostedInference-PByksLwY.js",
+      "bytes": 2778,
+      "sha256": "8a7dc9bc6654f4ddfab8ed953a957f1db9ca6716e6c9d3eacb314fac44e7ab14"
+    },
+    {
+      "path": "assets/html2canvas-CLg0nxUx.js",
+      "bytes": 199455,
+      "sha256": "2637b27637639d202dc1b8b50655d878ea13dd6058e73818a0b0f59731398c16"
+    },
+    {
+      "path": "assets/index.es-BZlo_a92.js",
+      "bytes": 151406,
+      "sha256": "c4543faf45623ad39df55d540b9893f56172c0785f248b2421509e5e97eb1bac"
+    },
+    {
+      "path": "assets/ort-wasm-simd-threaded.asyncify-CxOG5pUO.wasm",
+      "bytes": 26861777,
+      "sha256": "49871f5a4409519797e127440868a6d1923339d9185907f301a5b2a1d90af082"
+    },
+    {
+      "path": "assets/purify.es-Dn3VvdGh.js",
+      "bytes": 28012,
+      "sha256": "37ef4b20a8d7efc7def9bd5d68900773f834c9797cb67a81d3740752470f1030"
+    },
+    {
+      "path": "assets/src-BHQE61x8.css",
+      "bytes": 87037,
+      "sha256": "d6b5625015e26cf84e83c4cd6749012091c4c287806899abcef91ba7f17b8630"
+    },
+    {
+      "path": "assets/src-CeyL6X84.js",
+      "bytes": 239843,
+      "sha256": "4ba031107cf6718cc11ddbca6f14e4311377dc01457d557c955c28bd38fb74cb"
+    },
+    {
+      "path": "assets/swisseph-BqKK9TOX.wasm",
+      "bytes": 561871,
+      "sha256": "a6e5f53cc39bac07f44b4ce54e5f90f6bd1e25b6d20df2ea0bc4c1374d09842c"
+    },
+    {
+      "path": "assets/voiceVerification-jz3r8xGy.js",
+      "bytes": 1237,
+      "sha256": "f640b913bb7b9e9943c07921f5406600bea15264b56afc6a5b6b59efe152dced"
+    },
+    {
+      "path": "fonts/OFL-PlayfairDisplay.txt",
+      "bytes": 4541,
+      "sha256": "a32c1e30554f8227178d1643d182f9328b6529d92c9b43d86a16fb528381d857"
+    },
+    {
+      "path": "fonts/playfair-display-latin.woff2",
+      "bytes": 38404,
+      "sha256": "e0c764a8e9e1cce92163c55bac4b2ad6cd4cf8c696ce2289ab5c41565e65b7e2"
+    },
+    {
+      "path": "tests/voice-browser.html",
+      "bytes": 1457,
+      "sha256": "825e0db2835b0e9f957d4cc182b68aabc04e722e6354cb63e8fe8ebc75938a37"
+    },
+    {
+      "path": "vendor/swisseph/swisseph.data",
+      "bytes": 2151204,
+      "sha256": "1aac44b2ea3dfe668a063ed29dada99a7a96d8fa22fdce626cdf9e270b084ed0"
+    },
+    {
+      "path": "vendor/swisseph/swisseph.js",
+      "bytes": 74274,
+      "sha256": "451a518b26b446db5e0c9a834aad1e9428d0fff7411cbfc39fce523b43a79e32"
+    },
+    {
+      "path": "vendor/swisseph/swisseph.wasm",
+      "bytes": 561871,
+      "sha256": "a6e5f53cc39bac07f44b4ce54e5f90f6bd1e25b6d20df2ea0bc4c1374d09842c"
+    },
+    {
+      "path": "voices/chatterbox/F1.wav",
+      "bytes": 826746,
+      "sha256": "7f4b5f1b5fe3d3326edea226967f9cd7a4cb56832cd2dc329b81018a71dd5025"
+    },
+    {
+      "path": "voices/chatterbox/F2.wav",
+      "bytes": 742856,
+      "sha256": "2049d5c01b64ecce8fdea8b65742dcf3de121f24a6e8f0e05b3cc00538b0ed0c"
+    },
+    {
+      "path": "voices/chatterbox/F3.wav",
+      "bytes": 827740,
+      "sha256": "c04c80e856c8aa43a02614fe234f19a816a39bd895c2132237e51d2d6c8bd067"
+    },
+    {
+      "path": "voices/chatterbox/F4.wav",
+      "bytes": 738572,
+      "sha256": "204623f6cd5d238f519c7369503fc413bd9fe52b4f9bd836b4adcb3f2afac1c5"
+    },
+    {
+      "path": "voices/chatterbox/F5.wav",
+      "bytes": 866026,
+      "sha256": "c478e7201e7d59c1a253af02c96d34fd1b7985335f9f924fdc13af8893c06da9"
+    },
+    {
+      "path": "voices/chatterbox/M1.wav",
+      "bytes": 860364,
+      "sha256": "79270f68710ecff9aa00ffa73a1ef7e1e1afd5725f3d92a3e66a5fd51f267315"
+    },
+    {
+      "path": "voices/chatterbox/M2.wav",
+      "bytes": 790152,
+      "sha256": "f0f88ba997ca85f17beb392b4cb88ee3e8192c7501f47acf44cc1b5cc15b13e8"
+    },
+    {
+      "path": "voices/chatterbox/NOTICE.md",
+      "bytes": 821,
+      "sha256": "d287cf4837f87101960307d441a85de0405d63f33128d23a6bf8297dde07137a"
+    }
+  ]
+}

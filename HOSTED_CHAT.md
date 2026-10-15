@@ -1,3 +1,51 @@
+## Chatterbox substitution — 15 October 2026
+
+Independent template-derived repository: `rebots-online/natally-chatterbox`,
+native checkout `E:\devProjects\natally-chatterbox`. Source
+`4f6530c1d5729e957f82e42e7a4c857f3f49f03f` was committed/pushed and the remote
+SHA verified before the normal root `dist/` build and deployment to
+https://natally-chatterbox.surge.sh, Surge release `1792103121721`.
+All 30 served payload files were fetched and SHA-256 matched to the local build;
+the versioned browser-run folder retains the per-file receipt.
+The original marketplace application and its providers remain the inherited
+product; this repository substitutes the local voice engine and whole-unit
+speech planning under DOCS/ARCHITECTURE.md CB-ARCH-1, then CHECKLIST CB01–CB09.
+
+Actual browser use: the normal entry started loading before login or speech.
+The pinned 87,304,704-byte embedding tensor was read successfully from saved
+cache; all 13 model/tokenizer files showed saved-cache reads. Decoder/session
+and selected-reference preparation completed, then the loading strip cleared.
+The inherited voice page, using the real application speech service, reached
+"Playing locally generated audio" and "Local playback completed successfully".
+Cached replay began playback; Stop interrupted it. Cancelling active generation
+reinitialized from cache and reached WebGPU readiness; the following replay
+completed successfully. There was no observed automatic 87 MB download loop in
+this run. The older deployment did show one concrete network error on the
+language-model tensor before an explicit reload; that is not proof of the
+cause of Robin's phone report.
+
+An existing signed-in Chrome session loaded its real saved profile and three
+stored conversation turns without injected identity or application state.
+The saved welcome and longer reading were replayed through ordinary chat
+controls. Speaking/Karaoke Active and subsequent Replay states were observed;
+Stop removed the speaking state immediately. Generation was slow: one welcome
+observation remained in the language-model stage at 106 seconds with current
+work measurements, before playback became available. No new hosted answer or
+fresh authentication transaction was claimed from replaying stored messages.
+
+TypeScript checking, normal production build and independent source review
+completed. No unit suite or coded browser harness was run. The browser run
+does not certify subjective audible word completeness, long-reading ending
+intelligibility, WASM compatibility, injected cache/quota failures or target
+phone performance. These remain explicit acceptance limits for Robin's device
+evaluation, rather than a full rubric PASS.
+
+Public supporting recording, indexed observations and stills:
+`dist/rubric-runs/v0.0.0-chatterbox-4f6530c-20261015/REPORT.md`.
+The MP4 is a timestamped screen-observation sequence, without an audio track;
+gaps hold the preceding image and are disclosed in the report. Authenticated
+captures contain personal profile/conversation details and remain local only.
+
 ## Isolated public test deployment — 15 October 2026
 
 Test URL: https://natally-test.surge.sh, Surge release `1792089428952`, built
