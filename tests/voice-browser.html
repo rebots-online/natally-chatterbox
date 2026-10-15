@@ -24,7 +24,7 @@
   import { VoiceMeasurementPanel } from '/src/components/VoiceMeasurementPanel.tsx';
   import '/src/index.css';
   import { speakNatallyText, stopSpeaking, DEFAULT_VOICE_SETTINGS, NATALLY_VOICE_SAMPLE } from '/src/services/voiceService.ts';
-  import { subscribeVoiceStatus } from '/src/services/chatterboxTts.ts';
+  import { subscribeVoiceStatus } from '/src/services/supertonicTts.ts';
   createRoot(document.querySelector('#measurements')).render(React.createElement(VoiceMeasurementPanel));
   createRoot(document.querySelector('#progress')).render(React.createElement(VoiceDownloadStatus));
   document.querySelector('#sample').value = NATALLY_VOICE_SAMPLE;

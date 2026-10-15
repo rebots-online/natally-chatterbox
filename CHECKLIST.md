@@ -1,17 +1,3 @@
-# Chatterbox standalone evaluation deployment — 15 October 2026
-
-- 🟪 Replace Supertonic with browser-local Chatterbox Nano ONNX. Complete replies
-  first; split only at preceding whole sentence/logical-unit ends when necessary.
-  Missing phrases fail acceptance; pauses are acceptable.
-- 🟫 Independent template-derived repo `rebots-online/natally-chatterbox`, own
-  checkout `E:/devProjects/natally-chatterbox`; `.env` targets
-  `https://natally-chatterbox.surge.sh`. Deploy the built app there for Robin.
-- 🟪 Physical phone performance, working memory and audible completeness are
-  pending Robin's evaluation. See `DOCS/CHATTERBOX.md`.
-- 🟨 Marketplace architecture and existing Stitch billing screens are carried
-  forward unchanged. The screens remain a prototype, not integrated payments.
-- 🟫 Surge accepted release `1792092095076` from root `dist/`; app-wide preload source `5a0ed4b` was pushed and the remote SHA matched. No automated tests are authorized; Robin performs device evaluation.
-- ⬜ Deferred SOUL/two-lore remains unauthorized.
 # IMPLEMENTATION CHECKLIST & TASK RECIPE
 
 ## Public test deployment — 15 October 2026

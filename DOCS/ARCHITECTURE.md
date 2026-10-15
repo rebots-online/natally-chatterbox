@@ -1,156 +1,169 @@
-# ARCHITECTURE SNAPSHOT: Natally Conversational Intelligence & Astrological Reasoning Engine
+# Natally Chatterbox architecture
 
-```yaml
-Metadata:
-  Project: "AstroSphere 3D"
-  Repository: "ai-studio-remixastrosphere-1ee57c33-6487-411a-a872-59fbf4cbfc63"
-  Branch: "main"
-  Version: "2.4.0-restoration"
-  Date: "2026-10-09"
-  SourceCommit: "HEAD"
-  Scope: "Conversational intelligence, context continuity, inference resilience, astrological doctrine synthesis, and voice/mascot integration"
-  ArchitecturalOwner: "Principal AI Systems & Astrological Epistemology Engineer"
-  RelatedDecisions:
-    - "ADR-001: Upgrade server-side Gemini model routing to gemini-3.8-flash (deprecating dead gemini-2.5-flash endpoints)"
-    - "ADR-002: Eliminate silent deterministic fallback impersonation; establish structured error classification and retry mechanisms"
-    - "ADR-003: Decouple persistent lore, live chart coordinates, conversational history, and epistemological scaffolding"
-    - "ADR-004: Rigorous geometric aspect configuration detection (genuine Grand Trine, T-Square, Grand Cross) adhering to strict orb criteria"
-    - "ADR-005: Optional on-demand evidence and provenance inspector instead of conversational boilerplate insertion"
-    - "ADR-006: Restore Natally's authentic Moldavian-inspired cosmic confidante persona (witty, empathetic, depth-psychological, zero catchphrase slop)"
-  Dependencies:
-    - "@google/genai: ^2.4.0"
-    - "express: ^5.2.1"
-    - "swisseph-wasm: ^0.1.0"
-    - "three: ^0.174.0"
-    - "react: ^19.0.1"
-  AcceptanceCriteria:
-    - "100% pass on Regression Tests A through J (referential continuity, personal disclosure, sequential topics, interpretive continuity, honest ambiguity, broad synthesis, deliberate failure handling, repetition resistance, lore isolation, doctrine distinction)"
-    - "Zero silent fallback masking failed inference with canned responses"
-    - "Zero unprompted analytical scaffolding tags (`[Verified geometry]`, etc.) in ordinary dialogue"
-    - "Accurate aspect configuration detection (no false T-squares from unlinked squares/oppositions, no false Grand Trines from single trines)"
-    - "Preservation of Moldavian audio synthesis, karaoke tracking, 3D astrolabe interactions, and persistent lore archive"
-  ImplementationStatus: "Complete"
+Status: DRAFT — awaiting Robin's sign-off. No implementation is released.
+Date: 15 October 2026.
+
+Repository: `rebots-online/natally-chatterbox`.
+Checkout: `E:/devProjects/natally-chatterbox`, an independent repository created
+from the `natally-ai-studio` template. Baseline: initial commit `f190a5f`.
+Proposed deployment: `https://natally-chatterbox.surge.sh`.
+
+## Authority and release boundary
+
+Robin requested restoration to the initial template and preparation of only this
+architecture document for sign-off. All tracked files other than this document
+must match that baseline at this handoff. Earlier implementation commits remain
+in Git history; they are not the approved implementation or design authority.
+
+The governing sequence is:
+
+1. Robin approves this architecture, including any requested corrections.
+2. Translate the approved architecture into an explicit, ordered recipe in root
+   `CHECKLIST.md`. Do not invent implementation scope while deriving that recipe.
+3. Implement only released checklist steps. Resolve necessary changes outside
+   that contract in the architecture before coding them.
+
+Until sign-off, do not implement the replacement, create the checklist recipe,
+build, run tests, or deploy. The existing deployed site is a prior build; this
+repository rollback does not publish a replacement site.
+
+## Purpose and fixed scope
+
+Natally is a marketplace product. Preserve the template's marketplace purpose,
+application behavior, screens, accounts, charts, conversation flow, hosted
+inference, billing prototype and infrastructure boundaries.
+
+Substitute browser-local Chatterbox Nano ONNX for Supertonic, with only the
+speech-unit and immediate-start amendments below. Do not add a separate product,
+preview page, benchmark project, streaming chat interface or new application
+workflow. Completed replies are suitable speech inputs.
+
+The purpose is for Robin to find out firsthand whether the replacement improves
+speech on the device browser. Pauses are acceptable; lost portions of phrases
+are not. Ordinary lower-resource phones are the target. Desktop performance,
+parameter counts, download sizes or the presence of a GPU API do not establish
+phone suitability.
+
+## Existing application boundary
+
+Preserve this service relationship:
+
+```text
+Existing chat / reading / replay / mascot callers
+    -> voiceService.ts (existing settings, stop and playback callbacks)
+    -> shared local TTS client and browser worker
+    -> Chatterbox Nano ONNX sessions
+    -> complete PCM output
+    -> existing Web Audio playback and chart/text callbacks
 ```
 
----
+Do not change authored wording, persona, account/history ownership, inference
+transport or calculation tools. Retain existing voice controls and progress UI;
+only engine-specific information and wiring may change as required by the
+approved model contract. Existing template preview/measurement surfaces are not
+new work or an acceptance requirement for this substitution. Do not extend or
+run them.
 
-## 1. Executive Summary & Root Cause Analysis
+## Immediate background readiness
 
-### 1.1 The Primary Breakdown
-The observed catastrophic regression in Natally's conversational intelligence was caused by a combination of critical infrastructural, architectural, and prompt design defects:
+Begin engine loading at application entry, as soon as the application module
+runs, before rendering. It must not depend on sign-in, onboarding, opening
+settings, selecting Preview, receiving a reply or requesting speech.
 
-1. **Dead Model Endpoint Routing (`server.ts`)**:
-   `/api/chat` and `/api/readings` were invoking `model: 'gemini-2.5-flash'`. The Google Gemini API returns HTTP 404:
-   `"This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use models/gemini-3.8-flash..."`
-   Every single conversational request to the backend resulted in an unhandled 500 server error.
+- Start the shared worker immediately. No idle callback or timer delay. Robin's
+  instruction supersedes the older Save-Data skip and onboarding-only trigger.
+- Fetch missing pinned model/tokenizer files into the browser cache and reuse
+  cached files on later loads. Keep inference local and off the UI thread.
+- Create the actual runtime sessions and prepare the selected saved/default
+  voice reference during that same background operation. Download completion
+  alone is not readiness. Do not synthesize demonstration audio as a warm-up.
+- Coalesce startup and speech requests onto the same worker and initialization;
+  do not start a second engine when speech arrives during loading.
+- Retain measured byte progress and a distinct preparation stage in the existing
+  strip. Report ready only when the engine and selected reference are usable.
+  Keep loading failures visible and retryable through existing status handling.
+- Speech arriving before background work completes awaits that work. Starting
+  early cannot guarantee a cold download finishes before an immediate request.
+  Do not conceal the outstanding work or promise otherwise.
 
-2. **Silent Deterministic Impersonation (`src/services/natallyChat.ts`)**:
-   Instead of reporting the API failure or triggering a retryable state, `askNatally()` silently caught the failed HTTP request and invoked `getNatallyFallbackReply()`. This generator used crude regex matching on words like `"love"`, `"career"`, `"moon"`, `"hello"`:
-   - Queries mentioning `"love"` or `"lovers"` (e.g. *"Do you see my twin flame or other love interest in my stars?"* and *"Lovers first. Then career."*) invariably returned the identical hardcoded Venus paragraph containing `"no shallow games allowed!"`.
-   - Elliptical follow-up questions like *"What do you mean 'no games'?"* lacked the word `"love"` and fell through to a generic `"cosmic awakening"` canned template.
-   - Significant personal disclosures (e.g., trauma affecting sexuality) failed keyword matching and produced canned greetings like `"Beep-boop! Salut bestie-chan!"`.
+Preserve stop and account/session invalidation: obsolete speech must never play
+later. The approved checklist must specify cancellation and recovery details,
+including whether a worker restart requires loading cached files again.
 
-3. **Prompt Degradation & Catchphrase Inflation (`NATALLY_SYSTEM_PROMPT`)**:
-   The system prompt explicitly instructed the model to be *"Overflowing with cute robot expressions: 'Beep-boop starlight! ✨', 'Nya~ 🌟', 'Salut bestie-chan! 💖', 'UwU ✨'"* and mandated mechanical reproduction of internal workflow blocks: `[Verified natal geometry]`, `[Traditional doctrine]`, `[Stable interpretive hypotheses]`, `[Independent observation]`.
+## Speech completeness and splitting
 
-4. **Context Collapsing & History Pollution**:
-   Raw chart metadata was repeatedly dumped as a prefix into every user turn message rather than being maintained in the structured system instruction or conversation state. History turns were sliced without validation of role alternation or empty content.
+Use the complete cleaned speech turn whenever the model can accept it. For long
+turns, group complete sentences within the model's verified input capacity.
+For material that is not sentence prose, use appropriate whole logical units,
+such as complete list items or headings. Preserve their order and wording.
 
-5. **Spurious Astrological Configuration Logic (`src/services/astrowisdom.ts`)**:
-   The pattern detection logic diagnosed a *"Dynamic Cardinal T-Square"* simply if `hasOpposition && hasSquare` were true, regardless of whether the planets were linked or cardinal. It diagnosed an *"Elemental Grand Trine"* whenever a single `hasTrine` existed!
+Never cut at clauses, spaces, fixed character counts or 15–20 character chunks.
+When capacity is reached, choose the preceding complete sentence/logical-unit
+boundary. Keep the remainder for subsequent synthesis; never drop a tail.
+If one complete unit exceeds supported capacity, fail explicitly rather than
+cutting it arbitrarily or silently returning incomplete speech.
 
----
+Accept a generated unit only after generation completes. Budget exhaustion must
+not pass as complete audio. Valid PCM and a model end token cannot prove that
+every word was pronounced; Robin's listening remains the deciding evidence.
+Preserve existing source-offset and playback callbacks without adding forced
+alignment or another playback system.
 
-## 2. Target Architecture & Execution Path
+## Model and runtime contract
 
-```
-+---------------------------------------------------------------------------------------------------+
-|                                        BROWSER (CLIENT SPA)                                       |
-|                                                                                                   |
-|  +----------------------------+   +-----------------------------+   +--------------------------+  |
-|  |     NatallyChatbot UI      |   |       Astrolabe3D / UI      |   |    ThemesAndWisdomBox    |  |
-|  |  - Active conversation     |   |  - Real Swiss Ephemeris     |   |  - Life Path Engine      |  |
-|  |  - Preserved unsent draft  |   |    Planetary Coordinates    |   |  - Verified Geometry     |  |
-|  |  - Retry / Error banner    |   |  - Interactive Aspect Rims  |   |    Aspect Configs        |  |
-|  |  - Evidence toggle / view  |   +--------------+--------------+   +-------------+------------+  |
-|  +--------------+-------------+                  |                                |               |
-|                 |                                v                                v               |
-|                 |                   +-----------------------------------------------+             |
-|                 |                   |       ephemeris.ts / astrowisdom.ts           |             |
-|                 |                   |  - Rigorous Orb & Configuration Detectors     |             |
-|                 |                   |  - True Grand Trine / T-Square / Grand Cross  |             |
-|                 |                   +-----------------------+-----------------------+             |
-|                 |                                           |                                     |
-|                 v                                           v                                     |
-|  +-----------------------------------------------------------------------------------------+      |
-|  |                                  natallyChat.ts (Client Service)                        |      |
-|  |  - Separates: System Persona, Natal Context, Persistent Lore, Clean Turn History        |      |
-|  |  - Dispatches typed requests with configurable hyperparameters                          |      |
-|  |  - Structured Error Classification: Quota / Auth / Network / Offline                    |      |
-|  |  - Explicit Provenance & Evidence extraction (parsed from technical annotations)       |      |
-|  +----------------------------------------------+------------------------------------------+      |
-+-------------------------------------------------|-------------------------------------------------+
-                                                  | HTTP POST /api/chat, /api/readings, /api/tts
-                                                  v
-+---------------------------------------------------------------------------------------------------+
-|                                    EXPRESS BACKEND (server.ts)                                    |
-|                                                                                                   |
-|  +-----------------------+  +--------------------------------+  +-------------------------------+ |
-|  |     POST /api/chat    |  |       POST /api/readings       |  |          POST /api/tts        | |
-|  | - gemini-3.8-flash    |  | - gemini-3.8-flash             |  | - gemini-3.8-flash-lite-tts   | |
-|  | - System Instruction  |  | - Temperature: 1.25            |  | - Voice: Kore                 | |
-|  | - Alternating Turns   |  | - Comprehensive synthesis      |  | - Web Audio + Karaoke sync    | |
-|  | - Thinking Level Low  |  +---------------+----------------+  +---------------+---------------+ |
-|  +-----------+-----------+                  |                                   |                 |
-|              +------------------------------+-----------------------------------+                 |
-|                                             |                                                     |
-|                                             v                                                     |
-|                           +-----------------------------------+                                   |
-|                           |   @google/genai TypeScript SDK    |                                   |
-|                           |   process.env.GEMINI_API_KEY      |                                   |
-|                           +-----------------------------------+                                   |
-+---------------------------------------------------------------------------------------------------+
-```
+The requested engine is Chatterbox Nano ONNX (110M). It must run in the browser;
+no hosted TTS or automatic substitution of another model is authorized.
 
----
+Before releasing implementation steps, identify the exact model repository,
+immutable revision, graph and external-tensor files, tokenizer, supported
+operators and reference inputs. Record actual asset sizes and runtime needs.
+Browser-local loading and a practical execution path for the intended
+lower-resource phones are prerequisites to adopting a conversion. Report any
+mismatch before coding rather than adding a backend to accommodate it.
 
-## 3. Epistemological & Context Assembly Architecture
+The prior attempt used `owensong/chatterbox-nano-ONNX`, revision
+`4a66d7dab72a9e98f24b515d49a1d7a81632df2e`. It is a candidate to assess against
+this contract, not a conversion declared suitable by this draft.
 
-### 3.1 Five-Tier Context Isolation Strategy
-To prevent undifferentiated prompt pollution, context is assembled into distinct tiers:
+Use WebGPU where the actual graphs/runtime/browser support it. A WASM path must
+also be supported by those actual graphs and runtime; do not assume the previous
+Supertonic fallback transfers. Resolve external tensor files explicitly.
 
-1. **System Persona (`systemInstruction`)**:
-   Defines Natally's identity as a Moldavian-inspired celestial confidante with high psychological acuity, warmth, witty candor, and philosophical depth. Defines conversational rules: listen deeply, answer specific questions directly, track pronouns, acknowledge disclosures with empathy, speak naturally without catchphrase spam or exposed analytical brackets.
+Preserve existing preferences/defaults where supported. Reference assets,
+mapping existing voice IDs and any rate/pitch semantic differences must be
+specified and approved before becoming checklist steps. This draft does not
+authorize generating reference voices or adding DSP to approximate incompatible
+controls. Do not reuse Supertonic embeddings without confirmed compatibility.
 
-2. **Verified Natal Anchor (`natalContext`)**:
-   Exact mathematical coordinates computed from Swiss Ephemeris: planetary longitudes, signs, houses, dignities, exact aspects, and detected major configurations. Provided as reference grounding so Natally never hallucinates planetary coordinates.
+## Later implementation recipe
 
-3. **Persistent Lore Memory (`userLore`)**:
-   Long-term biographical facts and preferences stored across sessions (e.g. native's background, past topics). Injected as biographical memory, clearly marked as distinct from live conversational turns.
+The recipe may target application entry, the local voice client/worker,
+`voiceService.ts`, existing configuration/progress components, model asset
+configuration and required package/lockfile changes. Before coding, it must name
+exact entities and signatures, initialization ownership, input/output contracts,
+asset/reference decisions, error behavior and ordered edits. No opportunistic
+refactoring of unrelated template code.
 
-4. **Conversational Turn History (`history`)**:
-   Strictly sequenced, alternating `user` and `model` turns. Sanitized to ensure valid role ordering, non-empty text, and preservation of verbatim utterances so that follow-up questions (e.g., *"What do you mean by games?"*) resolve naturally.
+The inherited `DOCS/ARCHITECTURE/local-supertonic-voice.md` describes the template
+voice implementation. The Chatterbox, whole-unit and immediate-loading rules
+above are proposed amendments. Historical scheduling and test clauses cannot
+override Robin's current instructions.
 
-5. **Evidence & Provenance Metadata**:
-   When technical analysis is performed, the model can optionally provide structured evidence citations (or a designated evidence footer `---EVIDENCE---`) that the frontend parses into an on-demand expandable "Cosmic Geometry & Provenance" inspector rather than cluttering ordinary conversational speech.
+## Evaluation, build and publication
 
----
+No unit tests, automated browser tests, benchmark harnesses, new test pages or
+controlled comparison protocol are authorized. Robin evaluates the ordinary app
+on the device browser. Do not claim improved speed, memory use, spoken
+completeness or phone suitability before that evaluation.
 
-## 4. Geometric Aspect Configuration Invariants
+After design approval and a released implementation recipe, build directly into
+this dedicated repository's root `dist/` with the normal build command. Do not
+create temporary output folders or nested active deployment folders. Separate
+build folders are allowed only for semantically versioned historical artifacts.
+Configure the ignored local `.env` for `natally-chatterbox.surge.sh` and deploy
+there only at the later authorized implementation/deployment step.
 
-Aspect patterns must adhere to mathematically rigorous celestial geometry:
-
-- **T-Square**:
-  Requires an Opposition between two bodies ($180^\circ \pm 8^\circ$) where BOTH bodies simultaneously form a Square ($90^\circ \pm 7^\circ$) to a third body (the apex). Must identify the apex planet and modal quality (Cardinal, Fixed, Mutable).
-- **Grand Trine**:
-  Requires THREE distinct celestial bodies in mutual Trine aspects ($120^\circ \pm 8^\circ$) forming a closed triangle, typically spanning the same astrological element (Fire, Earth, Air, Water).
-- **Grand Cross**:
-  Requires FOUR distinct celestial bodies forming two oppositions ($180^\circ \pm 8^\circ$) and four connected squares ($90^\circ \pm 7^\circ$).
-
----
-
-## 5. Verification Boundaries & Invariants
-
-1. **No Silent Fallbacks**: The system must never present a canned keyword-matched message as a successful reading. If an API call fails, the client must surface a clear status banner with a retry trigger and retain the user's uncommitted input.
-2. **Deterministic Offline Mode**: If deliberate offline simulation is requested or during complete API unavailability, the fallback must be clearly watermarked as `[Offline Calibration Mode]` and must contextualize the conversation history rather than repeating identical static strings.
-3. **Voice Compatibility**: Output formatting must be speech-friendly; the speech synthesis pipeline strips structural Markdown and technical brackets, while preserving expressive punctuation.
+Commit and push completed authorized work to this repository's GitHub origin;
+verify the remote commit. Keep publication, build, deployment and Robin's device
+acceptance distinct. No provider migration, payment integration, Tauri/native
+packaging or deferred SOUL/two-lore work belongs to this substitution.

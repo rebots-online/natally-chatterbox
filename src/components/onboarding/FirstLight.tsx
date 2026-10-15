@@ -3,6 +3,7 @@ import { flushSync } from 'react-dom';
 import type { GazetteerEntry } from '../../services/gazetteer';
 import type { IntakeDraft } from '../../services/onboarding';
 import './first-light.css';
+import { scheduleSupertonicPreload } from '../../services/supertonicTts';
 import { requestCurrentLocation, type CurrentLocation } from '../../services/transits';
 import { validateBirthDate } from '../../services/birthDate';
 import { BirthDateFields } from './BirthDateFields';
@@ -48,6 +49,7 @@ const normalizePlaceLabel = (value: string) =>
 
 /** U.4-TW: clean-room presentation; the composition still owns persistence. */
 export function FirstLight({ gazetteer, busy, error, onCreate }: FirstLightProps) {
+  useEffect(scheduleSupertonicPreload, []);
   const id = useId();
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState({ name: '', date: '', place: '', time: '', currentPlace: '' });

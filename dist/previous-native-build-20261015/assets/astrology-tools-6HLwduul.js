@@ -1,0 +1,1 @@
+function e(e){return e&&typeof e.id==`string`&&/^[\w-]{1,128}$/.test(e.id)&&e.type===`function`&&e.function?.name===`calculate_astrology`&&typeof e.function.arguments==`string`&&e.function.arguments.length<=4e3}export{e as validToolCall};
