@@ -1,3 +1,29 @@
+## Natally Chatterbox deployment — 15 October 2026
+
+Standalone repo: https://github.com/rebots-online/natally-chatterbox
+Local checkout: `E:/devProjects/natally-chatterbox`, own Git directory and origin.
+Active build: root `dist/`, created with ordinary `npm run build`.
+Surge accepted release `1792091868387` at https://natally-chatterbox.surge.sh
+from source `2adb96d3379955ae3fd148915ebacfb716ae56ae` (32 files / ~40.8 MB).
+
+The local voice path is Chatterbox Nano ONNX. Whole replies are used when within
+its token budget; otherwise only complete sentences/logical units are grouped.
+Missing speech fails evaluation; pauses are acceptable. Account, inference,
+marketplace and billing-screen behavior are otherwise the template's behavior.
+
+The existing Netlify site's independent `natally-chatterbox` branch alias uses
+`FRONTEND_ORIGIN=https://natally-chatterbox.surge.sh`. Backend deployment
+`6ad1251397640ac4bd4f052d` is ready. Production deployment remains
+`6acc88fa1511aaad9589ba97`. Firebase authorized this hostname while preserving
+all 23 existing domains. Local ignored `.env` and public `.env.example` agree
+on the new frontend/backend URLs. No provider change or production cutover.
+
+Robin explicitly performs device-browser evaluation. No post-deployment tests,
+authenticated reading, physical-phone performance or listening acceptance are
+claimed. Existing voice preview: `/tests/voice-browser.html`. The billing screens
+remain the exported Stitch prototype and are not newly integrated by this task.
+
+The template's prior deployment history follows.
 ## Isolated public test deployment — 15 October 2026
 
 Test URL: https://natally-test.surge.sh, Surge release `1792089428952`, built

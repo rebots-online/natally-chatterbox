@@ -61,7 +61,14 @@ in the device browser.
   loading. This is a development observation, not a controlled comparison or a
   phone performance claim. Actual full-app deployment observations are recorded
   separately under the deployment rubric.
-- Full build, deployment and Git publication receipts are recorded at handback.
+- `npm run build` wrote the active application directly into root `dist/`.
+  Surge accepted release `1792091868387` at https://natally-chatterbox.surge.sh
+  from source commit `2adb96d3379955ae3fd148915ebacfb716ae56ae` (32 files,
+  approximately 40.8 MB). No post-deployment automated tests were run.
+- Existing-site Netlify branch deployment `6ad1251397640ac4bd4f052d` is ready,
+  context `branch-deploy`, branch `natally-chatterbox`. Production remains
+  `6acc88fa1511aaad9589ba97`. Firebase retained all 23 existing authorized domains
+  when the new exact hostname was added.
 - Phone speed, working-memory behavior, warmth and spoken completeness remain
   Robin's evaluation. The repository does not claim improvement before that.
 
@@ -74,3 +81,6 @@ in the device browser.
   and memory release on resource-limited devices.
 - Retain the template's legacy Supertonic source as history; the application imports
   Chatterbox only. No engine toggle or unrelated marketplace redesign is added.
+- Active builds live directly in `dist/`. Any separate build directories under
+  it must be historical and semantically named by version. The discarded nested
+  build target and scratch caches are not part of the final working layout.

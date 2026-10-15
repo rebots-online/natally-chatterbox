@@ -7,9 +7,10 @@
   checkout `E:/devProjects/natally-chatterbox`; `.env` targets
   `https://natally-chatterbox.surge.sh`. Deploy the built app there for Robin.
 - 🟪 Physical phone performance, working memory and audible completeness are
-  pending Robin's evaluation. See `DOCS/CHATTERBOX.md` and `DOCS/TEST_RUBRIC.md`.
+  pending Robin's evaluation. See `DOCS/CHATTERBOX.md`.
 - 🟨 Marketplace architecture and existing Stitch billing screens are carried
   forward unchanged. The screens remain a prototype, not integrated payments.
+- 🟫 Surge accepted release `1792091868387` from root `dist/`; source `2adb96d` was pushed and the remote SHA matched. No automated tests are authorized; Robin performs device evaluation.
 - ⬜ Deferred SOUL/two-lore remains unauthorized.
 # IMPLEMENTATION CHECKLIST & TASK RECIPE
 
