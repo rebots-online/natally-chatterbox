@@ -20,8 +20,8 @@ export class BackchannelPool {
   private lastActivity = 0;
 
   snapshot(): PoolSnapshot {
-    return { ready: this.clips.size, total: 3 * BACKCHANNEL_TARGET, error: this.error,
-      message: this.running ? 'Preparing acknowledgements during idle time' : this.clips.size === 3 * BACKCHANNEL_TARGET ? 'Acknowledgements ready' : 'Acknowledgements prepare when idle' };
+    return { ready: this.clips.size, total: Object.keys(BACKCHANNEL_PALETTES).length * BACKCHANNEL_TARGET, error: this.error,
+      message: this.running ? 'Preparing conversational cues during idle time' : this.clips.size === Object.keys(BACKCHANNEL_PALETTES).length * BACKCHANNEL_TARGET ? 'Conversational cues ready' : 'Conversational cues prepare when idle' };
   }
   subscribe(listener: (snapshot: PoolSnapshot) => void): () => void {
     this.listeners.add(listener); listener(this.snapshot());
@@ -98,7 +98,7 @@ export class BackchannelPool {
     let candidate: { stage: BackchannelStage; index: number; replace?: string } | null = null;
     // Fill one of every semantic stage before making the second variants.
     for (let level = 0; level < BACKCHANNEL_TARGET && !candidate; level++) {
-      for (const stage of ['interrupt', 'receipt', 'answer'] as BackchannelStage[]) {
+      for (const stage of ['interrupt', 'receipt', 'answer', 'continuation'] as BackchannelStage[]) {
         if ([...this.clips.keys()].filter(key => key.startsWith(stage + ':')).length > level) continue;
         const index = BACKCHANNEL_PALETTES[stage].findIndex((_, index) => !this.clips.has(`${stage}:${index}`) && !this.failed.has(`${stage}:${index}`));
         if (index >= 0) { candidate = { stage, index }; break; }

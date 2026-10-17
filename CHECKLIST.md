@@ -16,8 +16,9 @@ remain separate; these visuals and later-pause cues are not in current deploymen
   updates. Brief/dispatch/art direction and mouth research pushed after tasks.
   Generation is still running; no rendered design acceptance claimed.
 - [X] 🟪 G02 — Release closed later-gap cue amendment CB-ARCH-3 §11/G01–G06.
-- [ ] 🟪 G03 — Implement continuation pool/queue ownership and native cue state;
+- [X] 🟪 G03 — Implement continuation pool/queue ownership and native cue state;
   TypeScript/diff review, no new model/download/foreground cue generation.
+  ✅ TypeScript/diff pass. Independent race review/build/runtime are G04.
 - [ ] 🟫 G04 — Independent review, normal build, push/remote verification and
   deploy, followed by production-view generation-gap/interrupt observations.
 - [ ] 🟪 G05 — Inspect Open Design's actual rendered result and retrieve its

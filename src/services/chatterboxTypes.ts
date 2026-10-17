@@ -8,13 +8,14 @@ export type GraphRole = 'embed_tokens' | 'speech_encoder' | 'language_model' | '
 export interface LocalSpeech { samples: Float32Array; sampleRate: number; generationMs: number; backend: Backend; clipReuse: boolean }
 export interface SpeechSegment { text: string; start: number; end: number }
 export interface SpeechUnit extends SpeechSegment { tokenCount: number }
-export type BackchannelStage = 'receipt' | 'interrupt' | 'answer';
+export type BackchannelStage = 'receipt' | 'interrupt' | 'answer' | 'continuation';
 export interface SpeechCallbacks { onStart?: () => void; onEnd?: () => void; onPlaybackState?: (playing: boolean) => void; onWordBoundary?: (charIndex: number, charLength?: number) => void }
 export interface SpeechProgress {
   phase: 'idle' | 'thinking' | 'preparing' | 'speaking' | 'complete' | 'interrupted' | 'error';
   message: string; turnId: number; totalUnits: number; readyUnits: number; playedUnits: number;
   startedAt: number; confirmedAt: number; maxGapMs: number; final: boolean;
   playingUnit: number | null; generatingUnit: number | null;
+  cueStage: BackchannelStage | null; gapCueCount: number; gapCueStartedAt?: number; gapCueEndedAt?: number;
   submittedAt?: number; ackStartedAt?: number; ackEndedAt?: number; bridgeStartedAt?: number; bridgeEndedAt?: number;
   firstTextAt?: number; firstAudioAt?: number; lastAudioEndAt?: number;
 }

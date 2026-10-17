@@ -73,4 +73,5 @@ export const BACKCHANNEL_PALETTES = {
   receipt: ['Hmm.', 'Let me take a look.', 'Let me check your chart.', 'One moment.'],
   interrupt: ['Mm.', 'Hmm.', 'Mm-hm.', 'Ah.'],
   answer: ['All right.', "Okay. Let's start here.", "Here's what stands out.", "Let's take this a little at a time."],
+  continuation: ['Mm.', 'Let me stay with that thought.', 'Hmm.', 'Let me linger on that a moment.'],
 } as const;

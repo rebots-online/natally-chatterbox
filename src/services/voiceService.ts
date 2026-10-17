@@ -136,7 +136,7 @@ let currentBufferSource: AudioBufferSourceNode | null = null;
 let generation = 0;
 let finishPlayback: ((completed?: boolean) => void) | null = null;
 let finishUtterance: ((completed?: boolean) => void) | null = null;
-let speechProgress: SpeechProgress = { phase: 'idle', message: '', turnId: 0, totalUnits: 0, readyUnits: 0, playedUnits: 0, startedAt: 0, confirmedAt: 0, maxGapMs: 0, final: false, playingUnit: null, generatingUnit: null };
+let speechProgress: SpeechProgress = { phase: 'idle', message: '', turnId: 0, totalUnits: 0, readyUnits: 0, playedUnits: 0, startedAt: 0, confirmedAt: 0, maxGapMs: 0, final: false, playingUnit: null, generatingUnit: null, cueStage: null, gapCueCount: 0 };
 const speechListeners = new Set<(progress: SpeechProgress) => void>();
 export function publishSpeechProgress(update: Partial<SpeechProgress>): void {
   speechProgress = { ...speechProgress, ...update };
@@ -227,6 +227,7 @@ export function beginSpeechTurn(settings: VoiceSettings, callbacks: SpeechCallba
   let sourceText = '';
   const units: { unit: SpeechSegment; offsets: number[] }[] = [];
   let unitIndex = 0;
+  let gapCueAfter = -1;
   let waiting: (() => void) | null = null;
   let complete!: (success: boolean) => void;
   const completion = new Promise<boolean>(resolve => { complete = resolve; });
@@ -237,8 +238,9 @@ export function beginSpeechTurn(settings: VoiceSettings, callbacks: SpeechCallba
     if (ended) return;
     ended = true; notify();
     if (finishUtterance === end) {
+      stopPlayback();
       finishUtterance = null; backchannelPool.setBusy(false);
-      if (speechProgress.phase !== 'error') publishSpeechProgress({ phase: success ? 'complete' : 'interrupted', message: success ? 'Voice finished' : 'Voice interrupted', playingUnit: null, generatingUnit: null, confirmedAt: Date.now() });
+      publishSpeechProgress({ ...(speechProgress.phase === 'error' ? {} : { phase: success ? 'complete' as const : 'interrupted' as const, message: success ? 'Voice finished' : 'Voice interrupted' }), playingUnit: null, generatingUnit: null, cueStage: null, confirmedAt: Date.now() });
     }
     callbacks.onPlaybackState?.(false); callbacks.onEnd?.(); complete(success);
   };
@@ -252,23 +254,27 @@ export function beginSpeechTurn(settings: VoiceSettings, callbacks: SpeechCallba
   finishUtterance = end;
   publishSpeechProgress({ phase: acknowledgement ? 'thinking' : 'preparing', message: acknowledgement === 'interrupt' ? 'Interruption received · preparing your new reply' : acknowledgement ? 'Message received · preparing your reply' : 'Preparing voice',
     turnId: requestGeneration, totalUnits: 0, readyUnits: 0, playedUnits: 0, startedAt: Date.now(), submittedAt: acknowledgement ? Date.now() : undefined,
-    confirmedAt: Date.now(), final: false, playingUnit: null, generatingUnit: null, maxGapMs: 0,
+    confirmedAt: Date.now(), final: false, playingUnit: null, generatingUnit: null, maxGapMs: 0, cueStage: null, gapCueCount: 0,
+    gapCueStartedAt: undefined, gapCueEndedAt: undefined,
     ackStartedAt: undefined, ackEndedAt: undefined, bridgeStartedAt: undefined, bridgeEndedAt: undefined,
     firstTextAt: undefined, firstAudioAt: undefined, lastAudioEndAt: undefined });
   const acknowledge = async (stage: BackchannelStage, scheduled?: () => void): Promise<boolean> => {
-    const audio = settings.readingAloud && current() ? backchannelPool.take(stage) : null;
+    let cueStarted = false;
+    const permitted = () => current() && (stage === 'answer' ? !playing && speechProgress.readyUnits === 0 : stage === 'continuation' ? !playing && speechProgress.readyUnits <= unitIndex : true);
+    const audio = settings.readingAloud && permitted() ? backchannelPool.take(stage) : null;
     if (!audio) { scheduled?.(); return false; }
     try {
-      return await playAudio({ ...audio, sampleRate: audio.sampleRate * settings.rate }, settings, current, () => {
-        publishSpeechProgress(stage === 'answer' ? { bridgeStartedAt: Date.now() } : { ackStartedAt: Date.now() });
+      return await playAudio({ ...audio, sampleRate: audio.sampleRate * settings.rate }, settings, permitted, () => {
+        cueStarted = true;
+        publishSpeechProgress({ cueStage: stage, ...(stage === 'answer' ? { bridgeStartedAt: Date.now() } : stage === 'continuation' ? { gapCueStartedAt: Date.now(), gapCueEndedAt: undefined, gapCueCount: speechProgress.gapCueCount + 1 } : { ackStartedAt: Date.now() }) });
         scheduled?.();
       });
     } catch (error) {
       if (current()) publishSpeechProgress({ message: 'Acknowledgement playback: ' + (error instanceof Error ? error.message : String(error)) });
       return false;
     } finally {
-      if (current() && (stage === 'answer' ? speechProgress.bridgeStartedAt : speechProgress.ackStartedAt))
-        publishSpeechProgress(stage === 'answer' ? { bridgeEndedAt: Date.now() } : { ackEndedAt: Date.now() });
+      if (current() && cueStarted)
+        publishSpeechProgress({ ...(speechProgress.cueStage === stage ? { cueStage: null } : {}), ...(stage === 'answer' ? { bridgeEndedAt: Date.now() } : stage === 'continuation' ? { gapCueEndedAt: Date.now() } : { ackEndedAt: Date.now() }) });
       scheduled?.();
     }
   };
@@ -285,6 +291,11 @@ export function beginSpeechTurn(settings: VoiceSettings, callbacks: SpeechCallba
   const prefetch = () => {
     if (current() && playing && !pending && units[unitIndex + 1]) pending = { index: unitIndex + 1, promise: synthesize(unitIndex + 1) };
   };
+  const bridgeGap = () => {
+    if (!current() || !unitIndex || gapCueAfter === unitIndex || speechProgress.readyUnits > unitIndex) return;
+    gapCueAfter = unitIndex;
+    void acknowledge('continuation');
+  };
   const pump = async () => {
     if (pumping || !current()) return; pumping = true;
     try {
@@ -293,12 +304,14 @@ export function beginSpeechTurn(settings: VoiceSettings, callbacks: SpeechCallba
         if (unitIndex >= units.length) {
           if (final) { end(true); return; }
           publishSpeechProgress({ phase: 'thinking', message: 'Waiting for the next complete sentence', playingUnit: null });
+          bridgeGap();
           await new Promise<void>(resolve => { waiting = resolve; }); continue;
         }
         const entry = units[unitIndex];
         if (!pending) pending = { index: unitIndex, promise: synthesize(unitIndex) };
         if (pending.index !== unitIndex) throw new Error('Speech queue lost its beginning or ordering.');
         if (!playing) publishSpeechProgress({ phase: 'preparing', message: `Preparing sentence ${unitIndex + 1}`, playingUnit: null });
+        bridgeGap();
         const result = await pending.promise;
         if (!current()) return;
         pending = null;
@@ -306,7 +319,7 @@ export function beginSpeechTurn(settings: VoiceSettings, callbacks: SpeechCallba
         playing = true; prefetch();
         const played = await playAudio(result.audio!, settings, current, () => {
           const now = Date.now();
-          publishSpeechProgress({ phase: 'speaking', message: `Speaking sentence ${unitIndex + 1}`, playingUnit: unitIndex + 1,
+          publishSpeechProgress({ phase: 'speaking', message: `Speaking sentence ${unitIndex + 1}`, playingUnit: unitIndex + 1, cueStage: null,
             firstAudioAt: speechProgress.firstAudioAt ?? now,
             maxGapMs: Math.max(speechProgress.maxGapMs, speechProgress.lastAudioEndAt ? now - speechProgress.lastAudioEndAt : 0), confirmedAt: now });
           if (!started) { started = true; callbacks.onStart?.(); }
@@ -337,7 +350,7 @@ export function beginSpeechTurn(settings: VoiceSettings, callbacks: SpeechCallba
       publishSpeechProgress({ totalUnits: units.length, final, firstTextAt: speechProgress.firstTextAt ?? (units.length ? Date.now() : undefined), confirmedAt: Date.now() });
       if (acknowledgement && units.length && !bridgeChosen) {
         bridgeChosen = true;
-        void acknowledgementPlayback.then(() => { if (current() && !started) void acknowledge('answer'); });
+        void acknowledgementPlayback.then(() => { if (current() && !started && !playing) void acknowledge('answer'); });
       }
       prefetch(); notify(); void pump();
     } catch (error) { fail(error); }
