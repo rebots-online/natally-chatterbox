@@ -724,3 +724,102 @@ behavior. No additional application class or external service is introduced.
 | Robin: browser-use gauntlet required; "you should just complete it" | Complete the declared replacement and existing real-browser acceptance, rather than ending after build/deploy. No unit tests or added automation scripts. |
 | Documentation closure | CHECKLIST records execution; DOCS/TEST_RUBRIC.md adds named actual voice-readiness/playback/cache/stop rows; HOSTED_CHAT.md records source/deploy and observed results. These are administrative records, not executable entities. |
 | Error visibility | F15 must not swallow Cache.put/Cache.open failures. Report the concrete storage error rather than promising saved weights. F05/F06 preserve actual runtime failure context; a failed load does not trigger an automatic retry loop. |
+
+## 9. Conversational latency amendment — operator review, 17 October 2026
+
+**State: proposed design, not a coder release.** This section records Robin's
+17 October requirements and the measured defects in the published build. It does
+not attest implementation, change the pinned model, or waive the closed-contract
+approval process above. The whole-turn-first rule, frozen production UI and
+completed-reply-only transport in CB-ARCH-1 conflict with the requested outcome
+and need an explicit replacement contract before implementation.
+
+### Outcome and fixed requirements from this conversation
+
+Preserve the smoother Chatterbox speech while aiming for **zero incremental
+conversational latency**. Neither moving counters into production nor covering
+an arbitrarily long wait with filler satisfies the target. If a real rubric run
+shows remaining generation latency, establish what is unavoidable in the chosen
+approach, discuss the evidence and a different approach/model with Robin, and
+obtain that decision before accepting a compromise. A model change, provider,
+cost or infrastructure change is not released by this proposal.
+
+| Requirement | Required behavior |
+|---|---|
+| Speech units | Always generate a complete sentence or minimum meaningful logical unit; never pack a multi-sentence reply merely because it fits 768 tokens. Preserve the first words, every source offset and the ending. Reject an oversized indivisible unit explicitly instead of cutting or skipping it. |
+| Pipeline | Begin synthesis from the earliest eligible complete answer sentence and generate subsequent units behind playback in a bounded queue. Do not wait for the entire reply where the existing inference transport can be changed to deliver answer sentences earlier. Research/tool-call material, chart directives and provenance are not spoken answer text. |
+| Receipt backchannel | On submission, select already prepared audio before beginning prompt processing. The selection has no understanding of the new message: mostly nonverbal acknowledgements or an intention to inspect the chart, never a claim of agreement, correctness or a discovered finding. |
+| Post-inference bridge | A separate palette bridges answer availability to actual answer audio. Its semantics reflect that inference has now occurred. Any specific finding must be supported by that answer; a neutral transition must not fabricate a chart check. A bridge must not hold up ready answer audio. |
+| Interruption acknowledgement | Submission while Natally is generating or playing is a normal input path, for any reason. Use predominantly short grunts, `Mm.` or `Hmm.` with a settled, realizatory delivery rather than wonderment. It acknowledges that an interruption was registered, without assuming its reason or understanding the new content. Tone requires real listening acceptance. |
+| Palette creation | Generate the pools silently in background idle time using the selected existing voice. Do not ship/download additional prerecorded palettes, synthesize a missing acknowledgement on Send, or start a long warmup on the foreground path. Persist locally for reuse with explicit voice/model/reference/palette identity and bounded storage. No automatic telemetry upload. |
+| Palette scheduling | Foreground inference/TTS/playback always outranks replenishment. Cancel idle work cooperatively at graph/token boundaries without destroying healthy sessions or discarding ready clips. Replenish only when idle again. No queued warmup is allowed to precede a foreground request. Avoid immediate repeats and remove stale voice/version clips. |
+| New turn ownership | Stop old playback and backchannels promptly; invalidate old inference, synthesis, playback, karaoke and chart callbacks with a turn identity. Cancel obsolete queued work. An old result cannot replace, append to or restart the current answer. The new turn begins at its own first source offset. |
+| Context | Preserve displayed conversation as context: the user may have read ahead or be redirecting an inappropriate answer. Do not assume that all displayed text was heard, or that interruption implies agreement or any particular objection. Do not resume the old audio automatically. |
+| Production status | Put useful status in the ordinary chat, outside the debug panel and outside a disclosure. Keep preparing, actually speaking, interrupted and failed distinct; show ready/played units against their known scoped total. Do not label karaoke/mascot activity as actual playback before the audio starts. |
+| Honest totals | When the whole reply is available, show exact sentence totals. During streamed inference, distinguish received-unit totals from final reply length, which is not yet known. No invented denominator, output-token-limit-as-percent, ETA or heartbeat-as-progress. Never treat that disclosure as satisfying the zero-latency gate. |
+
+### Source findings and current runtime evidence
+
+- F26 `planSpeechUnits` returns the entire text if it fits the token capacity;
+  otherwise it packs complete sentences together. This is model-capacity
+  planning, not sentence-at-a-time conversational scheduling.
+- B06 `speakNatallyText` waits for complete-unit PCM. Its adaptive prefetch is
+  disabled without fast measured generation and strong capability hints; slow
+  generation can therefore remain serial with playback.
+- `completeHosted` and the existing `netlify/functions/chat.mjs` handler both
+  await complete JSON replies. `handleSendMessage` starts speech only after
+  `askNatally` returns. Moving the first sentence forward requires a transport
+  amendment across those existing boundaries, not merely a new TTS splitter.
+- F11 `cancelChatterbox` terminates the worker for pending plan/speak requests
+  and immediately reloads it. This is incompatible with cheap interruption of
+  idle palette generation. Runtime fault recovery remains a separate path.
+- `handleSendMessage` guards the account/chart session but does not have its own
+  per-inference-turn identity. Programmatic/recognition submissions can overlap.
+  `presentMessage` marks a message speaking before audio starts; this explains
+  the misleading production indicator, not the acoustic completeness report.
+- Native Windows Chrome, published source `062eb59`, selected F4, WebGPU:
+  cached-weight startup 17.254 s; fresh three-sentence generation 11.269 s;
+  subsequent fresh single-sentence generations 6.0146 s and 6.8474 s with the
+  engine in memory. Cached replay request 0.0004 s; the real playback page was
+  already showing playback at the first observation 287 ms after its automated
+  click. This is not an exact acoustic onset measurement or a device benchmark.
+- Evidence and limits:
+  `dist/rubric-runs/v0.0.0-chatterbox-latency-20261017/REPORT.md`.
+  These results establish a failing current build. They do not prove that all
+  Chatterbox approaches necessarily fail, or that a replacement model passes.
+
+### Proposed approach and affected boundaries
+
+Recommend changing the conversational pipeline before selecting a different
+model. Keep Chatterbox provisional: it remains acceptable only if the revised
+ordinary-app gauntlet meets Robin's latency, interruption and listening criteria.
+A splitter-only patch is insufficient; a model swap alone leaves the transport,
+queue ownership and misleading UI defects intact.
+
+| Existing home | Proposed ownership after contract approval |
+|---|---|
+| `chatterboxModel.ts` / `chatterboxTypes.ts` | Typed, distinct receipt/interrupt/post-inference palettes; bounded pool identity, job priority, turn ownership and measured queue status. Preserve pinned graph/voice identities unless Robin separately approves a replacement. |
+| `chatterbox.worker.ts` / `chatterboxTts.ts` | Silent idle generation, persistent local pool reuse, foreground priority and cooperative cancellation. Keep actual graph failures and watchdog recovery explicit. |
+| `speechUnits.ts` / `voiceService.ts` | Lossless sentence planning, ready-audio selection, bounded generation behind playback, immediate interruption and start/end callbacks tied to real audio. |
+| `hostedInference.ts` / `natallyChat.ts` / `netlify/functions/chat.mjs` | Stream eligible answer text using the existing provider/host, preserve auth/tool validation and cancellation; never speak unfinished tool calls or reasoning. Z.ai documents streaming, but that is not live proof for this deployed endpoint. |
+| `NatallyChatbot.tsx` / `VoiceDownloadStatus.tsx` | Per-turn ownership, contextual interruption, normal-chat status and exact scoped totals. Debug details remain diagnostics. |
+| `DOCS/TEST_RUBRIC.md` / `HOSTED_CHAT.md` | Actual production-view timing, context, listening, restart, cold-pool and target-device observations. No substitute unit suite or new coded browser harness. |
+
+Official streaming contract reference:
+[Z.ai Chat Completion](https://docs.z.ai/api-reference/llm/chat-completion).
+The pinned acoustic package itself is non-streaming:
+[conversion model card](https://huggingface.co/owensong/chatterbox-nano-ONNX/blob/4a66d7dab72a9e98f24b515d49a1d7a81632df2e/README.md).
+Sentence pipelining must not be described as streaming that acoustic decoder.
+
+### Required review before the executable contract
+
+Approve the approach above, then enumerate its closed AST declarations and
+derive the implementation checklist. Do not treat this proposal as permission
+to invent signatures or implement an undeclared streaming protocol.
+
+The first-ever empty-pool case must be resolved explicitly: with idle-only
+creation and no additional downloaded clips, an immediate selected-voice clip
+does not yet exist before idle generation has finished. Prewarming during normal
+startup/onboarding is the proposed first measure, but its success is not assumed
+for returning users or an early submission. It remains a failing acceptance case
+until measured and resolved, never a silent exception to zero incremental latency.

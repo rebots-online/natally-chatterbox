@@ -1,3 +1,36 @@
+# CHATTERBOX CONVERSATIONAL LATENCY — 17 October 2026
+
+Robin's current requirements are recorded in DOCS/ARCHITECTURE.md §9 and the
+conversational-latency rubric. This is a proposed replacement contract, not an
+implementation release or a claim that the latency is unavoidable.
+
+- [X] 🟪 Inspect the actual pipeline through verified CodeGraph, distinguish
+  normal-chat feedback from debug counters, and measure fresh versus cached
+  real speech in the existing published browser page. Native measurements and
+  indexed stills: dist/rubric-runs/v0.0.0-chatterbox-latency-20261017/REPORT.md.
+- [X] 🟪 Record separate pre-inference, interruption and post-inference semantics;
+  idle-only palette creation/reuse; contextual interruption; exact turn beginnings;
+  production progress and zero incremental latency as a release requirement.
+- [ ] 🟪 Review the proposed approach and resolve the first-ever empty-pool case;
+  complete the closed architecture amendment and derive/release executable tasks.
+- [ ] 🟪 Implement the released sentence/pipeline, foreground priority, idle
+  palettes, cooperative cancellation and production-status contract. No model,
+  provider, ownership, hosting or cost change without Robin's separate decision.
+- [ ] 🟪 Run the ordinary-app rubric, including fresh/long turns, faster reading
+  than listening, redirection during synthesis/playback, complete first/last words,
+  context, silent-pool generation and cold-pool/voice-change cases. Any residual
+  latency requires measured discussion of a different approach/model; counters
+  or filler alone cannot pass the zero-incremental-latency requirement.
+- [ ] 🔴 Verify the same behavior and listening on the actual target phones.
+- [ ] 🟫 Publish source and built artifacts, deploy the existing authorized domain
+  and verify runtime separately after the released implementation passes its gates.
+
+No product code, model, provider or deployment changed in this diagnosis/design
+task. No unit suite or coded browser harness was added or run. The current build
+fails the requested latency behavior; whole-product acceptance remains open.
+
+---
+
 # CHATTERBOX COMPLETION — released 15 October 2026
 
 Contract: DOCS/ARCHITECTURE.md CB-ARCH-1 and §8. Robin: "you should just complete it".

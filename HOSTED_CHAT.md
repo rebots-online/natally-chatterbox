@@ -1,3 +1,34 @@
+## Chatterbox conversational latency baseline — 17 October 2026
+
+Robin reports smoother voice with unacceptable first-speech delay, apparent
+missing beginnings and misleading production feedback. Current requirements:
+zero incremental conversational latency; sentence/minimum-logical-unit generation
+with the remaining queue behind playback; distinct pre-inference, interruption
+and post-inference palettes generated silently during idle time and reused
+locally; immediate contextual interruption without stale output or engine reload;
+useful ordinary-chat status outside the debug-only panel. Interruption cues are
+mostly settled/realizatory grunts, `Mm.` and `Hmm.`, not wonderment or a claim to
+have understood the incoming message. No extra palette download or generation
+on Send; any unavoidable residual latency requires operator discussion of an
+alternative approach/model, not a relaxed success claim.
+
+On the unchanged published source `062eb59`, actual native Windows Chrome/F4
+WebGPU measurements showed cached-weight engine preparation 17.254 s, fresh
+three-sentence generation 11.269 s and subsequent warm-engine single-sentence
+generations 6.0146 s and 6.8474 s. Cached replay generation completed in 0.4 ms;
+the real playback page already reported playback at the first UI observation,
+287 ms after the automated click. UI observation time is not exact acoustic
+onset. A later attempt to time transient playback missed the state and produced
+null timestamps; no playback-duration or real-time-factor claim is made.
+
+Indexed stills, synthetic samples, native run IDs, cumulative exports and limits:
+`dist/rubric-runs/v0.0.0-chatterbox-latency-20261017/REPORT.md`.
+The current build fails the new latency requirement. Improved-pipeline,
+interruption, semantic listening, audible completeness and target-phone
+acceptance remain open. DOCS/ARCHITECTURE.md §9 is an operator-review proposal;
+no product code, model/provider, hosted service or deployment changed. No unit
+suite, synthetic identity/provider/audio or new coded browser harness was used.
+
 ## Chatterbox substitution — 15 October 2026
 
 Independent template-derived repository: `rebots-online/natally-chatterbox`,
