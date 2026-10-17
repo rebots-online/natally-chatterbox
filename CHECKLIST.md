@@ -24,10 +24,13 @@ do not even consider a model change unless Robin surfaces it in discussion.
   binding. Verify TypeScript and inspect cancellation/tensor disposal paths.
   ✅ TypeScript/diff check pass; cancellation paths reviewed. Real GPU/timing and
   interruption acceptance remain CL09 observations, not inferred from this check.
-- [ ] 🟪 CL03 — C08/C09/C14: implement speechBackchannels.ts's selected-voice pool,
+- [X] 🟪 CL03 — C08/C09/C14: implement speechBackchannels.ts's selected-voice pool,
   startup local-cache restoration, two variants per stage, idle-only serial
   replenishment, bounded/validated PCM storage and input/foreground pre-emption.
   No extra palette downloads or missing-clip generation on Send; no retry loop.
+  ✅ TypeScript/diff check pass. Pool stays memory-only on selection, replaces
+  used variants only after idle generation succeeds, and preserves ready clips.
+  Actual idle/pre-emption/cache/first-use observations remain CL09.
 - [ ] 🟪 CL04 — C10–C13: implement source-preserving speech turns, shared real-audio
   playback, separate acknowledgement/answer bridge, one-ahead generation and
   cancellation/notification settlement. Keep existing pitch/tone/settings APIs.
