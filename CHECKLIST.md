@@ -53,9 +53,15 @@ do not even consider a model change unless Robin surfaces it in discussion.
   counts have exact final or clearly labelled received-unit denominators.
   ✅ TypeScript/diff checks pass; live input, ownership and actual-start state
   are implemented. Production-view behavior remains subject to CL09 observation.
-- [ ] 🟫 CL07 — Independent whole-change review, TypeScript, normal production
+- [X] 🟫 CL07 — Independent whole-change review, TypeScript, normal production
   build and diff checks. No unit suite or new coded browser harness. Preserve
   historical dist/rubric artifacts across the build; publish source/remote SHA.
+  ✅ Four Important source findings repaired and independently re-reviewed:
+  split chart-marker/trailing separator stability, actual per-buffer playback
+  state, worker task yields for cancellation, and idle quiet-time rechecks.
+  TypeScript, changed-server syntax and diff checks pass. Vite production build
+  passes directly into root dist with --emptyOutDir=false to preserve evidence.
+  Existing Swiss externalization/bundle warnings remain. No unit suite/harness.
 - [ ] 🟫 CL08 — Deploy the amended existing backend without configuration/model/
   provider changes, then normal root-dist frontend to the same Chatterbox Surge
   domain. Verify served assets against the actual build and Git publication.

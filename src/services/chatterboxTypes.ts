@@ -9,7 +9,7 @@ export interface LocalSpeech { samples: Float32Array; sampleRate: number; genera
 export interface SpeechSegment { text: string; start: number; end: number }
 export interface SpeechUnit extends SpeechSegment { tokenCount: number }
 export type BackchannelStage = 'receipt' | 'interrupt' | 'answer';
-export interface SpeechCallbacks { onStart?: () => void; onEnd?: () => void; onWordBoundary?: (charIndex: number, charLength?: number) => void }
+export interface SpeechCallbacks { onStart?: () => void; onEnd?: () => void; onPlaybackState?: (playing: boolean) => void; onWordBoundary?: (charIndex: number, charLength?: number) => void }
 export interface SpeechProgress {
   phase: 'idle' | 'thinking' | 'preparing' | 'speaking' | 'complete' | 'interrupted' | 'error';
   message: string; turnId: number; totalUnits: number; readyUnits: number; playedUnits: number;

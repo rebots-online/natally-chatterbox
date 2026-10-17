@@ -838,7 +838,7 @@ CB-ARCH-1 temporary-name freeze for these amended bodies only.
 
 | ID / home | Exact declarations / interface | Body and state contract |
 |---|---|---|
-| C01 `chatterboxTypes.ts` | `SpeechSegment { text:string; start:number; end:number }`; `SpeechUnit extends SpeechSegment { tokenCount:number }`; `BackchannelStage = 'receipt'|'interrupt'|'answer'`; `SpeechCallbacks { onStart?:()=>void; onEnd?:()=>void; onWordBoundary?:(charIndex:number,charLength?:number)=>void }` | Exact UTF-16 prepared-text segments; callbacks use original visible-text offsets. No estimated boundary claims beyond existing word timing. |
+| C01 `chatterboxTypes.ts` | `SpeechSegment { text:string; start:number; end:number }`; `SpeechUnit extends SpeechSegment { tokenCount:number }`; `BackchannelStage = 'receipt'|'interrupt'|'answer'`; `SpeechCallbacks { onStart?:()=>void; onEnd?:()=>void; onPlaybackState?:(playing:boolean)=>void; onWordBoundary?:(charIndex:number,charLength?:number)=>void }` | Exact UTF-16 prepared-text segments; callbacks use original visible-text offsets. onPlaybackState reflects every answer buffer start/end, including pauses while inference remains open. The existing speakNatallyText wrapper accepts this as an optional sixth callback. No estimated boundary claims beyond existing word timing. |
 | C02 same | `SpeechProgress` with phase `'idle'|'thinking'|'preparing'|'speaking'|'complete'|'interrupted'|'error'`; message:string; turnId,totalUnits,readyUnits,playedUnits,startedAt,confirmedAt,maxGapMs:number; final:boolean; playingUnit,generatingUnit:number|null; optional submittedAt,ackStartedAt,firstTextAt,firstAudioAt,lastAudioEndAt:number; `SpeechTurn { id:number; acknowledged:Promise<void>; update:(text:string,final?:boolean)=>void; done:()=>Promise<boolean>; fail:(error:unknown)=>void; cancel:()=>void }` | Progress describes this turn, survives native worker ready/synthesizing messages, and advances only on real unit/audio boundaries. Unknown final total is labelled as received units. No numeric tolerance waives zero incremental latency. |
 | C03 same | Speak request adds optional `priority:'foreground'|'idle'`; `WorkerCommand = WorkerRequest | { kind:'cancel'; ids:number[] }`; worker message adds `{id:number;kind:'cancelled'}`; PendingRequest adds priority | Cancel is an out-of-band command, not a FIFO job. Cancelled promises reject with AbortError. Preloads/session creation are retained; genuine native failures/watchdog still use existing reset. |
 | C04 `speechUnits.ts` | `segmentSpeechText(text:string, final:boolean):SpeechSegment[]`; amended `planSpeechUnits(text,countTokens,maxTokens):SpeechUnit[]` | Segment each paragraph/item with Intl.Segmenter sentence granularity; fallback sentence punctuation scanning. No greedy packing. Hold the incomplete final segment during streaming; newline-closed logical units can commit. Preserve leading/inter-unit whitespace in source slices; attach trailing whitespace to the last final unit. Validate each complete unit against tokenizer capacity before synthesizing it; in a completed batch, validate all units before playback. |
@@ -862,6 +862,14 @@ CB-ARCH-1 temporary-name freeze for these amended bodies only.
 | C32 `VoiceDownloadStatus.tsx` | export `ConversationVoiceStatus()` alongside existing debug exports | Always visible inside normal chat above composer, not in disclosure. Subscribe to speech/pool state; engine status only phase/bytes/errors, avoid token-loop re-render flicker. Show phase, generated/played X of N received/final sentences, loading bytes, idle pool X/6, elapsed waiting and explicit errors. Stop control calls existing stopSpeaking. No invented percent/ETA or runaway execution counter as progress. |
 
 ### 10.2 Ordering, conservation and first-use rules
+
+Review repairs within C04/C05/C24/C31: exclude mutable trailing whitespace from
+stream-committed unit ends and withhold a lone trailing `[` before chart parsing;
+yield a real worker task through a locally scoped MessageChannel before each
+graph run so cancellation MessageEvents can run even on synchronous WASM; close
+both local ports immediately after the yield. Playback-state callbacks clear
+mascot/karaoke between answer buffers, including provider pauses. These are
+required ownership/conservation repairs, not latency exemptions.
 
 1. Same input gesture: invalidate old turn -> stop old audio -> cancel obsolete
    jobs -> reserve new speech turn -> select/schedule ready receipt/interruption

@@ -299,6 +299,12 @@ export const NatallyChatbot: React.FC<NatallyChatbotProps> = ({
         if (!active()) return;
         setKaraokeCharIndex(charIdx);
         focus(chartFocusAt(cues, charIdx));
+      }, playing => {
+        if (!active()) return;
+        setCurrentlySpeakingMsgId(playing ? message.id : null);
+        setPreparingMsgId(playing ? null : message.id);
+        if (!playing) setKaraokeCharIndex(null);
+        onSpeechStateChange(playing, playing ? message.text.slice(0, 110) : null, playing ? cues[0]?.targets[0] || null : null);
       });
   };
 
@@ -387,7 +393,7 @@ export const NatallyChatbot: React.FC<NatallyChatbotProps> = ({
     };
     setPreparingMsgId(voiceSettings.readingAloud ? replyId : null);
     const speech = beginSpeechTurn(voiceSettings, {
-      onStart: () => { if (speechActive()) { setPreparingMsgId(null); setCurrentlySpeakingMsgId(replyId); onSpeechStateChange(true, activeStreamMessage.current?.text.slice(0, 110) || null, streamedCues[0]?.targets[0] || null); } },
+      onPlaybackState: playing => { if (speechActive()) { setPreparingMsgId(playing ? null : replyId); setCurrentlySpeakingMsgId(playing ? replyId : null); if (!playing) setKaraokeCharIndex(null); onSpeechStateChange(playing, playing ? activeStreamMessage.current?.text.slice(0, 110) || null : null, playing ? streamedCues[0]?.targets[0] || null : null); } },
       onEnd: () => { if (speechActive()) { focus([]); setPreparingMsgId(null); setCurrentlySpeakingMsgId(null); setKaraokeCharIndex(null); onSpeechStateChange(false, null, null); } },
       onWordBoundary: charIndex => { if (speechActive()) { setKaraokeCharIndex(charIndex); focus(chartFocusAt(streamedCues, charIndex)); } },
     }, interrupted ? 'interrupt' : 'receipt');

@@ -260,6 +260,7 @@ export async function askNatally(
     let visible = rawText;
     const chartStart = visible.lastIndexOf('[[');
     if (chartStart >= 0 && !visible.slice(chartStart).includes(']]')) visible = visible.slice(0, chartStart);
+    if (visible.endsWith('[')) visible = visible.slice(0, -1);
     const delimiter = '---ASTROLOGICAL PROVENANCE---';
     for (let length = delimiter.length - 1; length > 0; length--) if (visible.endsWith(delimiter.slice(0, length))) { visible = visible.slice(0, -length); break; }
     options.onPartial!(parseNatallyResponse(visible, chart));

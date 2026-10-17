@@ -114,9 +114,9 @@ export class BackchannelPool {
     this.running = true; this.notify();
     try {
       await initChatterbox(voice);
-      if (this.busy || epoch !== this.epoch) return;
+      if (this.busy || epoch !== this.epoch || performance.now() - this.lastActivity < 2000) return;
       const audio = await chatterboxSpeak(BACKCHANNEL_PALETTES[candidate.stage][candidate.index], { voice, speed: 1, priority: 'idle' });
-      if (this.busy || epoch !== this.epoch) return;
+      if (this.busy || epoch !== this.epoch || performance.now() - this.lastActivity < 2000) return;
       if (audio.samples.length > 24000 * 10) throw new Error('An acknowledgement exceeded the short-clip limit.');
       if (candidate.replace) { this.clips.delete(candidate.replace); this.refresh.delete(candidate.replace); }
       this.clips.set(key, audio); this.notify();

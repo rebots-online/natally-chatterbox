@@ -240,7 +240,7 @@ export function beginSpeechTurn(settings: VoiceSettings, callbacks: SpeechCallba
       finishUtterance = null; backchannelPool.setBusy(false);
       if (speechProgress.phase !== 'error') publishSpeechProgress({ phase: success ? 'complete' : 'interrupted', message: success ? 'Voice finished' : 'Voice interrupted', playingUnit: null, generatingUnit: null, confirmedAt: Date.now() });
     }
-    callbacks.onEnd?.(); complete(success);
+    callbacks.onPlaybackState?.(false); callbacks.onEnd?.(); complete(success);
   };
   const fail = (error: unknown) => {
     if (!current()) return;
@@ -287,6 +287,7 @@ export function beginSpeechTurn(settings: VoiceSettings, callbacks: SpeechCallba
         if (!settings.readingAloud) { if (final) end(false); return; }
         if (unitIndex >= units.length) {
           if (final) { end(true); return; }
+          publishSpeechProgress({ phase: 'thinking', message: 'Waiting for the next complete sentence', playingUnit: null });
           await new Promise<void>(resolve => { waiting = resolve; }); continue;
         }
         const entry = units[unitIndex];
@@ -304,12 +305,14 @@ export function beginSpeechTurn(settings: VoiceSettings, callbacks: SpeechCallba
             firstAudioAt: speechProgress.firstAudioAt ?? now,
             maxGapMs: Math.max(speechProgress.maxGapMs, speechProgress.lastAudioEndAt ? now - speechProgress.lastAudioEndAt : 0), confirmedAt: now });
           if (!started) { started = true; callbacks.onStart?.(); }
+          callbacks.onPlaybackState?.(true);
         }, (position, length) => {
           const start = entry.offsets[position]; const end = entry.offsets[position + length - 1] + 1;
           callbacks.onWordBoundary?.(start, end - start);
         }, entry.unit.text);
         playing = false;
         if (!current()) return;
+        callbacks.onPlaybackState?.(false);
         if (!played) { end(false); return; }
         unitIndex++;
         publishSpeechProgress({ playedUnits: unitIndex, playingUnit: null, lastAudioEndAt: Date.now(), confirmedAt: Date.now() });
@@ -341,9 +344,9 @@ export function beginSpeechTurn(settings: VoiceSettings, callbacks: SpeechCallba
 }
 
 export async function speakNatallyText(text: string, settings: VoiceSettings, onStart?: () => void, onEnd?: () => void,
-  onWordBoundary?: (charIndex: number, charLength?: number) => void): Promise<boolean> {
+  onWordBoundary?: (charIndex: number, charLength?: number) => void, onPlaybackState?: (playing: boolean) => void): Promise<boolean> {
   if (!settings.readingAloud || !prepareSpeechText(text)) { stopSpeaking(); onEnd?.(); return false; }
-  const turn = beginSpeechTurn(settings, { onStart, onEnd, onWordBoundary });
+  const turn = beginSpeechTurn(settings, { onStart, onEnd, onWordBoundary, onPlaybackState });
   try {
     await planChatterboxSpeech(prepareSpeechText(text), settings.aiVoiceName as VoiceId);
     if (turn.id === generation) turn.update(text, true);

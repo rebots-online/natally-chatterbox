@@ -121,6 +121,11 @@ async function loadEngine(forceWasm: boolean): Promise<Engine> {
   return engine;
 }
 async function runGraph(engine: Engine, role: GraphRole, feeds: TensorMap): Promise<TensorMap> {
+  await new Promise<void>(resolve => {
+    const channel = new MessageChannel();
+    channel.port1.onmessage = () => { channel.port1.close(); channel.port2.close(); resolve(); };
+    channel.port2.postMessage(null);
+  });
   if (cancelled.has(requestContext.id)) throw new DOMException('Speech interrupted.', 'AbortError');
   const output = await observe(role, 'run', () => engine.sessions[role].run(feeds));
   if (cancelled.has(requestContext.id)) { disposeTensors(output); throw new DOMException('Speech interrupted.', 'AbortError'); }

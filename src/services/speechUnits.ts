@@ -9,8 +9,9 @@ export function segmentSpeechText(text: string, final: boolean): SpeechSegment[]
     const segments = segmenter ? [...segmenter.segment(paragraph[0])] :
       [...paragraph[0].matchAll(/[^.!?]+(?:[.!?]+["'”’)]*(?:\s+|$)|$)/gu)].map(match => ({ index: match.index!, segment: match[0] }));
     for (const segment of segments) {
-      const end = paragraph.index! + segment.index + segment.segment.length;
-      const complete = end < text.length || final || closedLine || /[.!?]["'”’)\]]*\s+$/u.test(segment.segment);
+      const boundary = paragraph.index! + segment.index + segment.segment.length;
+      const end = boundary - (segment.segment.length - segment.segment.trimEnd().length);
+      const complete = boundary < text.length || final || closedLine || /[.!?]["'”’)\]]*\s+$/u.test(segment.segment);
       if (!complete || !text.slice(start, end).trim()) continue;
       units.push({ text: text.slice(start, end), start, end });
       start = end;
