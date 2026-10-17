@@ -31,10 +31,12 @@ do not even consider a model change unless Robin surfaces it in discussion.
   ✅ TypeScript/diff check pass. Pool stays memory-only on selection, replaces
   used variants only after idle generation succeeds, and preserves ready clips.
   Actual idle/pre-emption/cache/first-use observations remain CL09.
-- [ ] 🟪 CL04 — C10–C13: implement source-preserving speech turns, shared real-audio
+- [X] 🟪 CL04 — C10–C13: implement source-preserving speech turns, shared real-audio
   playback, separate acknowledgement/answer bridge, one-ahead generation and
   cancellation/notification settlement. Keep existing pitch/tone/settings APIs.
   Complete-text preview/replay prevalidates all units and has no turn backchannel.
+  ✅ TypeScript/diff check pass; queue/notification/late-promise paths reviewed.
+  Actual concurrency, listening, beginnings/endings and latency remain CL09.
 - [ ] 🟦 CL05 — C20–C24: implement bounded SSE framing/server stream adaptation and
   client partial callbacks/caller AbortSignal. Same backend/provider/model/auth/
   rate/tool limits. Preserve natural tool-round prefaces; reasoning/tool arguments
