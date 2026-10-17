@@ -9,6 +9,21 @@ existing Natally identity. Add supplied Open Design global MCP config if absent.
 Design consultation/configuration/closed architecture/implementation/runtime
 remain separate; these visuals and later-pause cues are not in current deployment.
 
+- [X] 🟫 G00 — Add/validate the supplied global Open Design MCP definition and
+  perform actual initialize/tools/agent discovery. Receipt f355132 pushed/verified.
+- [X] 🟪 G01 — Commission Open Design with verified GPT-6-Astra, original artwork,
+  full brief and warm candle-lit atelier/ordered shelf/constellation/no-portal
+  updates. Brief/dispatch/art direction and mouth research pushed after tasks.
+  Generation is still running; no rendered design acceptance claimed.
+- [X] 🟪 G02 — Release closed later-gap cue amendment CB-ARCH-3 §11/G01–G06.
+- [ ] 🟪 G03 — Implement continuation pool/queue ownership and native cue state;
+  TypeScript/diff review, no new model/download/foreground cue generation.
+- [ ] 🟫 G04 — Independent review, normal build, push/remote verification and
+  deploy, followed by production-view generation-gap/interrupt observations.
+- [ ] 🟪 G05 — Inspect Open Design's actual rendered result and retrieve its
+  bundle; reconcile the candle-lit atelier and free scene direction, then close
+  the exact animated-character/chart integration architecture before product code.
+
 Released: Robin approved §9 and explicitly instructed completion of the closed
 architecture/checklist followed by implementation and the production-view rubric.
 Contract: DOCS/ARCHITECTURE.md §10 CB-ARCH-2. Execute inline without another review

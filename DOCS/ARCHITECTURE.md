@@ -911,3 +911,42 @@ the existing Chatterbox Surge site. Verify remote commit reachability and served
 assets. Record first-use/palette/long response/interruption/context/completeness/
 production status and physical-device/listening limits separately in HOSTED_CHAT
 and the indexed run report. A failed rubric remains failed after Git publication.
+
+## 11. Later-generation-pause cues — CB-ARCH-3, released 17 October 2026
+
+Authority: Robin directly requested backchanneling between subsequent generation
+pauses after observing desktop latency. This is a narrow functional amendment to
+C01/C02/C08/C09/C12/C13/C32. The separate large-character/atelier design remains
+with Open Design; no scene module, mouth engine or rendering dependency is
+released by this section. Existing model/reference/runtime/sampling/provider
+contracts are unchanged. Zero incremental latency remains required.
+
+| ID / existing target | Exact amended surface and behavior |
+|---|---|
+| G01 `chatterboxTypes.ts` | Add `'continuation'` to BackchannelStage. SpeechProgress adds required `cueStage:BackchannelStage|null`, `gapCueCount:number` and optional `gapCueStartedAt:number`, `gapCueEndedAt:number`. Reset all per turn; native cue start/settlement only, no answer unit advancement. |
+| G02 `chatterboxModel.ts` | Add continuation palette `['Mm.', 'Let me stay with that thought.', 'Hmm.', 'Let me linger on that a moment.']`. Same selected voice, two prepared variants per semantic stage, no downloaded/generated-on-demand media. These follow a spoken thought and never claim a new finding or receipt of a new message. |
+| G03 `speechBackchannels.ts` | snapshot derives total from Object.keys(BACKCHANNEL_PALETTES).length * BACKCHANNEL_TARGET (now 8). Replenish stage order interrupt/receipt/answer/continuation; retain idle quiet interval, priority, bounded storage and existing cache revision. Restore old prepared stages and fill the new stage only while idle. |
+| G04 `voiceService.ts` | beginSpeechTurn adds scoped `gapCueAfter:number=-1` and `bridgeGap():void`. After at least one played unit, if the next complete unit is unavailable or not ready, select one prepared continuation cue immediately; at most one per unit gap, no loop or foreground synthesis. Existing pending unit generation continues. |
+| G05 same | acknowledge adds scoped `permitted():boolean`, `cueStarted:boolean`, and native cueStage/timing/count publication. For answer/continuation, the current turn must still be waiting and PCM must not already be ready. Pass permitted into playAudio so an await-resume continuation cannot start a stale cue over a ready answer. Never await cue duration before answer playback. Answer source.start clears cueStage; ordinary end stops any remaining cue, clears state and cannot touch a newer owner. |
+| G06 `VoiceDownloadStatus.tsx` | Existing section exposes cue-stage/gap-cue-count/start/end numeric metadata. Show an ordinary continuation-state line while its audio is active; retain preparing/speaking ownership and exact answer counts. Rename the pool line to Conversational cues, since it includes continuing thought as well as acknowledgement. No progress/latency claim from filler. |
+
+```mermaid
+flowchart TD
+  End[Answer buffer ends] --> Next{Next answer PCM ready?}
+  Next -- yes --> Play[Play next answer immediately]
+  Next -- no --> Once{A cue selected for this gap?}
+  Once -- no --> Pool{Prepared continuation clip exists?}
+  Pool -- yes --> Cue[Play through shared interruptible audio path]
+  Pool -- no --> Wait[Keep visible preparation; no foreground cue generation]
+  Once -- yes --> Wait
+  Cue --> Wait
+  Wait --> Ready[Next answer ready]
+  Ready --> Cut[Stop cue and play answer; no cue-duration wait]
+  Cut --> Play
+  Cue --> New[New submission stops old audio and generation]
+```
+
+Validation: TypeScript/diff, independent race/ownership review, production build,
+then real ordinary-chat long-turn and interruption observations. Preserve the
+prior failed rubric and report remaining uncovered waits/acoustic limits. Cue
+presence alone cannot PASS latency. Commit/push/verify after each task.
