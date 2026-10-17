@@ -1,0 +1,21 @@
+{
+  "observedAt": "2026-10-17T18:31:13.600Z",
+  "status": "Voice finished\n\n1 / 1 sentences ready · 1 / 1 played\n\nConversational cues: 8 / 8 prepared · saved locally",
+  "native": {
+    "final": "true",
+    "firstAudioAt": "1792261766454",
+    "firstUnitTextAt": "1792261760199",
+    "gapCueCount": "0",
+    "lastAnswerStartedAt": "1792261766454",
+    "lastAudioEndAt": "1792261770513",
+    "maxGapMs": "0",
+    "maxUncoveredAnswerGapMs": "0",
+    "phase": "complete",
+    "playedUnits": "1",
+    "readyUnits": "1",
+    "submittedAt": "1792261754338",
+    "totalUnits": "1",
+    "turnId": "7"
+  },
+  "boundary": "Ordinary canonical production status; no acoustic recording."
+}

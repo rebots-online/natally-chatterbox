@@ -692,3 +692,21 @@ unrecorded; do not attribute it. Report and sanitized observations:
 `dist/rubric-runs/v0.0.0-chatterbox-continuation-20261017/REPORT.md`. Interactive
 waterfalls/before-afters: `dist/rubric-runs/natally-animated-report-20261017/index.html`.
 Open Design scene inspection and live device/listening acceptance remain separate.
+
+
+## Canonical production replacement —17October2026
+
+At Robin's explicit request, https://natally.surge.sh now serves this checkout,
+replacing the former natally-ai-studio deployment as of publication bundle commit
+7378d5caba9bc20e73019a228e64e22ac1f81fbe (configuration record7301a71).
+Surge1792261498437. All67 served files matched SHA-256. Existing production
+Netlify backend deploy6ad3bcda0aefe97aace3e3a6 retains the exact frontend origin;
+OPTIONS204 with Access-Control-Allow-Origin https://natally.surge.sh observed.
+A real signed-in ordinary-chat prompt received a fresh hosted one-sentence reply
+and completed1/1 ready/played. Status subsequently reached8/8 local cues. Initial
+Send at this separate origin had0/8 cues and explicitly displayed that no prepared
+submission cue played. This first-use case is now observed and fails immediacy;
+it is not a deployment or latency exception. No acoustic recording/phone PASS.
+Evidence: dist/rubric-runs/natally-canonical-promotion-20261017.
+Natally stays in this repository; only the independent voice-editor project
+lives in C:/Users/Admin/Desktop/DevProjects/vociferous-cloner-studio.
