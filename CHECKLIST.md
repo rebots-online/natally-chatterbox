@@ -41,6 +41,9 @@ remain separate; these visuals and later-pause cues are not in current deploymen
 - [X] 🟫 G08 — Promote this checkout to natally.surge.sh replacing natally-ai-studio
   as of bundle7378d5c; Surge1792261498437,67/67 SHA-256 matches,production
   backend exact-origin preflight and real hosted one-sentence1/1 reply observed.
+- [X] 🟪 G10 — Release CB-ARCH-4 ready-pool variation contract.
+- [ ] 🟪 G11 — Implement/review/build/deploy expanded idle diversity and verify
+  ordinary production behavior; do not accept an uncovered silent third cue.
 - [ ] 🟪 G09 — Reusable private voice-ingest/tweaker Web UI is now its own project
   at C:/Users/Admin/Desktop/DevProjects/vociferous-cloner-studio; implement and
   verify its export/consumer adapter. Natally remains here.

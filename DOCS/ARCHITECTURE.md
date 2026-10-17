@@ -960,3 +960,23 @@ speech still fail; decorative animation is not voiced coverage. Native source
 scheduling does not certify acoustic continuity. The earlier run still fails:
 its recorded receipt/bridge intervals left uncovered gaps and it had no later
 continuation cues.
+
+
+## 12. Ready-pool variation — CB-ARCH-4, released17October2026
+
+Authority: Robin reports Hmm becomes repetitive after two or three uses. This
+remains a same-model, same-reference amendment; no foreground cue synthesis,
+new downloads, automatic speech-rate change or silence exemption is released.
+
+| ID / existing surface | Closed amendment |
+|---|---|
+| V01 chatterboxModel.ts | BACKCHANNEL_TARGET becomes4 per semantic stage(total16). Preserve every existing palette index/text so cached PCM retains its meaning. Append two context-appropriate alternatives per stage; no cache revision bump or forced deletion. |
+| V02 speechBackchannels.ts | BackchannelPool adds private recent:Array<{key:string;hum:boolean}>. Reset it on voice reconfiguration. take excludes the two most recently selected exact keys when alternatives exist and prefers a non-hum after two consecutive hum-family selections. Hum-family classification is a local text test, not ML. Keep at most3 recent entries. |
+| V03 same | If a partially populated pool lacks a diverse eligible choice, use an already-ready alternative before the previous exact choice; do not synthesize on Send or invent a silent third-use allowance. This degraded diversity is unpassed until enough idle variants exist; do not claim a full-pool repeat guarantee on partial initialization. |
+| V04 same existing snapshot/replenish | Existing derived totals and serial idle replenishment now target16, still one clip at a time under the same16MB persisted budget and foreground/input preemption. Existing clips remain selectable as the extra variants prepare. |
+
+Open Design's third-opportunity silence/cooldown proposal is not an approved
+production latency policy. Its atmosphere/gesture study is design evidence;
+uncovered waits still fail. Device-dependent pacing remains a measured follow-up,
+not an automatic slowdown or a change of model. Verify types/build/source review,
+then normal production pool/variation/interruption behavior and publish separately.
