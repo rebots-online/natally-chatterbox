@@ -36,6 +36,14 @@ remain separate; these visuals and later-pause cues are not in current deploymen
 - [ ] 🟪 G05 — Inspect Open Design's actual rendered result and retrieve its
   bundle; reconcile the candle-lit atelier and free scene direction, then close
   the exact animated-character/chart integration architecture before product code.
+  ✅ Initial actual prototype inspected; later-gap/answer-ready preemption
+  rehearsed as silent simulation. Warmer atelier/cue-fatigue refinement commissioned.
+- [X] 🟫 G08 — Promote this checkout to natally.surge.sh replacing natally-ai-studio
+  as of bundle7378d5c; Surge1792261498437,67/67 SHA-256 matches,production
+  backend exact-origin preflight and real hosted one-sentence1/1 reply observed.
+- [ ] 🟪 G09 — Reusable private voice-ingest/tweaker Web UI is now its own project
+  at C:/Users/Admin/Desktop/DevProjects/vociferous-cloner-studio; implement and
+  verify its export/consumer adapter. Natally remains here.
 
 Released: Robin approved §9 and explicitly instructed completion of the closed
 architecture/checklist followed by implementation and the production-view rubric.
@@ -121,7 +129,8 @@ do not even consider a model change unless Robin surfaces it in discussion.
 - [ ] 🟪 CL10 — Discuss the measured residual pipeline waits with Robin; retain
   zero incremental latency, then release and verify any further closed-architecture
   amendment. No proof of fundamental unavoidability and no model alternative.
-  Empty-pool Send, voice-change/exhaustion/fault cases and audible cue/word
+  Canonical-domain Send with0/8 pool is now observed and failed immediacy;
+  voice-change/exhaustion/fault cases and audible cue/word
   completeness remain unpassed; do not infer them from source or status counts.
 - [ ] 🔴 Verify the same behavior and listening on the actual target phones.
 - [X] 🟫 Publish source and built artifacts, deploy the existing authorized domain
