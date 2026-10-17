@@ -1,0 +1,299 @@
+[
+  {
+    "label": "Before continuation cues \u00b7 bookshop, 6 units",
+    "build": "6642254",
+    "duration": 31712,
+    "bars": [
+      {
+        "lane": 0,
+        "start": 0,
+        "end": 7223,
+        "label": "Send \u2192 first complete speech unit",
+        "kind": "inference"
+      },
+      {
+        "lane": 1,
+        "start": 7223,
+        "end": 11487,
+        "label": "First unit text \u2192 first answer source",
+        "kind": "tts"
+      },
+      {
+        "lane": 2,
+        "start": 9,
+        "end": 1374,
+        "label": "Receipt / interruption acknowledgement",
+        "kind": "cue"
+      },
+      {
+        "lane": 2,
+        "start": 7224,
+        "end": 8718,
+        "label": "Post-inference bridge",
+        "kind": "bridge"
+      },
+      {
+        "lane": 5,
+        "start": 1374,
+        "end": 7224,
+        "label": "Uncovered initial wait",
+        "kind": "gap"
+      },
+      {
+        "lane": 5,
+        "start": 8718,
+        "end": 11487,
+        "label": "Uncovered first-audio wait",
+        "kind": "gap"
+      },
+      {
+        "lane": 3,
+        "start": 11487,
+        "end": 31712,
+        "label": "Answer window: per-unit boundaries not recorded",
+        "kind": "unknown"
+      }
+    ],
+    "raw": {
+      "ackEndedAt": 1792259134383,
+      "ackStartedAt": 1792259133018,
+      "bridgeEndedAt": 1792259141727,
+      "bridgeStartedAt": 1792259140233,
+      "firstAudioAt": 1792259144496,
+      "firstUnitTextAt": 1792259140232,
+      "lastAudioEndAt": 1792259164721,
+      "maxGapMs": 1006,
+      "submittedAt": 1792259133009,
+      "totalUnits": 6
+    },
+    "source": "../v0.0.0-chatterbox-pipeline-20261017/REPORT.md"
+  },
+  {
+    "label": "After continuation cues \u00b7 atelier, 8 units",
+    "build": "ce6c2bf",
+    "duration": 56788,
+    "bars": [
+      {
+        "lane": 0,
+        "start": 0,
+        "end": 7937,
+        "label": "Send \u2192 first complete speech unit",
+        "kind": "inference"
+      },
+      {
+        "lane": 1,
+        "start": 7937,
+        "end": 12210,
+        "label": "First unit text \u2192 first answer source",
+        "kind": "tts"
+      },
+      {
+        "lane": 2,
+        "start": 11,
+        "end": 1058,
+        "label": "Receipt / interruption acknowledgement",
+        "kind": "cue"
+      },
+      {
+        "lane": 2,
+        "start": 7937,
+        "end": 9158,
+        "label": "Post-inference bridge",
+        "kind": "bridge"
+      },
+      {
+        "lane": 5,
+        "start": 1058,
+        "end": 7937,
+        "label": "Uncovered initial wait",
+        "kind": "gap"
+      },
+      {
+        "lane": 5,
+        "start": 9158,
+        "end": 12210,
+        "label": "Uncovered first-audio wait",
+        "kind": "gap"
+      },
+      {
+        "lane": 3,
+        "start": 12210,
+        "end": 56788,
+        "label": "Unobserved answer intervals",
+        "kind": "unknown"
+      },
+      {
+        "lane": 3,
+        "start": 12210,
+        "end": 15103,
+        "label": "Answer 1",
+        "kind": "answer"
+      },
+      {
+        "lane": 3,
+        "start": 20458,
+        "end": 22748,
+        "label": "Answer 2",
+        "kind": "answer"
+      },
+      {
+        "lane": 3,
+        "start": 27693,
+        "end": 30728,
+        "label": "Answer 3",
+        "kind": "answer"
+      },
+      {
+        "lane": 3,
+        "start": 42498,
+        "end": 45358,
+        "label": "Answer 6",
+        "kind": "answer"
+      },
+      {
+        "lane": 3,
+        "start": 48894,
+        "end": 52008,
+        "label": "Answer 7",
+        "kind": "answer"
+      },
+      {
+        "lane": 3,
+        "start": 54160,
+        "end": 56788,
+        "label": "Answer 8",
+        "kind": "answer"
+      },
+      {
+        "lane": 4,
+        "start": 15103,
+        "end": 15848,
+        "label": "Continuation cue",
+        "kind": "continuation"
+      },
+      {
+        "lane": 4,
+        "start": 22749,
+        "end": 24308,
+        "label": "Continuation cue",
+        "kind": "continuation"
+      },
+      {
+        "lane": 4,
+        "start": 30728,
+        "end": 31472,
+        "label": "Continuation cue",
+        "kind": "continuation"
+      },
+      {
+        "lane": 4,
+        "start": 39029,
+        "end": 39778,
+        "label": "Continuation cue",
+        "kind": "continuation"
+      },
+      {
+        "lane": 4,
+        "start": 45359,
+        "end": 46921,
+        "label": "Continuation cue",
+        "kind": "continuation"
+      },
+      {
+        "lane": 4,
+        "start": 52009,
+        "end": 52748,
+        "label": "Continuation cue",
+        "kind": "continuation"
+      },
+      {
+        "lane": 5,
+        "start": 15848,
+        "end": 20458,
+        "label": "Uncovered between answers",
+        "kind": "gap"
+      },
+      {
+        "lane": 5,
+        "start": 22748,
+        "end": 22749,
+        "label": "Uncovered between answers",
+        "kind": "gap"
+      },
+      {
+        "lane": 5,
+        "start": 24308,
+        "end": 27693,
+        "label": "Uncovered between answers",
+        "kind": "gap"
+      },
+      {
+        "lane": 5,
+        "start": 31472,
+        "end": 33131,
+        "label": "Uncovered between answers",
+        "kind": "gap"
+      },
+      {
+        "lane": 5,
+        "start": 39028,
+        "end": 39029,
+        "label": "Uncovered between answers",
+        "kind": "gap"
+      },
+      {
+        "lane": 5,
+        "start": 39778,
+        "end": 42498,
+        "label": "Uncovered between answers",
+        "kind": "gap"
+      },
+      {
+        "lane": 5,
+        "start": 45358,
+        "end": 45359,
+        "label": "Uncovered between answers",
+        "kind": "gap"
+      },
+      {
+        "lane": 5,
+        "start": 46921,
+        "end": 48894,
+        "label": "Uncovered between answers",
+        "kind": "gap"
+      },
+      {
+        "lane": 5,
+        "start": 52008,
+        "end": 52009,
+        "label": "Uncovered between answers",
+        "kind": "gap"
+      },
+      {
+        "lane": 5,
+        "start": 52748,
+        "end": 54160,
+        "label": "Uncovered between answers",
+        "kind": "gap"
+      }
+    ],
+    "raw": {
+      "ackEndedAt": 1792260686069,
+      "ackStartedAt": 1792260685022,
+      "bridgeEndedAt": 1792260694169,
+      "bridgeStartedAt": 1792260692948,
+      "firstAudioAt": 1792260697221,
+      "firstUnitTextAt": 1792260692948,
+      "gapCueCount": 7,
+      "gapCueEndedAt": 1792260737759,
+      "gapCueStartedAt": 1792260737020,
+      "lastAnswerStartedAt": 1792260739171,
+      "lastAudioEndAt": 1792260741799,
+      "maxGapMs": 5355,
+      "maxUncoveredAnswerGapMs": 4610,
+      "submittedAt": 1792260685011,
+      "totalUnits": 8
+    },
+    "source": "../v0.0.0-chatterbox-continuation-20261017/REPORT.md"
+  }
+]

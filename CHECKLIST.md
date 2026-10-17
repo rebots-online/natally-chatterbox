@@ -19,14 +19,20 @@ remain separate; these visuals and later-pause cues are not in current deploymen
 - [X] 🟪 G03 — Implement continuation pool/queue ownership and native cue state;
   TypeScript/diff review, no new model/download/foreground cue generation.
   ✅ TypeScript/diff pass. Independent race review/build/runtime are G04.
-- [ ] 🟫 G04 — Independent review, normal build, push/remote verification and
+- [X] 🟫 G04 — Independent review, normal build, push/remote verification and
   deploy, followed by production-view generation-gap/interrupt observations.
   ✅ Continuation scheduling and G07 coverage metadata independently reviewed;
   TypeScript, normal production build and diff checks pass. Publication/deploy
   and native production-view observations follow; no latency PASS inferred.
+  ✅ ce6c2bf pushed/remote verified, Surge 1792260505489, 57/57 served SHA-256
+  matches. Ordinary production run completed 8/8 with seven continuation cues;
+  maximum native uncovered finalized gap 4.610 s. Zero latency remains unpassed.
+  Report/stills/raw observations in v0.0.0-chatterbox-continuation-20261017.
 - [ ] 🟫 G06 — Prepare animated timing waterfalls and before/after report demos.
   Separate measured production boundaries from unknown intervals and design
   simulations; show uncovered waits without changing the zero-latency criterion.
+  ✅ Interactive measured waterfalls, gap zoom, before/after status stills built
+  and exercised in Chrome. Open Design scene embedding remains pending.
 - [ ] 🟪 G05 — Inspect Open Design's actual rendered result and retrieve its
   bundle; reconcile the candle-lit atelier and free scene direction, then close
   the exact animated-character/chart integration architecture before product code.

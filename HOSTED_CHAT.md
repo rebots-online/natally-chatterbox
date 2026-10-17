@@ -678,3 +678,17 @@ or sprite preferences. User adjustments saved under the current signature remain
 until the configured preset changes. The existing voice panel can reapply the
 configured Kawaii preset. No subjective audition is required for this release;
 further expressive tuning is deferred, not claimed verified.
+
+
+## 17 October 2026 — continuation cues
+
+Source/build ce6c2bf pushed and origin verified. Surge 1792260505489; all57 served
+payload files match SHA-256. Eight-unit ordinary-view run completed8/8 with seven
+continuation cues, receipt source scheduled11ms after native Send handler. Maximum
+raw answer gap5.355s, uncovered finalized gap4.610s. Initial receipt/bridge uncovered
+waits6.879s/3.052s. Zero incremental latency remains unpassed; native scheduling is
+not acoustic listening. One preceding7-unit run stopped5/7 with cancellation caller
+unrecorded; do not attribute it. Report and sanitized observations:
+`dist/rubric-runs/v0.0.0-chatterbox-continuation-20261017/REPORT.md`. Interactive
+waterfalls/before-afters: `dist/rubric-runs/natally-animated-report-20261017/index.html`.
+Open Design scene inspection and live device/listening acceptance remain separate.
