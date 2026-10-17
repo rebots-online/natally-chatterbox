@@ -1433,3 +1433,8 @@ Actual normal production view reached16/16saved locally; a requested two-sentenc
 The measured animated report now includes its portable GIF, interactive waterfall, ordinary-view before/after stills and the actual refined Open Design GPT-6-Astra atelier. Scene remains a silent design prototype with illustrative chart data. Its third-cue silence proposal is explicitly unaccepted. Large-scene production integration remains CHECKLIST G05.
 
 The private voice editor is separately established at C:/Users/Admin/Desktop/DevProjects/vociferous-cloner-studio, origin https://github.com/rebots-online/vociferous-cloner-studio . Natally was not moved. Only a generated finalized reference and safe provenance can be staged into the existing F4 consumer path; no editor or private source is publicly deployed.
+
+
+### Published report
+
+https://natally.surge.sh/rubric-runs/natally-animated-report-20261017/ is live with the same product assets plus the exact report/run directories. Report source217dc53; Surge1792263581822.111/111 complete product/report served payload files match SHA256, excluding Surge's CNAME control file. Full receipt: DOCS/REPORT-PUBLICATION-20261017.json. The local editor stays private; only stock-test UI screenshots and safe reports are public.

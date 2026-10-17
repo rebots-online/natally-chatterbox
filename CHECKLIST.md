@@ -36,6 +36,8 @@ remain separate; later-pause cues are deployed; the large scene remains a design
   ✅ Interactive measured waterfalls, gap zoom, before/after status stills built
   and exercised in Chrome. Actual refined scene/before-after embedded, portable
   65-frame GIF added; live production timings and silent design studies labelled.
+  ✅ Report source217dc53 published beside canonical Natally;111/111 complete
+  product/report served files match SHA256. URL recorded in HOSTED_CHAT.md.
 - [ ] 🟪 G05 — Inspect Open Design's actual rendered result and retrieve its
   bundle; reconcile the candle-lit atelier and free scene direction, then close
   the exact animated-character/chart integration architecture before product code.
