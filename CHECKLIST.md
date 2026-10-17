@@ -45,12 +45,14 @@ do not even consider a model change unless Robin surfaces it in discussion.
   ✅ TypeScript, both changed server-module syntax checks and diff check pass.
   Source review covers terminal validation, cancellation and tool-count limits;
   these checks do not certify live provider streaming or conversation quality.
-- [ ] 🟪 CL06 — C30–C32: wire live message/speech ownership and ordinary-chat status.
+- [X] 🟪 CL06 — C30–C32: wire live message/speech ownership and ordinary-chat status.
   New submissions remain responsive in inference/TTS/playback; stale promises
   cannot restart old output. Preserve displayed context and exact beginning.
   Distinguish actual audio from preparation in mascot/karaoke/replay controls.
   Hide the bottom diagnostics outside explicit debug mode; visible production
   counts have exact final or clearly labelled received-unit denominators.
+  ✅ TypeScript/diff checks pass; live input, ownership and actual-start state
+  are implemented. Production-view behavior remains subject to CL09 observation.
 - [ ] 🟫 CL07 — Independent whole-change review, TypeScript, normal production
   build and diff checks. No unit suite or new coded browser harness. Preserve
   historical dist/rubric artifacts across the build; publish source/remote SHA.

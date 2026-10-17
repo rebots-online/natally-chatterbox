@@ -39,7 +39,10 @@ import {
   saveVoiceSettings,
   speakNatallyText,
   stopSpeaking,
+  beginSpeechTurn,
+  isSpeechBusy,
 } from '../services/voiceService';
+import { ConversationVoiceStatus } from './VoiceDownloadStatus';
 import { NatallyConfigModal } from './NatallyConfigModal';
 import { NatallyIcon } from './NatallyIcon';
 import { setCustomAvatarUrl } from './NatallyAvatar';
@@ -128,6 +131,7 @@ export const NatallyChatbot: React.FC<NatallyChatbotProps> = ({
   const [inputText, setInputText] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [isTyping, setIsTyping] = useState(false);
+  const [preparingMsgId, setPreparingMsgId] = useState<string | null>(null);
   const [isListening, setIsListening] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const [showConfigModal, setShowConfigModal] = useState(false);
@@ -238,26 +242,35 @@ export const NatallyChatbot: React.FC<NatallyChatbotProps> = ({
   const currentChart = useRef(chart);
   currentChart.current = chart;
   const presentationGeneration = useRef(0);
+  const inferenceGeneration = useRef(0);
+  const inferenceAbort = useRef<AbortController | null>(null);
+  const messagesRef = useRef(messages);
+  messagesRef.current = messages;
+  const activeStreamMessage = useRef<PersistentChatMessage | null>(null);
   const greetingAllowed = useRef(true);
   const sessionIsActive = () => mounted.current && isCurrentSession() && currentChart.current === chart;
   useEffect(() => {
     mounted.current = true;
-    return () => { mounted.current = false; stopSpeaking(); };
+    return () => { mounted.current = false; inferenceGeneration.current++; inferenceAbort.current?.abort(); stopSpeaking(); };
   }, []);
 
   useEffect(() => {
+    inferenceGeneration.current++; inferenceAbort.current?.abort();
     stopSpeaking();
     presentationGeneration.current++;
     setIsTyping(false);
     setCurrentlySpeakingMsgId(null);
+    setPreparingMsgId(null);
     setKaraokeCharIndex(null);
+    onSpeechStateChange(false, null, null);
     onChartFocus?.([], chart);
   }, [chart]);
 
   const presentMessage = (message: PersistentChatMessage) => {
     greetingAllowed.current = false;
-    stopSpeaking();
+    inferenceGeneration.current++; inferenceAbort.current?.abort(); setIsTyping(false);
     const generation = ++presentationGeneration.current;
+    stopSpeaking(); setCurrentlySpeakingMsgId(null); setPreparingMsgId(null); setKaraokeCharIndex(null); onSpeechStateChange(false, null, null);
     const active = () => sessionIsActive() && presentationGeneration.current === generation;
     const cues = validateChartCues(message.chartCues, message.text, message.chartFocusKey, chart);
     let lastFocus = '';
@@ -271,14 +284,15 @@ export const NatallyChatbot: React.FC<NatallyChatbotProps> = ({
       onSpeechStateChange(false, message.text.slice(0, 110), null);
       return;
     }
-    setCurrentlySpeakingMsgId(message.id);
+    setPreparingMsgId(message.id);
     speakNatallyText(message.text, voiceSettings,
-      () => { if (active()) onSpeechStateChange(true, message.text.slice(0, 110), cues[0]?.targets[0] || null); },
+      () => { if (active()) { setPreparingMsgId(null); setCurrentlySpeakingMsgId(message.id); onSpeechStateChange(true, message.text.slice(0, 110), cues[0]?.targets[0] || null); } },
       () => {
         if (!active()) return;
         focus([]);
         onSpeechStateChange(false, null, null);
         setCurrentlySpeakingMsgId(null);
+        setPreparingMsgId(null);
         setKaraokeCharIndex(null);
       },
       charIdx => {
@@ -321,17 +335,24 @@ export const NatallyChatbot: React.FC<NatallyChatbotProps> = ({
   const handleSendMessage = async (textToSend?: string) => {
     if (!sessionIsActive()) return;
     const text = (textToSend || inputText).trim();
-    if ((!text && !attachedMedia) || (isTyping && !textToSend)) return;
+    if (!text && !attachedMedia) return;
+    const interrupted = isSpeechBusy() || isTyping;
+    inferenceAbort.current?.abort();
+    const turnGeneration = ++inferenceGeneration.current;
+    const presentation = ++presentationGeneration.current;
+    const controller = new AbortController(); inferenceAbort.current = controller;
+    const active = () => sessionIsActive() && inferenceGeneration.current === turnGeneration && !controller.signal.aborted;
+    const speechActive = () => active() && presentationGeneration.current === presentation;
     greetingAllowed.current = false;
     stopSpeaking();
-    presentationGeneration.current++;
+    setCurrentlySpeakingMsgId(null); setKaraokeCharIndex(null); onSpeechStateChange(false, null, null);
     onChartFocus?.([], chart);
 
     const mediaToSave = attachedMedia;
     setAttachedMedia(null);
 
     const userMsg: PersistentChatMessage = {
-      id: `user-${Date.now()}`,
+      id: `user-${Date.now()}-${turnGeneration}`,
       sender: 'user',
       text: text || '(Shared Media)',
       mediaUrl: mediaToSave?.url,
@@ -340,11 +361,36 @@ export const NatallyChatbot: React.FC<NatallyChatbotProps> = ({
       category: 'chat',
     };
 
-    setMessages((prev) => [...prev, userMsg]);
+    const history = messagesRef.current;
+    messagesRef.current = [...history, userMsg]; setMessages(messagesRef.current);
     setInputText('');
     setIsTyping(true);
     setErrorDetails(null);
     setLastFailedPrompt(null);
+
+    const replyId = `natally-${Date.now()}-${turnGeneration}`;
+    const baseMessage: PersistentChatMessage = { id: replyId, sender: 'natally', text: '', timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }), category: 'reading', isOfflineMode: false };
+    activeStreamMessage.current = baseMessage;
+    let streamedCues: ChartCue[] = [];
+    let lastFocus = '';
+    const focus = (targets: string[]) => {
+      if (!speechActive() || lastFocus === JSON.stringify(targets)) return;
+      lastFocus = JSON.stringify(targets); onChartFocus?.(targets, chart);
+    };
+    const storeMessage = (message: PersistentChatMessage) => {
+      if (!active()) return;
+      activeStreamMessage.current = message;
+      messagesRef.current = messagesRef.current.some(item => item.id === replyId)
+        ? messagesRef.current.map(item => item.id === replyId ? message : item) : [...messagesRef.current, message];
+      setMessages(messagesRef.current);
+      streamedCues = validateChartCues(message.chartCues, message.text, message.chartFocusKey, chart);
+    };
+    setPreparingMsgId(voiceSettings.readingAloud ? replyId : null);
+    const speech = beginSpeechTurn(voiceSettings, {
+      onStart: () => { if (speechActive()) { setPreparingMsgId(null); setCurrentlySpeakingMsgId(replyId); onSpeechStateChange(true, activeStreamMessage.current?.text.slice(0, 110) || null, streamedCues[0]?.targets[0] || null); } },
+      onEnd: () => { if (speechActive()) { focus([]); setPreparingMsgId(null); setCurrentlySpeakingMsgId(null); setKaraokeCharIndex(null); onSpeechStateChange(false, null, null); } },
+      onWordBoundary: charIndex => { if (speechActive()) { setKaraokeCharIndex(charIndex); focus(chartFocusAt(streamedCues, charIndex)); } },
+    }, interrupted ? 'interrupt' : 'receipt');
 
     if (
       text.toLowerCase().includes('i am') ||
@@ -360,12 +406,22 @@ export const NatallyChatbot: React.FC<NatallyChatbotProps> = ({
     }
 
     try {
-      const promptQuery = mediaToSave
+      let promptQuery = mediaToSave
         ? `${text}\n[Attached Media: ${mediaToSave.name}. Please incorporate insights from this shared media into our astrological reading and lore!]`
         : text;
 
-      const result = await askNatally(promptQuery, messages, chart, userLore, undefined, { partnerChart, calculationSession, isCurrentSession: sessionIsActive });
-      if (!sessionIsActive()) return;
+      if (interrupted) promptQuery += '\n[Delivery context: the previous reply was interrupted while its displayed text remained available. Do not assume the reason or what was heard. Address this new message.]';
+      await speech.acknowledged;
+      if (!active()) return;
+      const result = await askNatally(promptQuery, history, chart, userLore, undefined, {
+        partnerChart, calculationSession, isCurrentSession: active, signal: controller.signal,
+        onPartial: partial => {
+          if (!active() || !partial.text.trim()) return;
+          storeMessage({ ...baseMessage, text: partial.text, chartCues: partial.chartCues, chartFocusKey: partial.chartFocusKey });
+          speech.update(partial.text);
+        },
+      });
+      if (!active()) return;
 
       const reply = result.text;
       const targetEntity = extractAstrologicalEntity(reply);
@@ -379,7 +435,7 @@ export const NatallyChatbot: React.FC<NatallyChatbotProps> = ({
         : `${text.slice(0, 20)}...`;
 
       const natallyMsg: PersistentChatMessage = {
-        id: `natally-${Date.now()}`,
+        id: replyId,
         sender: 'natally',
         text: reply,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
@@ -390,11 +446,11 @@ export const NatallyChatbot: React.FC<NatallyChatbotProps> = ({
         chartFocusKey: result.chartFocusKey,
         isOfflineMode: false,
       };
-      setMessages((prev) => [...prev, natallyMsg]);
-
-      presentMessage(natallyMsg);
+      storeMessage(natallyMsg);
+      speech.update(reply, true); void speech.done();
     } catch (e: any) {
-      if (!sessionIsActive()) return;
+      if (!active()) return;
+      speech.fail(e);
       console.error('Natally inference failed:', e);
       // Preserve the user's unfulfilled message so it is not lost
       setInputText(text);
@@ -411,7 +467,8 @@ export const NatallyChatbot: React.FC<NatallyChatbotProps> = ({
         errorType: e?.code || e?.details?.errorType || 'inference_failure',
       });
     } finally {
-      if (sessionIsActive()) setIsTyping(false);
+      if (active()) setIsTyping(false);
+      if (inferenceAbort.current === controller) inferenceAbort.current = null;
     }
   };
 
@@ -618,9 +675,10 @@ export const NatallyChatbot: React.FC<NatallyChatbotProps> = ({
   // Replay a specific turn using the loudspeaker icon with karaoke
   const handleReplayTurn = (msg: PersistentChatMessage) => {
     if (!sessionIsActive()) return;
-    if (currentlySpeakingMsgId === msg.id) {
+    if (currentlySpeakingMsgId === msg.id || preparingMsgId === msg.id) {
       stopSpeaking();
       setCurrentlySpeakingMsgId(null);
+      setPreparingMsgId(null);
       setKaraokeCharIndex(null);
       onSpeechStateChange(false, null, null);
       return;
@@ -717,8 +775,10 @@ export const NatallyChatbot: React.FC<NatallyChatbotProps> = ({
   const handleClearHistory = () => {
     if (!sessionIsActive()) return;
     if (confirm('Clear Natally conversation history? Your profile lore remains saved.')) {
+      inferenceGeneration.current++; inferenceAbort.current?.abort(); setIsTyping(false);
       stopSpeaking();
       presentationGeneration.current++;
+      setPreparingMsgId(null); setCurrentlySpeakingMsgId(null); setKaraokeCharIndex(null); onSpeechStateChange(false, null, null);
       onChartFocus?.([], chart);
       setMessages([
         {
@@ -741,6 +801,7 @@ export const NatallyChatbot: React.FC<NatallyChatbotProps> = ({
       stopSpeaking();
       onSpeechStateChange(false, null, null);
       setCurrentlySpeakingMsgId(null);
+      setPreparingMsgId(null);
     }
   };
 
@@ -987,6 +1048,7 @@ export const NatallyChatbot: React.FC<NatallyChatbotProps> = ({
               const chartCues = messageChartCues.get(m.id) || [];
               const isNatally = m.sender === 'natally';
               const isSpeakingThisMsg = currentlySpeakingMsgId === m.id;
+              const isPreparingThisMsg = preparingMsgId === m.id;
 
               return (
                 <div
@@ -1133,7 +1195,7 @@ export const NatallyChatbot: React.FC<NatallyChatbotProps> = ({
                             <Volume2
                               className={`w-3 h-3 ${isSpeakingThisMsg ? 'animate-pulse text-emerald-300' : ''}`}
                             />
-                            <span>{isSpeakingThisMsg ? 'Karaoke Active (Stop)' : 'Replay Voice'}</span>
+                            <span>{isSpeakingThisMsg ? 'Karaoke Active (Stop)' : isPreparingThisMsg ? 'Preparing voice (Stop)' : 'Replay Voice'}</span>
                           </button>
 
                           {m.category && (
@@ -1239,6 +1301,7 @@ export const NatallyChatbot: React.FC<NatallyChatbotProps> = ({
 
           {/* Input Footer with Media Upload & Voice Buttons */}
           <div className="natally-chat-composer shrink-0 p-3 bg-[#1d122e]/95 border-t border-[#322641] rounded-b-2xl">
+            <ConversationVoiceStatus />
             <form
               onSubmit={(e) => {
                 e.preventDefault();
@@ -1296,7 +1359,7 @@ export const NatallyChatbot: React.FC<NatallyChatbotProps> = ({
               <button
                 type="submit"
                 aria-label="Send message"
-                disabled={isTyping || (!inputText.trim() && !attachedMedia)}
+                disabled={!inputText.trim() && !attachedMedia}
                 className="p-2 rounded-xl bg-[#d4af37] hover:bg-[#f2ca50] text-[#120c1c] transition-colors cursor-pointer disabled:opacity-40"
               >
                 <Send className="w-4 h-4" />
