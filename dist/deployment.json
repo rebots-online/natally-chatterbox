@@ -1,0 +1,11 @@
+{
+  "product": "Natally",
+  "domain": "https://natally.surge.sh",
+  "sourceRepository": "https://github.com/rebots-online/natally-chatterbox",
+  "voicePipelineSourceCommit": "ce6c2bf46566cba40adbf1d557ef09d0fdb1e040",
+  "replaces": {
+    "deploymentRepository": "natally-ai-studio",
+    "effectiveDate": "2026-10-17"
+  },
+  "acceptance": "Zero incremental latency remains unpassed. See hosted report; publication is not latency or listening acceptance."
+}
