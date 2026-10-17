@@ -4,7 +4,7 @@ import { CHATTERBOX_MODEL, CHATTERBOX_REVISION, CHATTERBOX_FILES, GRAPH_PATHS, V
 import { chooseSpeechToken, int64, disposeTensors, halfToFloat } from './chatterboxGeneration';
 import { planSpeechUnits } from './speechUnits';
 import type { VoiceMeasurement } from './voiceMeasurements';
-import type { Backend, Engine, GraphRole, SpeechUnit, TensorMap, Tokenizer, VoiceFileProgress, VoiceGraphProgress, VoiceId, VoiceStatus, WebGpuNavigator, WorkerRequest } from './chatterboxTypes';
+import type { Backend, Engine, GraphRole, SpeechUnit, TensorMap, Tokenizer, VoiceFileProgress, VoiceGraphProgress, VoiceId, VoiceStatus, WebGpuNavigator, WorkerRequest, WorkerCommand } from './chatterboxTypes';
 
 env.allowLocalModels = false;
 env.useBrowserCache = true;
@@ -21,6 +21,8 @@ const references = new Map<VoiceId, TensorMap>();
 const clips = new Map<string, Float32Array>();
 let clipBytes = 0;
 let runtimeFailure = false;
+const cancelled = new Set<number>();
+let settledId = 0;
 
 function status(phase: VoiceStatus['phase'], message: string, extra: Partial<VoiceStatus> = {}): void {
   current = { ...current, phase, message, ...extra };
@@ -43,6 +45,7 @@ async function observe<T>(role: GraphRole, operation: 'session' | 'run', action:
     status(current.phase, GRAPH_PATHS[role] + ' completed', { graphs: [...graphs.values()], confirmedAt: Date.now() });
     return result;
   } catch (error) {
+    if (error instanceof DOMException && error.name === 'AbortError') throw error;
     runtimeFailure = true;
     graphs.get(key)!.state = 'error'; graphs.get(key)!.durationMs = performance.now() - started;
     measure({ operation, state: 'error', file: GRAPH_PATHS[role], backend: graphs.get(key)!.backend, durationMs: performance.now() - started });
@@ -91,7 +94,8 @@ async function loadBytes(file: keyof typeof CHATTERBOX_FILES): Promise<Uint8Arra
 }
 async function loadEngine(forceWasm: boolean): Promise<Engine> {
   if (!engine) engine = (async () => {
-    const adapter = forceWasm ? null : await (navigator as WebGpuNavigator).gpu?.requestAdapter();
+    ort.env.webgpu.powerPreference = 'high-performance';
+    const adapter = forceWasm ? null : await (navigator as WebGpuNavigator).gpu?.requestAdapter({ powerPreference: 'high-performance' });
     const backend: Backend = adapter?.features.has('shader-f16') ? 'webgpu' : 'wasm';
     const sessions = {} as Engine['sessions'];
     try {
@@ -100,7 +104,11 @@ async function loadEngine(forceWasm: boolean): Promise<Engine> {
         const model = await loadBytes(file);
         const data = await loadBytes((file + '_data') as keyof typeof CHATTERBOX_FILES);
         status('preparing', 'Preparing Chatterbox Nano · ' + backend, { graphs: [{ file, backend, operation: 'session', state: 'start', completed: 0, startedAt: Date.now() }] });
-        sessions[role] = await observe(role, 'session', () => ort.InferenceSession.create(model, { executionProviders: [backend], externalData: [{ path: file.slice(file.lastIndexOf('/') + 1) + '_data', data }] }));
+        sessions[role] = await observe(role, 'session', () => ort.InferenceSession.create(model, {
+          executionProviders: [backend],
+          preferredOutputLocation: backend === 'webgpu' && role === 'language_model' ? 'gpu-buffer' : undefined,
+          externalData: [{ path: file.slice(file.lastIndexOf('/') + 1) + '_data', data }],
+        }));
       }
       for (const file of Object.keys(CHATTERBOX_FILES) as (keyof typeof CHATTERBOX_FILES)[]) if (!/^onnx\//.test(file)) await loadBytes(file);
       const tokenizer = await AutoTokenizer.from_pretrained(CHATTERBOX_MODEL, { revision: CHATTERBOX_REVISION });
@@ -112,7 +120,12 @@ async function loadEngine(forceWasm: boolean): Promise<Engine> {
   })().catch(error => { engine = null; throw error; });
   return engine;
 }
-async function runGraph(engine: Engine, role: GraphRole, feeds: TensorMap): Promise<TensorMap> { return observe(role, 'run', () => engine.sessions[role].run(feeds)); }
+async function runGraph(engine: Engine, role: GraphRole, feeds: TensorMap): Promise<TensorMap> {
+  if (cancelled.has(requestContext.id)) throw new DOMException('Speech interrupted.', 'AbortError');
+  const output = await observe(role, 'run', () => engine.sessions[role].run(feeds));
+  if (cancelled.has(requestContext.id)) { disposeTensors(output); throw new DOMException('Speech interrupted.', 'AbortError'); }
+  return output;
+}
 async function prepareReference(engine: Engine, voice: VoiceId): Promise<TensorMap> {
   if (!references.has(voice)) {
     const spec = VOICE_REFERENCES[voice];
@@ -187,6 +200,7 @@ async function generateUnit(engine: Engine, text: string, reference: TensorMap):
   } finally { input.dispose(); disposeTensors(cache); }
 }
 async function handleRequest(data: WorkerRequest): Promise<void> {
+  if (cancelled.delete(data.id)) { settledId = data.id; self.postMessage({ id: data.id, kind: 'cancelled' }); return; }
   runtimeFailure = false;
   let inputRejected = false;
   requestContext = { id: data.id, runId: Date.now().toString(36) + '-' + data.id, started: performance.now(), workload: data.kind === 'preload' ? 'preload' : data.text.length <= 100 ? '1-100' : data.text.length <= 300 ? '101-300' : '301-1000' };
@@ -198,6 +212,7 @@ async function handleRequest(data: WorkerRequest): Promise<void> {
     if (!(data.voice in VOICE_REFERENCES)) { inputRejected = true; throw new Error('Unsupported reference voice.'); }
     const ready = await loadEngine(data.forceWasm);
     const reference = await prepareReference(ready, data.voice);
+    if (cancelled.has(data.id)) throw new DOMException('Speech interrupted.', 'AbortError');
     if (data.kind === 'preload') {
       status('ready', 'Chatterbox Nano ready · ' + ready.backend);
       self.postMessage({ id: data.id, kind: 'preloaded' });
@@ -224,10 +239,20 @@ async function handleRequest(data: WorkerRequest): Promise<void> {
     }
     measure({ operation: 'request', state: 'complete', durationMs: performance.now() - requestContext.started });
   } catch (error) {
+    if (error instanceof DOMException && error.name === 'AbortError') {
+      status('ready', 'Speech interrupted · voice remains loaded');
+      measure({ operation: 'request', state: 'error', durationMs: performance.now() - requestContext.started });
+      self.postMessage({ id: data.id, kind: 'cancelled' });
+      return;
+    }
     status('error', (error instanceof Error ? error.message : String(error)) + ' · last operation: ' + current.message);
     measure({ operation: 'request', state: 'error', durationMs: performance.now() - requestContext.started });
     self.postMessage({ id: data.id, kind: 'failed', message: current.message, runtimeFailed: runtimeFailure, inputRejected, backend: current.graphs?.[0]?.backend || 'wasm' });
-  } finally { clearInterval(heartbeat); }
+  } finally { clearInterval(heartbeat); cancelled.delete(data.id); settledId = data.id; }
 }
-function handleMessage(event: MessageEvent<WorkerRequest>): void { queue = queue.then(() => handleRequest(event.data)); }
+function handleMessage(event: MessageEvent<WorkerCommand>): void {
+  const data = event.data;
+  if (data.kind === 'cancel') { for (const id of data.ids) if (id > settledId) cancelled.add(id); return; }
+  queue = queue.then(() => handleRequest(data));
+}
 self.onmessage = handleMessage;

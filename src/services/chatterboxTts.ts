@@ -12,6 +12,8 @@ const preloads = new Map<VoiceId, Promise<void>>();
 let selectedVoice: VoiceId = 'F4';
 let forceWasm = false;
 let lastAcknowledgedAt = 0;
+let foregroundEpoch = 0;
+let idleEpoch = 0;
 
 export function reportVoiceStatus(value: VoiceStatus): void {
   status = value.phase === 'error' ? { ...status, ...value } : value;
@@ -46,6 +48,10 @@ function handleWorkerMessage(event: MessageEvent<WorkerMessage>): void {
   }
   const request = pending.get(data.id);
   if (!request) return;
+  if (data.kind === 'cancelled') {
+    clearTimeout(request.timer); pending.delete(data.id);
+    request.reject(new DOMException('Speech interrupted.', 'AbortError')); return;
+  }
   if (data.kind === 'failed') {
     if (data.inputRejected) { clearTimeout(request.timer); pending.delete(data.id); request.reject(new Error(data.message)); return; }
     if (data.runtimeFailed && data.backend === 'webgpu') forceWasm = true;
@@ -54,6 +60,7 @@ function handleWorkerMessage(event: MessageEvent<WorkerMessage>): void {
   clearTimeout(request.timer); pending.delete(data.id); request.resolve(data);
 }
 function requestWorker(payload: WorkerPayload): Promise<WorkerMessage> {
+  if (payload.kind !== 'preload' && !(payload.kind === 'speak' && payload.priority === 'idle')) cancelChatterbox('idle');
   if (!worker) {
     try {
       worker = new Worker(new URL('./chatterbox.worker.ts', import.meta.url), { type: 'module' });
@@ -65,7 +72,7 @@ function requestWorker(payload: WorkerPayload): Promise<WorkerMessage> {
   return new Promise((resolve, reject) => {
     const id = ++nextId;
     const timer = setTimeout(expireWorker, LIMITS.inactivityMs);
-    pending.set(id, { kind: payload.kind, resolve, reject, timer });
+    pending.set(id, { kind: payload.kind, priority: payload.kind === 'speak' && payload.priority === 'idle' ? 'idle' : 'foreground', resolve, reject, timer });
     try { worker!.postMessage({ id, ...payload }); }
     catch (error) { resetWorker(error instanceof Error ? error.message : 'Local voice could not receive the request.'); }
   });
@@ -82,23 +89,30 @@ export function initChatterbox(voice: VoiceId): Promise<void> {
   return preload;
 }
 export async function planChatterboxSpeech(text: string, voice: VoiceId): Promise<SpeechUnit[]> {
+  const epoch = foregroundEpoch;
   await initChatterbox(voice);
+  if (epoch !== foregroundEpoch) throw new DOMException('Speech interrupted.', 'AbortError');
   const message = await requestWorker({ kind: 'plan', text, voice, forceWasm });
   if (!('kind' in message) || message.kind !== 'planned') throw new Error('Local voice returned no sentence plan.');
   return message.units;
 }
-export async function chatterboxSpeak(text: string, options: { voice: VoiceId; speed: number }): Promise<LocalSpeech> {
+export async function chatterboxSpeak(text: string, options: { voice: VoiceId; speed: number; priority?: 'foreground' | 'idle' }): Promise<LocalSpeech> {
+  const epoch = options.priority === 'idle' ? idleEpoch : foregroundEpoch;
   await initChatterbox(options.voice);
+  if (epoch !== (options.priority === 'idle' ? idleEpoch : foregroundEpoch)) throw new DOMException('Speech interrupted.', 'AbortError');
   const message = await requestWorker({ kind: 'speak', text, ...options, forceWasm });
   if (!('kind' in message) || message.kind !== 'spoken') throw new Error('Local voice returned no speech.');
   if (!message.audio.samples.length || !Number.isFinite(message.audio.sampleRate) || message.audio.sampleRate <= 0) throw new Error('Local voice returned invalid audio.');
   for (const sample of message.audio.samples) if (!Number.isFinite(sample)) throw new Error('Local voice returned invalid PCM.');
   return message.audio;
 }
-export function cancelChatterbox(): void {
-  for (const request of pending.values()) if (request.kind !== 'preload') {
-    resetWorker('Speech cancelled.');
-    void initChatterbox(selectedVoice).catch(() => {});
-    return;
+export function cancelChatterbox(priority?: 'idle'): void {
+  idleEpoch++;
+  if (!priority) foregroundEpoch++;
+  const ids: number[] = [];
+  for (const [id, request] of pending) if (request.kind !== 'preload' && (!priority || request.priority === priority)) {
+    ids.push(id); clearTimeout(request.timer); pending.delete(id);
+    request.reject(new DOMException('Speech interrupted.', 'AbortError'));
   }
+  if (ids.length) worker?.postMessage({ kind: 'cancel', ids });
 }

@@ -67,3 +67,10 @@ export const VOICE_REFERENCES = {
 } as const;
 export const LIMITS = { textTokens: 768, speechTokens: 4096, contextTokens: 8196, clipBytes: 16000000, referenceSamples: 240000, sampleRate: 24000, inactivityMs: 300000 } as const;
 export const SAMPLING = { temperature: 0.8, topK: 1000, topP: 0.95, repetitionPenalty: 1.2, startToken: 6561, stopToken: 6562, silenceToken: 4299 } as const;
+export const BACKCHANNEL_POOL_VERSION = 1;
+export const BACKCHANNEL_TARGET = 2;
+export const BACKCHANNEL_PALETTES = {
+  receipt: ['Hmm.', 'Let me take a look.', 'Let me check your chart.', 'One moment.'],
+  interrupt: ['Mm.', 'Hmm.', 'Mm-hm.', 'Ah.'],
+  answer: ['All right.', "Okay. Let's start here.", "Here's what stands out.", "Let's take this a little at a time."],
+} as const;

@@ -17,11 +17,13 @@ do not even consider a model change unless Robin surfaces it in discussion.
   checklist. C01–C32 name the entire added module/type/export/class surface and
   bound amended bodies. Preserve the first-use empty-pool case as unpassed, not
   a latency exception; expose actual preparation while preserving text input.
-- [ ] 🟪 CL02 — C01–C07: types, one-sentence/minimum-unit planning, foreground/idle
+- [X] 🟪 CL02 — C01–C07: types, one-sentence/minimum-unit planning, foreground/idle
   request priority and cooperative cancellation through worker graph boundaries.
   Preserve sessions on ordinary interruption; retain explicit fault recovery.
   Keep language-model KV outputs on GPU with the pinned runtime's supported IO
   binding. Verify TypeScript and inspect cancellation/tensor disposal paths.
+  ✅ TypeScript/diff check pass; cancellation paths reviewed. Real GPU/timing and
+  interruption acceptance remain CL09 observations, not inferred from this check.
 - [ ] 🟪 CL03 — C08/C09/C14: implement speechBackchannels.ts's selected-voice pool,
   startup local-cache restoration, two variants per stage, idle-only serial
   replenishment, bounded/validated PCM storage and input/foreground pre-emption.
