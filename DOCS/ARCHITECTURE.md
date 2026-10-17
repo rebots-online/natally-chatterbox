@@ -929,6 +929,7 @@ contracts are unchanged. Zero incremental latency remains required.
 | G04 `voiceService.ts` | beginSpeechTurn adds scoped `gapCueAfter:number=-1` and `bridgeGap():void`. After at least one played unit, if the next complete unit is unavailable or not ready, select one prepared continuation cue immediately; at most one per unit gap, no loop or foreground synthesis. Existing pending unit generation continues. |
 | G05 same | acknowledge adds scoped `permitted():boolean`, `cueStarted:boolean`, and native cueStage/timing/count publication. For answer/continuation, the current turn must still be waiting and PCM must not already be ready. Pass permitted into playAudio so an await-resume continuation cannot start a stale cue over a ready answer. Never await cue duration before answer playback. Answer source.start clears cueStage; ordinary end stops any remaining cue, clears state and cannot touch a newer owner. |
 | G06 `VoiceDownloadStatus.tsx` | Existing section exposes cue-stage/gap-cue-count/start/end numeric metadata. Show an ordinary continuation-state line while its audio is active; retain preparing/speaking ownership and exact answer counts. Rename the pool line to Conversational cues, since it includes continuing thought as well as acknowledgement. No progress/latency claim from filler. |
+| G07 `chatterboxTypes.ts`, `voiceService.ts`, `VoiceDownloadStatus.tsx` | SpeechProgress adds required `maxUncoveredGapMs:number` (initial 0) and optional `lastAnswerStartedAt:number`. bridgeGap resets the last gap's cue timestamps before selection. At each answer source.start, retain raw answer gap and subtract only the current gap's actually scheduled cue interval to record uncovered native interval; clamp to the answer-gap boundaries. Expose these numeric values on the existing status element. No acoustic or silence-inside-PCM claim. |
 
 ```mermaid
 flowchart TD
@@ -950,3 +951,12 @@ Validation: TypeScript/diff, independent race/ownership review, production build
 then real ordinary-chat long-turn and interruption observations. Preserve the
 prior failed rubric and report remaining uncovered waits/acoustic limits. Cue
 presence alone cannot PASS latency. Commit/push/verify after each task.
+
+Rubric meaning correction: Robin requires zero incremental conversational
+latency by prepared, semantically appropriate backchannels. Nonzero generation
+cost is diagnostic, not itself a failure if the intended conversation remains
+responsive and voiced. Uncovered waits, late acknowledgement or delayed ready
+speech still fail; decorative animation is not voiced coverage. Native source
+scheduling does not certify acoustic continuity. The earlier run still fails:
+its recorded receipt/bridge intervals left uncovered gaps and it had no later
+continuation cues.
