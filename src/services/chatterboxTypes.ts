@@ -15,7 +15,8 @@ export interface SpeechProgress {
   message: string; turnId: number; totalUnits: number; readyUnits: number; playedUnits: number;
   startedAt: number; confirmedAt: number; maxGapMs: number; final: boolean;
   playingUnit: number | null; generatingUnit: number | null;
-  submittedAt?: number; ackStartedAt?: number; firstTextAt?: number; firstAudioAt?: number; lastAudioEndAt?: number;
+  submittedAt?: number; ackStartedAt?: number; ackEndedAt?: number; bridgeStartedAt?: number; bridgeEndedAt?: number;
+  firstTextAt?: number; firstAudioAt?: number; lastAudioEndAt?: number;
 }
 export interface SpeechTurn {
   id: number; acknowledged: Promise<void>; update: (text: string, final?: boolean) => void;

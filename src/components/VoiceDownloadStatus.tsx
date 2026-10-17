@@ -24,7 +24,13 @@ export function ConversationVoiceStatus() {
   }, [working]);
   const hasUnits = !!speech?.totalUnits;
   const loading = !hasUnits && ['loading', 'preparing'].includes(engine.phase);
-  return <section aria-label="Conversation voice status" className="mb-2 rounded-xl border border-[#d4af37]/35 bg-[#130c20] px-3 py-2 text-[11px] text-[#e6d8be]">
+  return <section aria-label="Conversation voice status" className="mb-2 rounded-xl border border-[#d4af37]/35 bg-[#130c20] px-3 py-2 text-[11px] text-[#e6d8be]"
+    data-phase={speech?.phase} data-turn-id={speech?.turnId} data-submitted-at={speech?.submittedAt}
+    data-ack-started-at={speech?.ackStartedAt} data-ack-ended-at={speech?.ackEndedAt}
+    data-bridge-started-at={speech?.bridgeStartedAt} data-bridge-ended-at={speech?.bridgeEndedAt}
+    data-first-unit-text-at={speech?.firstTextAt} data-first-audio-at={speech?.firstAudioAt}
+    data-last-audio-end-at={speech?.lastAudioEndAt} data-max-gap-ms={speech?.maxGapMs}
+    data-total-units={speech?.totalUnits} data-ready-units={speech?.readyUnits} data-played-units={speech?.playedUnits} data-final={speech?.final}>
     <div className="flex items-center justify-between gap-2">
       <span role="status" aria-live="polite" className={speech?.phase === 'error' ? 'text-amber-200' : 'text-[#f2ca50]'}>
         {active || speech?.phase === 'error' || speech?.phase === 'interrupted' ? speech.message : loading ? 'Preparing local voice' : speech?.phase === 'complete' ? 'Voice finished' : pool.message}
@@ -36,7 +42,7 @@ export function ConversationVoiceStatus() {
       <progress aria-label={speech!.final ? 'Reply sentences played' : 'Received sentences played; reply length not yet final'} max={speech!.totalUnits} value={speech!.playedUnits} className="mt-1 block h-1 w-full accent-[#d4af37]" />
     </>}
     {active && !hasUnits && <p className="mt-1 text-[#bdb0c5]">Reply length is not known yet.</p>}
-    {active && speech?.phase !== 'speaking' && <p className="mt-1 tabular-nums text-[#bdb0c5]">{(Math.max(0, now - speech!.startedAt) / 1000).toFixed(1)}s since this voice turn began · {(Math.max(0, now - speech!.confirmedAt) / 1000).toFixed(1)}s since the last completed work boundary</p>}
+    {active && speech?.phase !== 'speaking' && <p className="mt-1 tabular-nums text-[#bdb0c5]">{(Math.max(0, now - speech!.startedAt) / 1000).toFixed(1)}s since this voice turn began · {(Math.max(0, now - speech!.confirmedAt) / 1000).toFixed(1)}s since the last reply or audio boundary</p>}
     {loading && !!engine.totalBytes && <p className="mt-1 tabular-nums">Voice files: {((engine.loadedBytes || 0) / 1000000).toFixed(1)} / {(engine.totalBytes / 1000000).toFixed(1)} MB read</p>}
     <p className="mt-1 text-[10px] text-[#bdb0c5]">Acknowledgements: {pool.ready} / {pool.total} prepared{pool.ready < pool.total ? ' · prepared silently when idle' : ' · saved locally'}{active && !speech?.ackStartedAt && speech?.submittedAt ? ' · no prepared submission cue was played' : ''}</p>
     {(pool.error || engine.phase === 'error' && !active) && <p className="mt-1 text-amber-200">{pool.error || engine.message}</p>}

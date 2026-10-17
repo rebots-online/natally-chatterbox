@@ -894,6 +894,14 @@ required ownership/conservation repairs, not latency exemptions.
 
 ### 10.3 Verification, publication and deployment
 
+C02/C12/C32 measurement amendment: SpeechProgress additionally permits optional
+ackEndedAt, bridgeStartedAt and bridgeEndedAt numeric timestamps. Reset these per
+turn; acknowledge records native source scheduling/settlement only while current.
+The existing Conversation voice status section exposes its own numeric turn,
+unit and timestamp state in data-* attributes for read-only rubric observation.
+No speech/account/history text is included in those attributes. This is native
+scheduling evidence, never acoustic onset or a substitute for visible progress.
+
 Run TypeScript, the normal production build, diff checks, independent whole-change
 source review and the real production-view rubric. No unit suite/new browser test
 harness. Native supporting voice-page observations are distinguished from actual

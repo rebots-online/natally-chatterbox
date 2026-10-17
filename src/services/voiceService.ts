@@ -253,19 +253,24 @@ export function beginSpeechTurn(settings: VoiceSettings, callbacks: SpeechCallba
   publishSpeechProgress({ phase: acknowledgement ? 'thinking' : 'preparing', message: acknowledgement === 'interrupt' ? 'Interruption received · preparing your new reply' : acknowledgement ? 'Message received · preparing your reply' : 'Preparing voice',
     turnId: requestGeneration, totalUnits: 0, readyUnits: 0, playedUnits: 0, startedAt: Date.now(), submittedAt: acknowledgement ? Date.now() : undefined,
     confirmedAt: Date.now(), final: false, playingUnit: null, generatingUnit: null, maxGapMs: 0,
-    ackStartedAt: undefined, firstTextAt: undefined, firstAudioAt: undefined, lastAudioEndAt: undefined });
+    ackStartedAt: undefined, ackEndedAt: undefined, bridgeStartedAt: undefined, bridgeEndedAt: undefined,
+    firstTextAt: undefined, firstAudioAt: undefined, lastAudioEndAt: undefined });
   const acknowledge = async (stage: BackchannelStage, scheduled?: () => void): Promise<boolean> => {
     const audio = settings.readingAloud && current() ? backchannelPool.take(stage) : null;
     if (!audio) { scheduled?.(); return false; }
     try {
       return await playAudio({ ...audio, sampleRate: audio.sampleRate * settings.rate }, settings, current, () => {
-        if (stage !== 'answer') publishSpeechProgress({ ackStartedAt: Date.now() });
+        publishSpeechProgress(stage === 'answer' ? { bridgeStartedAt: Date.now() } : { ackStartedAt: Date.now() });
         scheduled?.();
       });
     } catch (error) {
       if (current()) publishSpeechProgress({ message: 'Acknowledgement playback: ' + (error instanceof Error ? error.message : String(error)) });
       return false;
-    } finally { scheduled?.(); }
+    } finally {
+      if (current() && (stage === 'answer' ? speechProgress.bridgeStartedAt : speechProgress.ackStartedAt))
+        publishSpeechProgress(stage === 'answer' ? { bridgeEndedAt: Date.now() } : { ackEndedAt: Date.now() });
+      scheduled?.();
+    }
   };
   let ackScheduled!: () => void;
   const acknowledged = new Promise<void>(resolve => { ackScheduled = resolve; });
