@@ -1,0 +1,46 @@
+[
+  {
+    "at": 1792263396724,
+    "attributes": {
+      "data-ack-started-at": "1792263396632",
+      "data-cue-stage": "receipt",
+      "data-final": "false",
+      "data-gap-cue-count": "0",
+      "data-max-gap-ms": "0",
+      "data-max-uncovered-answer-gap-ms": "0",
+      "data-phase": "thinking",
+      "data-played-units": "0",
+      "data-ready-units": "0",
+      "data-submitted-at": "1792263396624",
+      "data-total-units": "0",
+      "data-turn-id": "6"
+    },
+    "text": "Message received · preparing your replyStopReply length is not known yet.0.0s since this voice turn began · 0.0s since the last reply or audio boundaryConversational cues: 16 / 16 prepared · saved locally"
+  },
+  {
+    "at": 1792263421762,
+    "attributes": {
+      "data-ack-ended-at": "1792263397931",
+      "data-ack-started-at": "1792263396632",
+      "data-bridge-ended-at": "1792263404382",
+      "data-bridge-started-at": "1792263403065",
+      "data-final": "true",
+      "data-first-audio-at": "1792263404800",
+      "data-first-unit-text-at": "1792263403064",
+      "data-gap-cue-count": "1",
+      "data-gap-cue-ended-at": "1792263406580",
+      "data-gap-cue-started-at": "1792263406151",
+      "data-last-answer-started-at": "1792263406580",
+      "data-last-audio-end-at": "1792263408162",
+      "data-max-gap-ms": "429",
+      "data-max-uncovered-answer-gap-ms": "0",
+      "data-phase": "complete",
+      "data-played-units": "2",
+      "data-ready-units": "2",
+      "data-submitted-at": "1792263396624",
+      "data-total-units": "2",
+      "data-turn-id": "6"
+    },
+    "text": "Voice finished2 / 2 sentences ready · 2 / 2 playedConversational cues: 16 / 16 prepared · saved locally"
+  }
+]

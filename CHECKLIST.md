@@ -7,14 +7,16 @@ gaze/blinks, mystical gem/trinket background, relevant glowing chart inset and
 natal/current-sky overlay. Consult Open Design MCP and Google Stitch; use the
 existing Natally identity. Add supplied Open Design global MCP config if absent.
 Design consultation/configuration/closed architecture/implementation/runtime
-remain separate; these visuals and later-pause cues are not in current deployment.
+remain separate; later-pause cues are deployed; the large scene remains a design prototype.
 
 - [X] 🟫 G00 — Add/validate the supplied global Open Design MCP definition and
   perform actual initialize/tools/agent discovery. Receipt f355132 pushed/verified.
 - [X] 🟪 G01 — Commission Open Design with verified GPT-6-Astra, original artwork,
   full brief and warm candle-lit atelier/ordered shelf/constellation/no-portal
   updates. Brief/dispatch/art direction and mouth research pushed after tasks.
-  Generation is still running; no rendered design acceptance claimed.
+  Both GPT-6-Astra runs completed. Actual initial/refined artifacts inspected;
+  warm shelves/nine candles/constellations/free scene preserved. Product integration
+  remains G05; the proposed silent third cue was not accepted.
 - [X] 🟪 G02 — Release closed later-gap cue amendment CB-ARCH-3 §11/G01–G06.
 - [X] 🟪 G03 — Implement continuation pool/queue ownership and native cue state;
   TypeScript/diff review, no new model/download/foreground cue generation.
@@ -28,25 +30,35 @@ remain separate; these visuals and later-pause cues are not in current deploymen
   matches. Ordinary production run completed 8/8 with seven continuation cues;
   maximum native uncovered finalized gap 4.610 s. Zero latency remains unpassed.
   Report/stills/raw observations in v0.0.0-chatterbox-continuation-20261017.
-- [ ] 🟫 G06 — Prepare animated timing waterfalls and before/after report demos.
+- [X] 🟫 G06 — Prepare animated timing waterfalls and before/after report demos.
   Separate measured production boundaries from unknown intervals and design
   simulations; show uncovered waits without changing the zero-latency criterion.
   ✅ Interactive measured waterfalls, gap zoom, before/after status stills built
-  and exercised in Chrome. Open Design scene embedding remains pending.
+  and exercised in Chrome. Actual refined scene/before-after embedded, portable
+  65-frame GIF added; live production timings and silent design studies labelled.
 - [ ] 🟪 G05 — Inspect Open Design's actual rendered result and retrieve its
   bundle; reconcile the candle-lit atelier and free scene direction, then close
   the exact animated-character/chart integration architecture before product code.
   ✅ Initial actual prototype inspected; later-gap/answer-ready preemption
-  rehearsed as silent simulation. Warmer atelier/cue-fatigue refinement commissioned.
+  rehearsed as silent simulation. Warm refinement inspected and archived. Exact
+  product integration architecture/runtime still open; no silent-cue exemption.
 - [X] 🟫 G08 — Promote this checkout to natally.surge.sh replacing natally-ai-studio
   as of bundle7378d5c; Surge1792261498437,67/67 SHA-256 matches,production
   backend exact-origin preflight and real hosted one-sentence1/1 reply observed.
 - [X] 🟪 G10 — Release CB-ARCH-4 ready-pool variation contract.
-- [ ] 🟪 G11 — Implement/review/build/deploy expanded idle diversity and verify
+- [X] 🟪 G11 — Implement/review/build/deploy expanded idle diversity and verify
   ordinary production behavior; do not accept an uncovered silent third cue.
-- [ ] 🟪 G09 — Reusable private voice-ingest/tweaker Web UI is now its own project
+  ✅ Source01eca4f/bundle0619090 pushed/verified, Surge1792263255485,76/76
+  served SHA256 matches. Normal16/16pool and real2/2turn observed: receipt8ms,
+  one429ms later gap covered. Initial5.134s+0.418s still uncovered; latency FAIL.
+  Heard variation/prosody and phones remain unverified.
+- [X] 🟪 G09 — Reusable private voice-ingest/tweaker Web UI is now its own project
   at C:/Users/Admin/Desktop/DevProjects/vociferous-cloner-studio; implement and
   verify its export/consumer adapter. Natally remains here.
+  ✅ Separate origin/branch, source25153eb/report3c45999 pushed/verified.
+  Same-model preview, history, ZIP/hash/WAV and temporary consumer stage observed.
+  File-chooser import, real operator voice/listening and final promotion remain open.
+  See that project's DOCS/verification/REPORT-20261017.md.
 
 Released: Robin approved §9 and explicitly instructed completion of the closed
 architecture/checklist followed by implementation and the production-view rubric.
