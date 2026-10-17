@@ -727,22 +727,22 @@ behavior. No additional application class or external service is introduced.
 
 ## 9. Conversational latency amendment — operator review, 17 October 2026
 
-**State: proposed design, not a coder release.** This section records Robin's
-17 October requirements and the measured defects in the published build. It does
-not attest implementation, change the pinned model, or waive the closed-contract
-approval process above. The whole-turn-first rule, frozen production UI and
-completed-reply-only transport in CB-ARCH-1 conflict with the requested outcome
-and need an explicit replacement contract before implementation.
+**State: approved by Robin, 17 October 2026.** Robin explicitly directed:
+"finish the closed architecture and checklist, then implement it and run the
+actual production-view rubric." Section 10 is that executable amendment and
+supersedes conflicting whole-turn-first, frozen-UI, completed-JSON-only and
+worker-teardown rules in CB-ARCH-1. This approval includes finishing and executing
+the derived checklist without another approval cycle. The pinned model is fixed.
 
 ### Outcome and fixed requirements from this conversation
 
 Preserve the smoother Chatterbox speech while aiming for **zero incremental
 conversational latency**. Neither moving counters into production nor covering
 an arbitrarily long wait with filler satisfies the target. If a real rubric run
-shows remaining generation latency, establish what is unavoidable in the chosen
-approach, discuss the evidence and a different approach/model with Robin, and
-obtain that decision before accepting a compromise. A model change, provider,
-cost or infrastructure change is not released by this proposal.
+shows remaining generation latency, establish the failing boundary and discuss
+the evidence and pipeline remedies with Robin before accepting a compromise.
+Do not consider a model change as a remedy unless Robin surfaces that possibility
+in operator discussion. No provider, cost or infrastructure change is released.
 
 | Requirement | Required behavior |
 |---|---|
@@ -790,11 +790,11 @@ cost or infrastructure change is not released by this proposal.
 
 ### Proposed approach and affected boundaries
 
-Recommend changing the conversational pipeline before selecting a different
-model. Keep Chatterbox provisional: it remains acceptable only if the revised
-ordinary-app gauntlet meets Robin's latency, interruption and listening criteria.
-A splitter-only patch is insufficient; a model swap alone leaves the transport,
-queue ownership and misleading UI defects intact.
+Implement the approved conversational pipeline using the existing Chatterbox
+model and immutable assets. The ordinary-app gauntlet must meet Robin's latency,
+interruption and listening criteria. A splitter-only patch leaves the transport,
+queue ownership and misleading UI defects intact. Alternative models are outside
+the solution search unless Robin raises them in discussion.
 
 | Existing home | Proposed ownership after contract approval |
 |---|---|
@@ -811,11 +811,7 @@ The pinned acoustic package itself is non-streaming:
 [conversion model card](https://huggingface.co/owensong/chatterbox-nano-ONNX/blob/4a66d7dab72a9e98f24b515d49a1d7a81632df2e/README.md).
 Sentence pipelining must not be described as streaming that acoustic decoder.
 
-### Required review before the executable contract
-
-Approve the approach above, then enumerate its closed AST declarations and
-derive the implementation checklist. Do not treat this proposal as permission
-to invent signatures or implement an undeclared streaming protocol.
+### First-use acceptance boundary
 
 The first-ever empty-pool case must be resolved explicitly: with idle-only
 creation and no additional downloaded clips, an immediate selected-voice clip
@@ -823,3 +819,79 @@ does not yet exist before idle generation has finished. Prewarming during normal
 startup/onboarding is the proposed first measure, but its success is not assumed
 for returning users or an early submission. It remains a failing acceptance case
 until measured and resolved, never a silent exception to zero incremental latency.
+
+## 10. Closed conversational speech contract — CB-ARCH-2, released 17 October 2026
+
+Authority: Robin's explicit approval and instruction to complete this contract,
+derive the checklist, implement and run production-view acceptance in one execution.
+The current model/revision/runtime/reference assets/sampling remain immutable.
+No unit suite or new coded browser harness. Existing verification page remains
+supporting evidence only. Use ordinary authenticated production UI for acceptance.
+
+### 10.1 Closed authored declarations and bindings
+
+The following declarations extend/replace the named existing bodies. Function-local
+bindings implement the listed algorithms; they must not create unlisted product
+entities, modules, exports, classes or dependencies. Native callback/loop/catch
+bindings belong to the owning function, not a new subsystem. This supersedes the
+CB-ARCH-1 temporary-name freeze for these amended bodies only.
+
+| ID / home | Exact declarations / interface | Body and state contract |
+|---|---|---|
+| C01 `chatterboxTypes.ts` | `SpeechSegment { text:string; start:number; end:number }`; `SpeechUnit extends SpeechSegment { tokenCount:number }`; `BackchannelStage = 'receipt'|'interrupt'|'answer'`; `SpeechCallbacks { onStart?:()=>void; onEnd?:()=>void; onWordBoundary?:(charIndex:number,charLength?:number)=>void }` | Exact UTF-16 prepared-text segments; callbacks use original visible-text offsets. No estimated boundary claims beyond existing word timing. |
+| C02 same | `SpeechProgress` with phase `'idle'|'thinking'|'preparing'|'speaking'|'complete'|'interrupted'|'error'`; message:string; turnId,totalUnits,readyUnits,playedUnits,startedAt,confirmedAt,maxGapMs:number; final:boolean; playingUnit,generatingUnit:number|null; optional submittedAt,ackStartedAt,firstTextAt,firstAudioAt,lastAudioEndAt:number; `SpeechTurn { id:number; acknowledged:Promise<void>; update:(text:string,final?:boolean)=>void; done:()=>Promise<boolean>; fail:(error:unknown)=>void; cancel:()=>void }` | Progress describes this turn, survives native worker ready/synthesizing messages, and advances only on real unit/audio boundaries. Unknown final total is labelled as received units. No numeric tolerance waives zero incremental latency. |
+| C03 same | Speak request adds optional `priority:'foreground'|'idle'`; `WorkerCommand = WorkerRequest | { kind:'cancel'; ids:number[] }`; worker message adds `{id:number;kind:'cancelled'}`; PendingRequest adds priority | Cancel is an out-of-band command, not a FIFO job. Cancelled promises reject with AbortError. Preloads/session creation are retained; genuine native failures/watchdog still use existing reset. |
+| C04 `speechUnits.ts` | `segmentSpeechText(text:string, final:boolean):SpeechSegment[]`; amended `planSpeechUnits(text,countTokens,maxTokens):SpeechUnit[]` | Segment each paragraph/item with Intl.Segmenter sentence granularity; fallback sentence punctuation scanning. No greedy packing. Hold the incomplete final segment during streaming; newline-closed logical units can commit. Preserve leading/inter-unit whitespace in source slices; attach trailing whitespace to the last final unit. Validate each complete unit against tokenizer capacity before synthesizing it; in a completed batch, validate all units before playback. |
+| C05 `chatterbox.worker.ts` | module `cancelled:Set<number>`; amended `handleMessage`, `handleRequest`, `runGraph`, `observe`, `loadEngine` | Out-of-band cancellations mark IDs immediately. Queued cancelled jobs do no work. Check at each run boundary; dispose returned tensors if cancellation won. AbortError does not mark runtimeFailure or reset sessions. Delete cancelled IDs on job settlement. Keep language-model outputs GPU resident on WebGPU through `preferredOutputLocation:'gpu-buffer'`; download only logits for sampling. Select high-performance WebGPU provider, retain existing WASM selection. Same model and tensor contract. |
+| C06 `chatterboxTts.ts` | `chatterboxSpeak(text,options:{voice:VoiceId;speed:number;priority?:'foreground'|'idle'}):Promise<LocalSpeech>`; `cancelChatterbox(priority?:'idle'):void`; amended request/message handling | Reject/remove only matching pending requests and post cancel IDs; do not restart worker. Any foreground plan/speak first pre-empts idle work. A late cancelled response cannot resolve another request. Track original pending generation across await-init so obsolete work cannot be enqueued after cancellation. |
+| C07 `chatterboxModel.ts` | `BACKCHANNEL_PALETTES`, `BACKCHANNEL_POOL_VERSION = 1`, `BACKCHANNEL_TARGET = 2` | Receipt: `Hmm.`, `Let me take a look.`, `Let me check your chart.`, `One moment.` Interrupt: `Mm.`, `Hmm.`, `Mm-hm.`, `Ah.` Answer: `All right.`, `Okay. Let's start here.`, `Here's what stands out.`, `Let's take this a little at a time.` Two ready variants per stage; rotate the larger palette on replenishment. Delivery is listened to, never certified by punctuation. |
+| C08 new `src/services/speechBackchannels.ts` | `PoolSnapshot { ready:number; total:number; message:string; error:string|null }`; `BackchannelPool` methods `configure(voice:VoiceId):Promise<void>`, `setBusy(busy:boolean):void`, `take(stage:BackchannelStage):LocalSpeech|null`, `snapshot():PoolSnapshot`, `subscribe(listener:(snapshot:PoolSnapshot)=>void):()=>void`, `pause():void`, private `notify():void`, `schedule():void`, `replenish():Promise<void>`; singleton `backchannelPool` | Fields: voice, epoch, busy, running, timer, idleId, clips, lastUsed, failed, listeners, error, lastActivity. Existing voiceService owns orchestration/settings/playback, so this separate home keeps pool storage/scheduling independent and files under 500 lines. |
+| C09 C08 cache/scheduling | Cache name `natally-chatterbox-backchannels-v1`; same-origin keys containing model revision, reference Git blob, voice, stage, palette index; PCM float32, header sample rate 24000 | No network fallback for a missing clip. Restore local clips independently of engine readiness. Validate nonempty finite PCM, byte alignment and <=10 seconds per clip. Persist max 16 MB across voices by oldest cache entry; active memory only selected voice. Idle task generates one missing variant, checks epoch/busy before and after each await, yields between clips. Actual foreground turn sets busy before any queue work. Pointer/key/touch activity cancels idle jobs, waits for quiet before rescheduling. Failed entries do not retry-loop. Cache/generation failures surface as pool error, not false readiness. |
+| C10 `voiceService.ts` | module `speechProgress`, `speechListeners`; `publishSpeechProgress(update:Partial<SpeechProgress>):void`; `subscribeSpeechProgress(listener:(progress:SpeechProgress)=>void):()=>void`; amended globals generation/finishPlayback/finishUtterance | A single active speech owner covers thinking, acknowledgements, synthesis and playback. `isSpeechBusy` protects it from mascot chatter. Existing settings/cleanup APIs retained. `saveVoiceSettings` configures the selected-voice pool; settings changes do not ship or fetch clips. |
+| C11 same | `stopPlayback():void`; `playAudio(audio:LocalSpeech,settings:VoiceSettings,current:()=>boolean,onStart?:()=>void,onWord?:(position:number,length:number)=>void,text?:string):Promise<boolean>` | Same local AudioContext, pitch and tone filters. Start/end reflect source.start/onended, not queued intent. Cancellation stops/disconnects source, clears word timers and settles playback false. Observers only run if current; callbacks cannot revive stale work. Backchannels use this same interruptible playback path but do not advance answer offsets. |
+| C12 same | `beginSpeechTurn(settings:VoiceSettings,callbacks?:SpeechCallbacks,acknowledgement?:BackchannelStage):SpeechTurn`; amended `speakNatallyText` wrapper | Stop old owner, reserve generation, set pool busy, publish thinking/preparing immediately. Receipt/interruption selection reads memory only. `acknowledged` settles after scheduling ready audio, or immediately if pool empty/muted; never await clip completion or generate a missing clip. `update` accepts cumulative visible text; commit only stable complete segments, validate immutable committed prefix, retain source offset maps. Once eligible answer exists, choose answer bridge once if still waiting; skip/cut bridge when answer is ready. |
+| C13 C12 queue | Scoped closures `current`, `end`, `fail`, `notify`, `synthesize`, `prefetch`, `pump`, `acknowledge`, `update` and returned `done`, `cancel` | Bounded one-ahead generation in both resource modes; no slow-RTF switch back to serial. Generation starts for a following committed unit during current playback, including a newly arriving unit. Catch every pending generation outcome. Pump waits on explicit notification, not polling. Start answer at unit zero; raw-prefix conservation prevents mid-turn starts. `done` closes input; end once; cancellation wakes pump and resolves false. For complete speakNatallyText, preflight full plan before enqueuing. Record start/first-text/first-audio/unit-completion/max-gap timestamps; raw measurements are not a zero-latency PASS. |
+| C14 `main.tsx` | `startupSettings` binding; configure pool at startup alongside existing immediate model preload | No auth or settings visit required. Restore palettes from storage immediately; generate only in idle periods. Bottom diagnostic strip mounts only for DEV or explicit `voiceDebug` URL parameter. Ordinary chat gets its own status. |
+| C20 new `netlify/lib/event-stream.mjs` | `readEventStream(response,onEvent,signal?):Promise<void>` | Universal browser/server SSE reader. TextDecoder streaming, CRLF and LF, multiline data, `[DONE]`, split UTF-8/frame boundaries. Max buffered frame 262144 chars; cancellation releases reader. Observer errors propagate. No dependency or secret exposure. |
+| C21 same | `streamCompletion(upstream,headers,model,signal?):Response` | Return SSE with no-store and existing CORS policy. Aggregate only delta.content as visible text; ignore reasoning. Emit `{type:'text',text:delta}`. Assemble indexed tool deltas, enforce call/count/argument/ID limits before terminal tools event. End with `{type:'tools',toolCalls,text,model,source:'hosted'}` or `{type:'done',text,model,source:'hosted'}` after valid finish; errors emit `{type:'error',error}`. Non-stop/tool_calls or missing terminal completion fails explicitly; no success on truncated stream. |
+| C22 `netlify/functions/chat.mjs` | amended `handleChat` | Validate optional stream boolean; request streaming only when requested, preserve nonstream clients. Preserve auth, exact allowed origin, tool limits/rate limits, same configured provider/model and timeouts. Abort upstream on request cancellation. Preserve bounded assistant tool-round content in continuation. No provisioning/env/billing/model change. |
+| C23 `hostedInference.ts` | append optional `onText?:(text:string)=>void`, `signal?:AbortSignal` parameters to `completeHosted` and `requestHostedInference` | Combine caller cancellation and existing timeout. Stream when callback supplied; require valid terminal event/model/source. Accumulate user-visible tool-round content monotonically, retain it as a preface in final text instead of retracting spoken/displayed text. Execute validated tools exactly as before; stream only content, never reasoning or tool arguments. Check account/turn identity before every callback/await continuation. |
+| C24 `natallyChat.ts` | askNatally options add `onPartial?:(result:NatallyChatResult)=>void`, `signal?:AbortSignal` | Parse chart cues/provenance at each callback using existing parser; hide incomplete chart/provenance control prefixes until complete. Pass cumulative visible text to the chat. Existing nonstream callers retain behavior. Final response preserves every committed visible sentence and metadata. |
+| C30 `NatallyChatbot.tsx` | refs `inferenceGeneration`, `inferenceAbort`, `messagesRef`, `activeStreamMessage`; amended handleSendMessage, presentMessage, replay/clear/chart/unmount handlers | New send aborts old fetch, invalidates turn and presentation before stop, creates speech turn with receipt or interrupt stage. Input remains usable during inference/TTS/playback. Await scheduling acknowledgement before askNatally. Stream into one stable message ID; update cue metadata and speech cumulatively, call final update on completion. Never re-speak completed streamed answer. Retain displayed partial text on interruption; omit empty placeholders from inference. Explicit error/cancel stops stream and speech. Every async callback checks account/chart/turn identity. |
+| C31 same | streaming onStart/onEnd/onWordBoundary closures; optional context string passed as current user prompt prefix | Production mascot/karaoke start only on actual answer start. Per-turn words/cues use current streamed message. New prompt may state only that prior voice was interrupted while its text remained visible; never invent why or assume unread text. Saved replay uses ordinary complete-text service with no receipt/answer bridge. Stop/mute changes audio ownership, not account/history. |
+| C32 `VoiceDownloadStatus.tsx` | export `ConversationVoiceStatus()` alongside existing debug exports | Always visible inside normal chat above composer, not in disclosure. Subscribe to speech/pool state; engine status only phase/bytes/errors, avoid token-loop re-render flicker. Show phase, generated/played X of N received/final sentences, loading bytes, idle pool X/6, elapsed waiting and explicit errors. Stop control calls existing stopSpeaking. No invented percent/ETA or runaway execution counter as progress. |
+
+### 10.2 Ordering, conservation and first-use rules
+
+1. Same input gesture: invalidate old turn -> stop old audio -> cancel obsolete
+   jobs -> reserve new speech turn -> select/schedule ready receipt/interruption
+   audio -> start new inference. Never await the acknowledgement's duration.
+2. Streamed answer content is cumulative. Natural content preceding a tool call
+   remains displayed/spoken context, followed by the validated tool continuation;
+   reasoning and structured tool arguments never enter visible/spoken text.
+3. Complete sentences commit in source order. A late incomplete sentence cannot
+   rewrite a committed prefix. For an already completed reading, plan/validate all
+   units before playback. A streaming oversized unit fails before that unit's
+   generation; previously spoken units remain acknowledged, never truncated.
+4. Only one foreground speech generation runs; at most one following audio promise
+   exists while a unit plays. Idle pool work cannot run while any turn is active.
+5. Empty first-use pool: expose actual pool preparation and preserve usable text
+   submission. Do not synthesize on Send, add downloaded clips or fabricate an
+   acknowledgement. This is a known **unpassed** rubric case, not an accepted
+   latency exception. Startup/onboarding and local persistence are the measures
+   to exercise; any remaining failure is reported for operator discussion.
+6. Zero incremental latency stays unchanged. Measure and report actual remaining
+   initial or inter-unit waits; no filler/counter/build/test can turn a failure
+   into PASS. Model alternatives are excluded unless Robin introduces them.
+
+### 10.3 Verification, publication and deployment
+
+Run TypeScript, the normal production build, diff checks, independent whole-change
+source review and the real production-view rubric. No unit suite/new browser test
+harness. Native supporting voice-page observations are distinguished from actual
+chat. Preserve old dist evidence across Vite's output wipe. Publish the existing
+backend with streaming support without changing its settings/provider/model, then
+the existing Chatterbox Surge site. Verify remote commit reachability and served
+assets. Record first-use/palette/long response/interruption/context/completeness/
+production status and physical-device/listening limits separately in HOSTED_CHAT
+and the indexed run report. A failed rubric remains failed after Git publication.

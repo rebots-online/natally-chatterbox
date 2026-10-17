@@ -1,8 +1,10 @@
 # CHATTERBOX CONVERSATIONAL LATENCY — 17 October 2026
 
-Robin's current requirements are recorded in DOCS/ARCHITECTURE.md §9 and the
-conversational-latency rubric. This is a proposed replacement contract, not an
-implementation release or a claim that the latency is unavoidable.
+Released: Robin approved §9 and explicitly instructed completion of the closed
+architecture/checklist followed by implementation and the production-view rubric.
+Contract: DOCS/ARCHITECTURE.md §10 CB-ARCH-2. Execute inline without another review
+pause. Same immutable Chatterbox model/revision/graphs/references/runtime/sampling;
+do not even consider a model change unless Robin surfaces it in discussion.
 
 - [X] 🟪 Inspect the actual pipeline through verified CodeGraph, distinguish
   normal-chat feedback from debug counters, and measure fresh versus cached
@@ -11,23 +13,59 @@ implementation release or a claim that the latency is unavoidable.
 - [X] 🟪 Record separate pre-inference, interruption and post-inference semantics;
   idle-only palette creation/reuse; contextual interruption; exact turn beginnings;
   production progress and zero incremental latency as a release requirement.
-- [ ] 🟪 Review the proposed approach and resolve the first-ever empty-pool case;
-  complete the closed architecture amendment and derive/release executable tasks.
-- [ ] 🟪 Implement the released sentence/pipeline, foreground priority, idle
-  palettes, cooperative cancellation and production-status contract. No model,
-  provider, ownership, hosting or cost change without Robin's separate decision.
-- [ ] 🟪 Run the ordinary-app rubric, including fresh/long turns, faster reading
-  than listening, redirection during synthesis/playback, complete first/last words,
-  context, silent-pool generation and cold-pool/voice-change cases. Any residual
-  latency requires measured discussion of a different approach/model; counters
-  or filler alone cannot pass the zero-incremental-latency requirement.
+- [X] 🟪 CL01 — Finish/reconcile the closed architecture and this executable
+  checklist. C01–C32 name the entire added module/type/export/class surface and
+  bound amended bodies. Preserve the first-use empty-pool case as unpassed, not
+  a latency exception; expose actual preparation while preserving text input.
+- [ ] 🟪 CL02 — C01–C07: types, one-sentence/minimum-unit planning, foreground/idle
+  request priority and cooperative cancellation through worker graph boundaries.
+  Preserve sessions on ordinary interruption; retain explicit fault recovery.
+  Keep language-model KV outputs on GPU with the pinned runtime's supported IO
+  binding. Verify TypeScript and inspect cancellation/tensor disposal paths.
+- [ ] 🟪 CL03 — C08/C09/C14: implement speechBackchannels.ts's selected-voice pool,
+  startup local-cache restoration, two variants per stage, idle-only serial
+  replenishment, bounded/validated PCM storage and input/foreground pre-emption.
+  No extra palette downloads or missing-clip generation on Send; no retry loop.
+- [ ] 🟪 CL04 — C10–C13: implement source-preserving speech turns, shared real-audio
+  playback, separate acknowledgement/answer bridge, one-ahead generation and
+  cancellation/notification settlement. Keep existing pitch/tone/settings APIs.
+  Complete-text preview/replay prevalidates all units and has no turn backchannel.
+- [ ] 🟦 CL05 — C20–C24: implement bounded SSE framing/server stream adaptation and
+  client partial callbacks/caller AbortSignal. Same backend/provider/model/auth/
+  rate/tool limits. Preserve natural tool-round prefaces; reasoning/tool arguments
+  never reach speech. Nonstream callers remain supported. Verify TypeScript and
+  syntax; actual provider streaming is verified later through the real UI.
+- [ ] 🟪 CL06 — C30–C32: wire live message/speech ownership and ordinary-chat status.
+  New submissions remain responsive in inference/TTS/playback; stale promises
+  cannot restart old output. Preserve displayed context and exact beginning.
+  Distinguish actual audio from preparation in mascot/karaoke/replay controls.
+  Hide the bottom diagnostics outside explicit debug mode; visible production
+  counts have exact final or clearly labelled received-unit denominators.
+- [ ] 🟫 CL07 — Independent whole-change review, TypeScript, normal production
+  build and diff checks. No unit suite or new coded browser harness. Preserve
+  historical dist/rubric artifacts across the build; publish source/remote SHA.
+- [ ] 🟫 CL08 — Deploy the amended existing backend without configuration/model/
+  provider changes, then normal root-dist frontend to the same Chatterbox Surge
+  domain. Verify served assets against the actual build and Git publication.
+- [ ] 🟪 CL09 — Run the ordinary-app rubric with diagnostics closed: fresh/long
+  turns, idle/cache palettes, early submission, interruption in synthesis/audio/
+  backchannel, context/redirection, first/final words and meaningful visible totals.
+  Record raw onset/wait/gap boundaries and all failed/unobserved rows. Zero
+  incremental latency remains mandatory. Discuss residual pipeline failures with
+  Robin; exclude model alternatives unless Robin raises them.
 - [ ] 🔴 Verify the same behavior and listening on the actual target phones.
 - [ ] 🟫 Publish source and built artifacts, deploy the existing authorized domain
   and verify runtime separately after the released implementation passes its gates.
 
-No product code, model, provider or deployment changed in this diagnosis/design
-task. No unit suite or coded browser harness was added or run. The current build
-fails the requested latency behavior; whole-product acceptance remains open.
+Review focus: (1) old await-init/stream callbacks after interruption, (2) partial
+SSE/UTF-8/chart/provenance markers, (3) empty/failed/changed-voice palette caches,
+(4) later sentences arriving while audio plays and bounded prefetch error handling,
+(5) incomplete tool/final streams and source-offset conservation. Exercise these
+through source review and actual UI observations; no new test harness is released.
+
+Execution ledger: source baseline 818b662; branch codex/conversation-voice-pipeline.
+The diagnostic baseline failed latency; implementation/build/runtime/publication
+and target-phone/listening acceptance remain separate evidence gates.
 
 ---
 

@@ -2,8 +2,10 @@
 
 Robin requires zero incremental conversational latency, preservation of the smoother
 voice, contextually appropriate backchannels and immediate interruption. This is
-the proposed amendment rubric for DOCS/ARCHITECTURE.md §9. It does not retroactively
-PASS the published build, release an implementation contract or relax the target.
+the released amendment rubric for DOCS/ARCHITECTURE.md §9–10. It does not
+retroactively PASS the published build or relax the target. Robin's subsequent
+instruction excludes considering model alternatives unless Robin introduces that
+possibility in operator discussion.
 
 Drive the ordinary production interface with debug panels closed. The inherited
 voice page may isolate native generation/cache behavior, but cannot pass ordinary
@@ -18,7 +20,7 @@ establishes audible output. State the recording's audio/timestamp limitations.
 | LAT-BRIDGE | After inference, a different appropriate prepared bridge may play while response audio is prepared; it yields when the answer is ready. | Not implemented. Reusing pre-understanding semantics, invented findings or delaying ready speech fails. |
 | LAT-PALETTE | Silent selected-voice pool creation occurs during actual idle time, is locally reused, varied and bounded, and foreground work pre-empts it without engine reload. | Not implemented. First-ever empty pool, reload, changed voice and exhausted pool must be exercised explicitly. |
 | LAT-SENTENCE | A long response starts at its actual beginning with one complete sentence/minimum logical unit; remaining generation runs behind playback. | Current planner packs whole turns and sentences: source-confirmed defect. Single-sentence native generation still took 6.0146 s / 6.8474 s on the observed desktop. |
-| LAT-ZERO | Revised ordinary conversation meets Robin's zero incremental latency requirement on fresh and long turns. Record raw timing and queue starvation; do not reinterpret filler or silence avoidance as proof of zero generation cost. | Current build fails. Optimized pipeline/model not evaluated; no assertion that current latency is fundamentally unavoidable. Discuss measured residual failures and a new approach/model with Robin before accepting any compromise. |
+| LAT-ZERO | Revised ordinary conversation meets Robin's zero incremental latency requirement on fresh and long turns. Record raw timing and queue starvation; do not reinterpret filler or silence avoidance as proof of zero generation cost. | Baseline fails. The amended pipeline must be observed; no assertion that latency is fundamentally unavoidable. Discuss measured residual pipeline failures with Robin before accepting any compromise. Do not consider a model alternative unless Robin raises it. |
 | LAT-INTERRUPT | Submit a new turn during generation, answer playback and a backchannel, for read-ahead, redirection and another reason. Old output stops promptly, no obsolete job/callback resumes, and loaded sessions survive normal interruption. | Not implemented. Receipt is usually a short settled/realizatory grunt, `Mm.` or `Hmm.`, not wonderment or presumed understanding. |
 | LAT-CONTEXT | The redirected answer addresses the new message with displayed conversation context, without assuming all prior audio was heard or guessing why the user interrupted. | Pending real inference and listening observation. |
 | LAT-COMPLETE | First and final words, every planned logical unit and original offsets remain in order; new-turn karaoke/chart focus starts correctly; oversized units fail explicitly. | Audible completeness and reported missing beginnings remain unverified. |
