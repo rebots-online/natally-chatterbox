@@ -1,0 +1,44 @@
+[
+  {
+    "file": "01-completed-status.jpg",
+    "capturedAtUtc": "2026-10-17T17:39:46.2326895Z",
+    "bytes": 12011,
+    "sha256": "4e6ac1e4962da29fe5ce39360f1c640cafc7c222a00d9866a7b7b2ba05a82eda"
+  },
+  {
+    "file": "02-long-turn-status.jpg",
+    "capturedAtUtc": "2026-10-17T17:40:12.0176753Z",
+    "bytes": 12687,
+    "sha256": "c6d78b1ad8f0723e6dbb0d9428e9ea41253f4cf9d0f7dfd824287b66b038bab6"
+  },
+  {
+    "file": "03-interruption-status.jpg",
+    "capturedAtUtc": "2026-10-17T17:41:07.3124359Z",
+    "bytes": 11722,
+    "sha256": "9b05a69ecb95669bc0e98f9decd852715f2be04a01731238f016fc9a563984a0"
+  },
+  {
+    "file": "04-measured-long-status.jpg",
+    "capturedAtUtc": "2026-10-17T17:45:42.5789352Z",
+    "bytes": 16054,
+    "sha256": "ec99b6fcca2c0f211ce1cbc9dd3f59e1a1c36f807830025ab66a15f458201dca"
+  },
+  {
+    "file": "05-reply-still-arriving.jpg",
+    "capturedAtUtc": "2026-10-17T17:46:47.4276463Z",
+    "bytes": 14069,
+    "sha256": "e5224b7a4662565d5f419ef871bb75d7ed56846c5364b738f9fd8f0de9ecfe27"
+  },
+  {
+    "file": "06-long-chart-complete.jpg",
+    "capturedAtUtc": "2026-10-17T17:48:51.7036126Z",
+    "bytes": 12105,
+    "sha256": "eac890a0b56f969bbf28f6a57833b4a46cb60714aa8d9430f9bdc15d8b1b2a38"
+  },
+  {
+    "file": "07-normal-card-final.jpg",
+    "capturedAtUtc": "2026-10-17T17:49:09.8737949Z",
+    "bytes": 6844,
+    "sha256": "e783d109629900926cd01163981ab2d2ca97c09d7946f6a29fd338799466d7e9"
+  }
+]

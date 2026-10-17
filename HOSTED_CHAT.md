@@ -1,3 +1,40 @@
+## Streamed conversational speech — 17 October 2026
+
+Closed architecture CB-ARCH-2 and checklist CL01–CL09 implemented and published.
+Current code/bundle `66422549e7b4007f03bf651c9c3f8a1fd9ef0e06`, Surge release
+`1792259067502` at https://natally-chatterbox.surge.sh. All 48 served payload
+files fetched and SHA-256 matched. Existing backend alias updated at Netlify
+deploy `6ad3b228c6ce2c3e210cd8c0`, with the same model/provider/settings/origin
+context. No new infrastructure. Historical raw frames were excluded from deploy.
+
+Sentence/minimum-unit streaming, one-ahead generation, idle-only local receipt/
+interruption/answer palettes, cooperative cancellation retaining sessions and
+normal-chat progress are implemented. Four Important review findings were fixed
+and independently re-reviewed; TypeScript, changed-server syntax, normal root-dist
+production build and diff checks pass. No unit suite or coded browser harness.
+
+**Production-view verdict: DEFECTIVE on zero incremental latency.** Existing
+signed-in Windows Chrome, F4, with debug closed: a six-unit run scheduled a ready
+receipt 9 ms after the submission handler, but first answer audio at 11.487 s.
+There were 5.850 s between receipt settlement and bridge start, then 2.769 s to
+answer start; maximum answer gap 1.006 s. A longer chart-aware streamed reply
+finished 16/16 units, with first answer at 11.232 s and maximum gap 4.061 s.
+The pool reached 6/6 during idle and restored 6/6 after reload. Active synthesis
+and playback accepted redirections; a rapid second submission 432 ms later
+produced the corrected green-kite answer. Displayed history remained available.
+
+These are native source scheduling/settlement and UI observations, not acoustic
+onset or listening proof. First/final audible words, natural cue prosody, actual
+phones and empty-pool/voice-change/exhaustion/fault paths remain unpassed.
+No claim of fundamental unavoidability and no accepted latency compromise.
+Model alternatives are excluded unless Robin introduces them.
+
+Full report, 24 sanitized observations, indexed stills and payload receipts:
+`dist/rubric-runs/v0.0.0-chatterbox-pipeline-20261017/REPORT.md`. Authenticated
+full captures remain local outside Git. Robin subsequently requested cues during
+later generation pauses and an immersive animated conversational Natally design;
+that is the next amendment, not an implemented feature of this deployed build.
+
 ## Chatterbox conversational latency baseline — 17 October 2026
 
 Robin reports smoother voice with unacceptable first-speech delay, apparent
@@ -9,8 +46,9 @@ locally; immediate contextual interruption without stale output or engine reload
 useful ordinary-chat status outside the debug-only panel. Interruption cues are
 mostly settled/realizatory grunts, `Mm.` and `Hmm.`, not wonderment or a claim to
 have understood the incoming message. No extra palette download or generation
-on Send; any unavoidable residual latency requires operator discussion of an
-alternative approach/model, not a relaxed success claim.
+on Send; residual latency requires operator discussion of pipeline remedies,
+not a relaxed success claim. Model alternatives are excluded unless Robin
+introduces them.
 
 On the unchanged published source `062eb59`, actual native Windows Chrome/F4
 WebGPU measurements showed cached-weight engine preparation 17.254 s, fresh

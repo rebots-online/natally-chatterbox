@@ -1,0 +1,295 @@
+{
+  "boundary": "Normal production status DOM and numeric native scheduling metadata; no acoustic capture. UI observations are upper bounds, not native times.",
+  "observations": [
+    {
+      "at": "2026-10-17T17:38:51.678Z",
+      "elapsedMs": 422,
+      "kind": "initial-send-pool-3",
+      "build": "54e3f53",
+      "status": "  - region \"Conversation voice status\":\n    - status: Message received · preparing your reply\n    - button \"Stop current voice\": Stop\n    - paragraph: Reply length is not known yet.\n    - paragraph: 0.1s since this voice turn began · 0.1s since the last completed work boundary\n    - paragraph: \"Acknowledgements: 3 / 6 prepared · prepared silently when idle\"\n"
+    },
+    {
+      "at": "2026-10-17T17:38:59.002Z",
+      "elapsedMs": 7746,
+      "kind": "fresh-turn-observation",
+      "build": "54e3f53",
+      "status": "  - region \"Conversation voice status\":\n    - status: Preparing sentence 1\n    - button \"Stop current voice\": Stop\n    - paragraph: 0 / 2 sentences ready · 0 / 2 played\n    - progressbar \"Reply sentences played\"\n    - paragraph: 7.1s since this voice turn began · 0.2s since the last completed work boundary\n    - paragraph: \"Acknowledgements: 3 / 6 prepared · prepared silently when idle\"\n"
+    },
+    {
+      "at": "2026-10-17T17:39:09.443Z",
+      "elapsedMs": 18187,
+      "kind": "fresh-status",
+      "build": "54e3f53",
+      "status": "Voice finished\n\n2 / 2 sentences ready · 2 / 2 played\n\nAcknowledgements: 6 / 6 prepared · saved locally"
+    },
+    {
+      "at": "2026-10-17T17:39:55.306Z",
+      "elapsedMs": 9047,
+      "kind": "long-turn",
+      "build": "54e3f53",
+      "status": "  - region \"Conversation voice status\":\n    - status: Preparing sentence 1\n    - button \"Stop current voice\": Stop\n    - paragraph: 0 / 6 sentences ready · 0 / 6 played\n    - progressbar \"Reply sentences played\"\n    - paragraph: 8.5s since this voice turn began · 1.6s since the last completed work boundary\n    - paragraph: \"Acknowledgements: 6 / 6 prepared · saved locally\"\n"
+    },
+    {
+      "at": "2026-10-17T17:40:07.501Z",
+      "elapsedMs": 21242,
+      "kind": "long-status",
+      "build": "54e3f53",
+      "status": "Speaking sentence 3\nStop\n\n3 / 6 sentences ready · 2 / 6 played\n\nAcknowledgements: 6 / 6 prepared · saved locally"
+    },
+    {
+      "at": "2026-10-17T17:40:20.062Z",
+      "elapsedMs": 33803,
+      "kind": "long-later",
+      "build": "54e3f53",
+      "status": "Speaking sentence 6\nStop\n\n6 / 6 sentences ready · 5 / 6 played\n\nAcknowledgements: 6 / 6 prepared · saved locally"
+    },
+    {
+      "at": "2026-10-17T17:40:35.700Z",
+      "elapsedMs": 49441,
+      "kind": "long-complete",
+      "build": "54e3f53",
+      "status": "Voice finished\n\n6 / 6 sentences ready · 6 / 6 played\n\nAcknowledgements: 6 / 6 prepared · saved locally"
+    },
+    {
+      "at": "2026-10-17T17:40:49.887Z",
+      "elapsedMs": 14145,
+      "kind": "before-synthesis-redirect",
+      "build": "54e3f53",
+      "status": "Speaking sentence 2\nStop\n\n2 / 3 sentences ready · 1 / 3 played\n\nAcknowledgements: 6 / 6 prepared · saved locally"
+    },
+    {
+      "at": "2026-10-17T17:40:52.409Z",
+      "elapsedMs": 2497,
+      "kind": "redirect-accepted",
+      "build": "54e3f53",
+      "status": "Interruption received · preparing your new reply\nStop\n\nReply length is not known yet.\n\n1.0s since this voice turn began · 1.0s since the last completed work boundary\n\nAcknowledgements: 6 / 6 prepared · saved locally"
+    },
+    {
+      "at": "2026-10-17T17:41:02.373Z",
+      "elapsedMs": 12461,
+      "kind": "redirect-result",
+      "build": "54e3f53",
+      "status": "  - region \"Conversation voice status\":\n    - status: Speaking sentence 1\n    - button \"Stop current voice\": Stop\n    - paragraph: 1 / 1 sentences ready · 0 / 1 played\n    - progressbar \"Reply sentences played\"\n    - paragraph: \"Acknowledgements: 6 / 6 prepared · saved locally\"\n"
+    },
+    {
+      "at": "2026-10-17T17:41:29.689Z",
+      "elapsedMs": 9997,
+      "kind": "before-tts-interruption",
+      "build": "54e3f53",
+      "status": "Preparing sentence 1\nStop\n\n0 / 4 sentences ready · 0 / 4 played\n\n9.0s since this voice turn began · 2.7s since the last completed work boundary\n\nAcknowledgements: 6 / 6 prepared · saved locally"
+    },
+    {
+      "at": "2026-10-17T17:41:30.011Z",
+      "elapsedMs": 322,
+      "kind": "tts-interruption-accepted",
+      "build": "54e3f53",
+      "status": "Interruption received · preparing your new reply\nStop\n\nReply length is not known yet.\n\n0.1s since this voice turn began · 0.1s since the last completed work boundary\n\nAcknowledgements: 6 / 6 prepared · saved locally"
+    },
+    {
+      "at": "2026-10-17T17:41:40.638Z",
+      "elapsedMs": 390,
+      "kind": "cue-interruption-first-send",
+      "build": "54e3f53",
+      "status": "Interruption received · preparing your new reply\nStop\n\nReply length is not known yet.\n\n0.0s since this voice turn began · 0.0s since the last completed work boundary\n\nAcknowledgements: 6 / 6 prepared · saved locally"
+    },
+    {
+      "at": "2026-10-17T17:41:40.976Z",
+      "elapsedMs": 296,
+      "betweenSubmissionsMs": 432,
+      "kind": "rapid-second-send",
+      "build": "54e3f53",
+      "status": "Interruption received · preparing your new reply\nStop\n\nReply length is not known yet.\n\n0.2s since this voice turn began · 0.2s since the last completed work boundary\n\nAcknowledgements: 6 / 6 prepared · saved locally"
+    },
+    {
+      "at": "2026-10-17T17:42:07.066Z",
+      "elapsedMs": 26386,
+      "kind": "rapid-correction-result",
+      "build": "54e3f53",
+      "status": "  - region \"Conversation voice status\":\n    - status: Voice finished\n    - paragraph: 1 / 1 sentences ready · 1 / 1 played\n    - progressbar \"Reply sentences played\"\n    - paragraph: \"Acknowledgements: 6 / 6 prepared · saved locally\"\n"
+    },
+    {
+      "at": "2026-10-17T17:45:33.062Z",
+      "elapsedMs": 816,
+      "kind": "measured-long-submit",
+      "build": "6642254",
+      "status": "Message received · preparing your replyStopReply length is not known yet.0.0s since this voice turn began · 0.0s since the last reply or audio boundaryAcknowledgements: 6 / 6 prepared · saved locally",
+      "timing": {
+        "ackStartedAt": "1792259133018",
+        "final": "false",
+        "maxGapMs": "0",
+        "phase": "thinking",
+        "playedUnits": "0",
+        "readyUnits": "0",
+        "submittedAt": "1792259133009",
+        "totalUnits": "0",
+        "turnId": "6"
+      }
+    },
+    {
+      "at": "2026-10-17T17:45:42.344Z",
+      "elapsedMs": 10098,
+      "kind": "measured-long-progress",
+      "build": "6642254",
+      "status": "Preparing sentence 1Stop0 / 6 sentences ready · 0 / 6 played9.0s since this voice turn began · 1.7s since the last reply or audio boundaryAcknowledgements: 6 / 6 prepared · saved locally",
+      "timing": {
+        "ackEndedAt": "1792259134383",
+        "ackStartedAt": "1792259133018",
+        "bridgeEndedAt": "1792259141727",
+        "bridgeStartedAt": "1792259140233",
+        "final": "true",
+        "firstUnitTextAt": "1792259140232",
+        "maxGapMs": "0",
+        "phase": "preparing",
+        "playedUnits": "0",
+        "readyUnits": "0",
+        "submittedAt": "1792259133009",
+        "totalUnits": "6",
+        "turnId": "6"
+      }
+    },
+    {
+      "at": "2026-10-17T17:46:07.553Z",
+      "elapsedMs": 35307,
+      "kind": "measured-long-playback",
+      "build": "6642254",
+      "status": "Voice finished6 / 6 sentences ready · 6 / 6 playedAcknowledgements: 6 / 6 prepared · saved locally",
+      "timing": {
+        "ackEndedAt": "1792259134383",
+        "ackStartedAt": "1792259133018",
+        "bridgeEndedAt": "1792259141727",
+        "bridgeStartedAt": "1792259140233",
+        "final": "true",
+        "firstAudioAt": "1792259144496",
+        "firstUnitTextAt": "1792259140232",
+        "lastAudioEndAt": "1792259164721",
+        "maxGapMs": "1006",
+        "phase": "complete",
+        "playedUnits": "6",
+        "readyUnits": "6",
+        "submittedAt": "1792259133009",
+        "totalUnits": "6",
+        "turnId": "6"
+      }
+    },
+    {
+      "at": "2026-10-17T17:46:36.802Z",
+      "elapsedMs": 3404,
+      "kind": "chart-long-inference",
+      "build": "6642254",
+      "status": "Message received · preparing your replyStopReply length is not known yet.3.0s since this voice turn began · 3.0s since the last reply or audio boundaryAcknowledgements: 6 / 6 prepared · saved locally",
+      "timing": {
+        "ackEndedAt": "1792259194461",
+        "ackStartedAt": "1792259193469",
+        "final": "false",
+        "maxGapMs": "0",
+        "phase": "thinking",
+        "playedUnits": "0",
+        "readyUnits": "0",
+        "submittedAt": "1792259193462",
+        "totalUnits": "0",
+        "turnId": "8"
+      }
+    },
+    {
+      "at": "2026-10-17T17:46:42.506Z",
+      "elapsedMs": 9108,
+      "kind": "chart-long-stream",
+      "build": "6642254",
+      "status": "Preparing sentence 1Stop0 / 4 received sentences ready · 0 / 4 played · reply still arriving9.0s since this voice turn began · 0.9s since the last reply or audio boundaryAcknowledgements: 6 / 6 prepared · saved locally",
+      "timing": {
+        "ackEndedAt": "1792259194461",
+        "ackStartedAt": "1792259193469",
+        "bridgeEndedAt": "1792259200811",
+        "bridgeStartedAt": "1792259200061",
+        "final": "false",
+        "firstUnitTextAt": "1792259200061",
+        "maxGapMs": "0",
+        "phase": "preparing",
+        "playedUnits": "0",
+        "readyUnits": "0",
+        "submittedAt": "1792259193462",
+        "totalUnits": "4",
+        "turnId": "8"
+      }
+    },
+    {
+      "at": "2026-10-17T17:46:47.513Z",
+      "elapsedMs": 14115,
+      "kind": "chart-long-content",
+      "build": "6642254",
+      "status": "  - region \"Conversation voice status\":\n    - status: Speaking sentence 1\n    - button \"Stop current voice\": Stop\n    - paragraph: 1 / 12 received sentences ready · 0 / 12 played · reply still arriving\n    - progressbar \"Received sentences played; reply length not yet final\"\n    - paragraph: \"Acknowledgements: 6 / 6 prepared · saved locally\"\n"
+    },
+    {
+      "at": "2026-10-17T17:47:12.804Z",
+      "elapsedMs": 39406,
+      "kind": "chart-long-playback",
+      "build": "6642254",
+      "status": "Speaking sentence 5Stop5 / 16 sentences ready · 4 / 16 playedAcknowledgements: 6 / 6 prepared · saved locally",
+      "timing": {
+        "ackEndedAt": "1792259194461",
+        "ackStartedAt": "1792259193469",
+        "bridgeEndedAt": "1792259200811",
+        "bridgeStartedAt": "1792259200061",
+        "final": "true",
+        "firstAudioAt": "1792259204694",
+        "firstUnitTextAt": "1792259200061",
+        "lastAudioEndAt": "1792259230521",
+        "maxGapMs": "2192",
+        "phase": "speaking",
+        "playedUnits": "4",
+        "readyUnits": "5",
+        "submittedAt": "1792259193462",
+        "totalUnits": "16",
+        "turnId": "8"
+      }
+    },
+    {
+      "at": "2026-10-17T17:47:53.470Z",
+      "elapsedMs": 80072,
+      "kind": "chart-long-late-playback",
+      "build": "6642254",
+      "status": "Preparing sentence 13Stop12 / 16 sentences ready · 12 / 16 played79.5s since this voice turn began · 2.6s since the last reply or audio boundaryAcknowledgements: 6 / 6 prepared · saved locally",
+      "timing": {
+        "ackEndedAt": "1792259194461",
+        "ackStartedAt": "1792259193469",
+        "bridgeEndedAt": "1792259200811",
+        "bridgeStartedAt": "1792259200061",
+        "final": "true",
+        "firstAudioAt": "1792259204694",
+        "firstUnitTextAt": "1792259200061",
+        "lastAudioEndAt": "1792259270341",
+        "maxGapMs": "2673",
+        "phase": "preparing",
+        "playedUnits": "12",
+        "readyUnits": "12",
+        "submittedAt": "1792259193462",
+        "totalUnits": "16",
+        "turnId": "8"
+      }
+    },
+    {
+      "at": "2026-10-17T17:48:51.518Z",
+      "elapsedMs": 138120,
+      "kind": "chart-long-final",
+      "build": "6642254",
+      "status": "Voice finished16 / 16 sentences ready · 16 / 16 playedAcknowledgements: 6 / 6 prepared · saved locally",
+      "timing": {
+        "ackEndedAt": "1792259194461",
+        "ackStartedAt": "1792259193469",
+        "bridgeEndedAt": "1792259200811",
+        "bridgeStartedAt": "1792259200061",
+        "final": "true",
+        "firstAudioAt": "1792259204694",
+        "firstUnitTextAt": "1792259200061",
+        "lastAudioEndAt": "1792259297541",
+        "maxGapMs": "4061",
+        "phase": "complete",
+        "playedUnits": "16",
+        "readyUnits": "16",
+        "submittedAt": "1792259193462",
+        "totalUnits": "16",
+        "turnId": "8"
+      }
+    }
+  ]
+}

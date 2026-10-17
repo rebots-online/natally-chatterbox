@@ -1,3 +1,22 @@
+# Natally Chatterbox — 17 October 2026
+
+Current live application: https://natally-chatterbox.surge.sh.
+Code/bundle: `66422549e7b4007f03bf651c9c3f8a1fd9ef0e06`, pushed and remote
+verified. Surge `1792259067502`; all 48 served payloads match SHA-256.
+Backend alias deploy `6ad3b228c6ce2c3e210cd8c0`. Normal Vite production build
+directly in root dist, preserving historical evidence via --emptyOutDir=false.
+Same model/runtime/reference assets/sampling and existing provider/configuration.
+
+Archive: `natally-chatterbox-6642254-20261017.zip` (exact 49-file deployment,
+including CNAME). Adjacent manifest records archive and per-file hashes.
+Production rubric: `rubric-runs/v0.0.0-chatterbox-pipeline-20261017/REPORT.md`.
+The run is **DEFECTIVE on zero incremental latency**. Sentence streaming,
+interruption, idle palettes and normal-chat progress are implemented, but native
+first-answer/gap measurements fail the unchanged requirement. Listening and
+physical phones remain unverified. No model alternatives were considered.
+
+The 15 October release record follows as historical evidence.
+
 # Natally Chatterbox — 15 October 2026
 
 Live: https://natally-chatterbox.surge.sh

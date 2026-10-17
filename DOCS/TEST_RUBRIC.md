@@ -1,5 +1,13 @@
 # Conversational latency acceptance — 17 October 2026
 
+Latest actual production-view run: **DEFECTIVE on latency**.
+[Report, native boundaries, 24 observations and stills](../dist/rubric-runs/v0.0.0-chatterbox-pipeline-20261017/REPORT.md).
+CB-ARCH-2 is implemented/deployed; the table's original baseline descriptions
+below are retained as acceptance requirements, not current implementation claims.
+Ready receipt scheduled in 9 ms; fresh six-unit first answer in 11.487 s;
+16-unit chart reply completed but largest inter-sentence gap was 4.061 s.
+Listening, phones and unexercised cache/failure cases remain explicitly unpassed.
+
 Robin requires zero incremental conversational latency, preservation of the smoother
 voice, contextually appropriate backchannels and immediate interruption. This is
 the released amendment rubric for DOCS/ARCHITECTURE.md §9–10. It does not

@@ -1,5 +1,14 @@
 # CHATTERBOX CONVERSATIONAL LATENCY — 17 October 2026
 
+Robin's subsequent instruction: commit/push and verify remote after every task.
+Next requested amendment: later-generation-pause backchannels plus a large,
+user-facing animated Natally with crystal-ball hand motion, randomized/contextual
+gaze/blinks, mystical gem/trinket background, relevant glowing chart inset and
+natal/current-sky overlay. Consult Open Design MCP and Google Stitch; use the
+existing Natally identity. Add supplied Open Design global MCP config if absent.
+Design consultation/configuration/closed architecture/implementation/runtime
+remain separate; these visuals and later-pause cues are not in current deployment.
+
 Released: Robin approved §9 and explicitly instructed completion of the closed
 architecture/checklist followed by implementation and the production-view rubric.
 Contract: DOCS/ARCHITECTURE.md §10 CB-ARCH-2. Execute inline without another review
@@ -62,18 +71,34 @@ do not even consider a model change unless Robin surfaces it in discussion.
   TypeScript, changed-server syntax and diff checks pass. Vite production build
   passes directly into root dist with --emptyOutDir=false to preserve evidence.
   Existing Swiss externalization/bundle warnings remain. No unit suite/harness.
-- [ ] 🟫 CL08 — Deploy the amended existing backend without configuration/model/
+- [X] 🟫 CL08 — Deploy the amended existing backend without configuration/model/
   provider changes, then normal root-dist frontend to the same Chatterbox Surge
   domain. Verify served assets against the actual build and Git publication.
-- [ ] 🟪 CL09 — Run the ordinary-app rubric with diagnostics closed: fresh/long
+  ✅ Backend deploy 6ad3b228c6ce2c3e210cd8c0 at the same Chatterbox alias;
+  native-timing source/bundle 6642254 published and remote verified. Surge
+  1792259067502; all 48 served payload files match local SHA-256. Same branch
+  origin/model/provider configuration. Historical raw frames excluded from deploy.
+- [X] 🟪 CL09 — Run the ordinary-app rubric with diagnostics closed: fresh/long
   turns, idle/cache palettes, early submission, interruption in synthesis/audio/
   backchannel, context/redirection, first/final words and meaningful visible totals.
   Record raw onset/wait/gap boundaries and all failed/unobserved rows. Zero
   incremental latency remains mandatory. Discuss residual pipeline failures with
   Robin; exclude model alternatives unless Robin raises them.
+  ✅ Real signed-in Windows Chrome run, 24 sanitized observations, indexed stills
+  and native boundaries retained in dist/rubric-runs/v0.0.0-chatterbox-pipeline-20261017.
+  Six-unit native receipt scheduling 9 ms; first answer 11.487 s; maximum answer
+  gap 1.006 s. Longer chart-aware turn completed 16/16 but maximum gap 4.061 s.
+  Synthesis/playback interruption and rapid 432 ms correction observed; cached
+  palette restored 6/6. The run is DEFECTIVE on latency, not acceptance complete.
+- [ ] 🟪 CL10 — Discuss the measured residual pipeline waits with Robin; retain
+  zero incremental latency, then release and verify any further closed-architecture
+  amendment. No proof of fundamental unavoidability and no model alternative.
+  Empty-pool Send, voice-change/exhaustion/fault cases and audible cue/word
+  completeness remain unpassed; do not infer them from source or status counts.
 - [ ] 🔴 Verify the same behavior and listening on the actual target phones.
-- [ ] 🟫 Publish source and built artifacts, deploy the existing authorized domain
-  and verify runtime separately after the released implementation passes its gates.
+- [X] 🟫 Publish source and built artifacts, deploy the existing authorized domain
+  and record runtime separately. Source/build/deploy gates passed; the failed
+  latency and unverified listening/device rows remain open above.
 
 Review focus: (1) old await-init/stream callbacks after interruption, (2) partial
 SSE/UTF-8/chart/provenance markers, (3) empty/failed/changed-voice palette caches,

@@ -1,0 +1,329 @@
+{
+  "source": "3e9d455c4d7e002e1646c6a9af68c415663b88ff",
+  "bundleCommit": "54e3f53eac44c785882583a9465c94d80877598a",
+  "surgeRelease": "1792258664014",
+  "backendDeploy": "6ad3b228c6ce2c3e210cd8c0",
+  "checkedAt": "2026-10-17T17:38:24.6994782Z",
+  "files": [
+    {
+      "path": "assets/__vite-browser-external-BZEJgUep.js",
+      "status": 200,
+      "bytes": 90,
+      "localSha256": "b7c424fbc68eb036c92dae8b4d5d711c20f8595ba1283968d0f75c510c90c139",
+      "servedSha256": "b7c424fbc68eb036c92dae8b4d5d711c20f8595ba1283968d0f75c510c90c139",
+      "match": true
+    },
+    {
+      "path": "assets/__vite-browser-external-DH4A8OTR.js",
+      "status": 200,
+      "bytes": 90,
+      "localSha256": "ea5d8b2259d8208487ef52e727e1c7d911bdc76735fbeb9e0949ecc4d42f3052",
+      "servedSha256": "ea5d8b2259d8208487ef52e727e1c7d911bdc76735fbeb9e0949ecc4d42f3052",
+      "match": true
+    },
+    {
+      "path": "assets/app-aWh5pRCM.js",
+      "status": 200,
+      "bytes": 1831995,
+      "localSha256": "657fde90b17c606bc7e2c30acd7cb950cc3df91cb82a48bbaf5111f1a3bcb61f",
+      "servedSha256": "657fde90b17c606bc7e2c30acd7cb950cc3df91cb82a48bbaf5111f1a3bcb61f",
+      "match": true
+    },
+    {
+      "path": "assets/app-B0Z5CX5y.js",
+      "status": 200,
+      "bytes": 1829591,
+      "localSha256": "d974f11bef899aa36b24356a32060cbbea68e73f72bf38110fe4597fabb5e6ce",
+      "servedSha256": "d974f11bef899aa36b24356a32060cbbea68e73f72bf38110fe4597fabb5e6ce",
+      "match": true
+    },
+    {
+      "path": "assets/app-fbSOHZUI.css",
+      "status": 200,
+      "bytes": 11475,
+      "localSha256": "fbf9d9c4c1a0c3ad057fb364ec68eec5bd689ad576654ab710873d7fa333705f",
+      "servedSha256": "fbf9d9c4c1a0c3ad057fb364ec68eec5bd689ad576654ab710873d7fa333705f",
+      "match": true
+    },
+    {
+      "path": "assets/astrology-tools-6HLwduul.js",
+      "status": 200,
+      "bytes": 238,
+      "localSha256": "d755824fcc73f881b52dc0c93e37575fe7be2efac08000e6bfc0a08068ef7dd7",
+      "servedSha256": "d755824fcc73f881b52dc0c93e37575fe7be2efac08000e6bfc0a08068ef7dd7",
+      "match": true
+    },
+    {
+      "path": "assets/astrology-tools-D91kSRt-.js",
+      "status": 200,
+      "bytes": 62,
+      "localSha256": "cadd6e8eb1ad45ae07ba2f7969c8a238a067de5ea0c69d249fee1a717adbb34f",
+      "servedSha256": "cadd6e8eb1ad45ae07ba2f7969c8a238a067de5ea0c69d249fee1a717adbb34f",
+      "match": true
+    },
+    {
+      "path": "assets/chatterbox.worker-BRiIPwnX.js",
+      "status": 200,
+      "bytes": 556408,
+      "localSha256": "72f26b59682bd4577bbe4d624218798b62f04ae0d3add421e45f6bd8b85b24c5",
+      "servedSha256": "72f26b59682bd4577bbe4d624218798b62f04ae0d3add421e45f6bd8b85b24c5",
+      "match": true
+    },
+    {
+      "path": "assets/chatterbox.worker-CzBCh5tb.js",
+      "status": 200,
+      "bytes": 557414,
+      "localSha256": "1afe0afb9aa42912752f2dcc783fe2f2232b85c272d2243e55e695fc4e0354be",
+      "servedSha256": "1afe0afb9aa42912752f2dcc783fe2f2232b85c272d2243e55e695fc4e0354be",
+      "match": true
+    },
+    {
+      "path": "assets/hostedInference-Bf1Mn5J9.js",
+      "status": 200,
+      "bytes": 4724,
+      "localSha256": "ca77435fbd499329b7ecb91667e2529d47411c0cdfa610a20b1fd449349d393a",
+      "servedSha256": "ca77435fbd499329b7ecb91667e2529d47411c0cdfa610a20b1fd449349d393a",
+      "match": true
+    },
+    {
+      "path": "assets/hostedInference-PByksLwY.js",
+      "status": 200,
+      "bytes": 2778,
+      "localSha256": "8a7dc9bc6654f4ddfab8ed953a957f1db9ca6716e6c9d3eacb314fac44e7ab14",
+      "servedSha256": "8a7dc9bc6654f4ddfab8ed953a957f1db9ca6716e6c9d3eacb314fac44e7ab14",
+      "match": true
+    },
+    {
+      "path": "assets/html2canvas-CLg0nxUx.js",
+      "status": 200,
+      "bytes": 199455,
+      "localSha256": "2637b27637639d202dc1b8b50655d878ea13dd6058e73818a0b0f59731398c16",
+      "servedSha256": "2637b27637639d202dc1b8b50655d878ea13dd6058e73818a0b0f59731398c16",
+      "match": true
+    },
+    {
+      "path": "assets/html2canvas-tWYP0wTT.js",
+      "status": 200,
+      "bytes": 199455,
+      "localSha256": "d9ad9de4fbd2bd1f3765be5860617ea15cda4b780bec25c8187068a178e33acf",
+      "servedSha256": "d9ad9de4fbd2bd1f3765be5860617ea15cda4b780bec25c8187068a178e33acf",
+      "match": true
+    },
+    {
+      "path": "assets/index.es-BZlo_a92.js",
+      "status": 200,
+      "bytes": 151406,
+      "localSha256": "c4543faf45623ad39df55d540b9893f56172c0785f248b2421509e5e97eb1bac",
+      "servedSha256": "c4543faf45623ad39df55d540b9893f56172c0785f248b2421509e5e97eb1bac",
+      "match": true
+    },
+    {
+      "path": "assets/index.es-tsjv-HAK.js",
+      "status": 200,
+      "bytes": 151406,
+      "localSha256": "0511e5cb52db4b3a532fd52ddb1b7e390920dfbeac5cbbb29c9e041316f586ea",
+      "servedSha256": "0511e5cb52db4b3a532fd52ddb1b7e390920dfbeac5cbbb29c9e041316f586ea",
+      "match": true
+    },
+    {
+      "path": "assets/ort-wasm-simd-threaded.asyncify-CxOG5pUO.wasm",
+      "status": 200,
+      "bytes": 26861777,
+      "localSha256": "49871f5a4409519797e127440868a6d1923339d9185907f301a5b2a1d90af082",
+      "servedSha256": "49871f5a4409519797e127440868a6d1923339d9185907f301a5b2a1d90af082",
+      "match": true
+    },
+    {
+      "path": "assets/purify.es-Dn3VvdGh.js",
+      "status": 200,
+      "bytes": 28012,
+      "localSha256": "37ef4b20a8d7efc7def9bd5d68900773f834c9797cb67a81d3740752470f1030",
+      "servedSha256": "37ef4b20a8d7efc7def9bd5d68900773f834c9797cb67a81d3740752470f1030",
+      "match": true
+    },
+    {
+      "path": "assets/src-4bIK4EIG.js",
+      "status": 200,
+      "bytes": 252561,
+      "localSha256": "68246140fe8587f5fdb6376448cb4aafc113359867a494d7e19549da81a463b6",
+      "servedSha256": "68246140fe8587f5fdb6376448cb4aafc113359867a494d7e19549da81a463b6",
+      "match": true
+    },
+    {
+      "path": "assets/src-BHQE61x8.css",
+      "status": 200,
+      "bytes": 87037,
+      "localSha256": "d6b5625015e26cf84e83c4cd6749012091c4c287806899abcef91ba7f17b8630",
+      "servedSha256": "d6b5625015e26cf84e83c4cd6749012091c4c287806899abcef91ba7f17b8630",
+      "match": true
+    },
+    {
+      "path": "assets/src-CeyL6X84.js",
+      "status": 200,
+      "bytes": 239843,
+      "localSha256": "4ba031107cf6718cc11ddbca6f14e4311377dc01457d557c955c28bd38fb74cb",
+      "servedSha256": "4ba031107cf6718cc11ddbca6f14e4311377dc01457d557c955c28bd38fb74cb",
+      "match": true
+    },
+    {
+      "path": "assets/src-CJE7zSle.css",
+      "status": 200,
+      "bytes": 87139,
+      "localSha256": "efe2720323e6dc70fb244f936c6dccabef1ab350b2e05f0b10fabf6160f1b04f",
+      "servedSha256": "efe2720323e6dc70fb244f936c6dccabef1ab350b2e05f0b10fabf6160f1b04f",
+      "match": true
+    },
+    {
+      "path": "assets/swisseph-BqKK9TOX.wasm",
+      "status": 200,
+      "bytes": 561871,
+      "localSha256": "a6e5f53cc39bac07f44b4ce54e5f90f6bd1e25b6d20df2ea0bc4c1374d09842c",
+      "servedSha256": "a6e5f53cc39bac07f44b4ce54e5f90f6bd1e25b6d20df2ea0bc4c1374d09842c",
+      "match": true
+    },
+    {
+      "path": "assets/voiceVerification-jz3r8xGy.js",
+      "status": 200,
+      "bytes": 1237,
+      "localSha256": "f640b913bb7b9e9943c07921f5406600bea15264b56afc6a5b6b59efe152dced",
+      "servedSha256": "f640b913bb7b9e9943c07921f5406600bea15264b56afc6a5b6b59efe152dced",
+      "match": true
+    },
+    {
+      "path": "assets/voiceVerification-WTxg_iRl.js",
+      "status": 200,
+      "bytes": 1237,
+      "localSha256": "5f901d5fbd14e5073bb5e7318d47b45c74c775964305f9ea34b78be668652c8a",
+      "servedSha256": "5f901d5fbd14e5073bb5e7318d47b45c74c775964305f9ea34b78be668652c8a",
+      "match": true
+    },
+    {
+      "path": "fonts/OFL-PlayfairDisplay.txt",
+      "status": 200,
+      "bytes": 4541,
+      "localSha256": "a32c1e30554f8227178d1643d182f9328b6529d92c9b43d86a16fb528381d857",
+      "servedSha256": "a32c1e30554f8227178d1643d182f9328b6529d92c9b43d86a16fb528381d857",
+      "match": true
+    },
+    {
+      "path": "fonts/playfair-display-latin.woff2",
+      "status": 200,
+      "bytes": 38404,
+      "localSha256": "e0c764a8e9e1cce92163c55bac4b2ad6cd4cf8c696ce2289ab5c41565e65b7e2",
+      "servedSha256": "e0c764a8e9e1cce92163c55bac4b2ad6cd4cf8c696ce2289ab5c41565e65b7e2",
+      "match": true
+    },
+    {
+      "path": "index.html",
+      "status": 200,
+      "bytes": 4301,
+      "localSha256": "cbb93030714b804d924e7432858deb6299e686a1afe88d141ee314b822a97325",
+      "servedSha256": "cbb93030714b804d924e7432858deb6299e686a1afe88d141ee314b822a97325",
+      "match": true
+    },
+    {
+      "path": "natally-mascot.webp",
+      "status": 200,
+      "bytes": 1777004,
+      "localSha256": "a40780bad977525afdd6c7f92ed47a4b0ba090b1453921a0ad4248208301f873",
+      "servedSha256": "a40780bad977525afdd6c7f92ed47a4b0ba090b1453921a0ad4248208301f873",
+      "match": true
+    },
+    {
+      "path": "tests/voice-browser.html",
+      "status": 200,
+      "bytes": 1457,
+      "localSha256": "a3bf3a35b6648feda088bddfd15831bcc10e44ced041091ea06b16142c2a4b68",
+      "servedSha256": "a3bf3a35b6648feda088bddfd15831bcc10e44ced041091ea06b16142c2a4b68",
+      "match": true
+    },
+    {
+      "path": "vendor/swisseph/swisseph.data",
+      "status": 200,
+      "bytes": 2151204,
+      "localSha256": "1aac44b2ea3dfe668a063ed29dada99a7a96d8fa22fdce626cdf9e270b084ed0",
+      "servedSha256": "1aac44b2ea3dfe668a063ed29dada99a7a96d8fa22fdce626cdf9e270b084ed0",
+      "match": true
+    },
+    {
+      "path": "vendor/swisseph/swisseph.js",
+      "status": 200,
+      "bytes": 74274,
+      "localSha256": "451a518b26b446db5e0c9a834aad1e9428d0fff7411cbfc39fce523b43a79e32",
+      "servedSha256": "451a518b26b446db5e0c9a834aad1e9428d0fff7411cbfc39fce523b43a79e32",
+      "match": true
+    },
+    {
+      "path": "vendor/swisseph/swisseph.wasm",
+      "status": 200,
+      "bytes": 561871,
+      "localSha256": "a6e5f53cc39bac07f44b4ce54e5f90f6bd1e25b6d20df2ea0bc4c1374d09842c",
+      "servedSha256": "a6e5f53cc39bac07f44b4ce54e5f90f6bd1e25b6d20df2ea0bc4c1374d09842c",
+      "match": true
+    },
+    {
+      "path": "voices/chatterbox/F1.wav",
+      "status": 200,
+      "bytes": 826746,
+      "localSha256": "7f4b5f1b5fe3d3326edea226967f9cd7a4cb56832cd2dc329b81018a71dd5025",
+      "servedSha256": "7f4b5f1b5fe3d3326edea226967f9cd7a4cb56832cd2dc329b81018a71dd5025",
+      "match": true
+    },
+    {
+      "path": "voices/chatterbox/F2.wav",
+      "status": 200,
+      "bytes": 742856,
+      "localSha256": "2049d5c01b64ecce8fdea8b65742dcf3de121f24a6e8f0e05b3cc00538b0ed0c",
+      "servedSha256": "2049d5c01b64ecce8fdea8b65742dcf3de121f24a6e8f0e05b3cc00538b0ed0c",
+      "match": true
+    },
+    {
+      "path": "voices/chatterbox/F3.wav",
+      "status": 200,
+      "bytes": 827740,
+      "localSha256": "c04c80e856c8aa43a02614fe234f19a816a39bd895c2132237e51d2d6c8bd067",
+      "servedSha256": "c04c80e856c8aa43a02614fe234f19a816a39bd895c2132237e51d2d6c8bd067",
+      "match": true
+    },
+    {
+      "path": "voices/chatterbox/F4.wav",
+      "status": 200,
+      "bytes": 738572,
+      "localSha256": "204623f6cd5d238f519c7369503fc413bd9fe52b4f9bd836b4adcb3f2afac1c5",
+      "servedSha256": "204623f6cd5d238f519c7369503fc413bd9fe52b4f9bd836b4adcb3f2afac1c5",
+      "match": true
+    },
+    {
+      "path": "voices/chatterbox/F5.wav",
+      "status": 200,
+      "bytes": 866026,
+      "localSha256": "c478e7201e7d59c1a253af02c96d34fd1b7985335f9f924fdc13af8893c06da9",
+      "servedSha256": "c478e7201e7d59c1a253af02c96d34fd1b7985335f9f924fdc13af8893c06da9",
+      "match": true
+    },
+    {
+      "path": "voices/chatterbox/M1.wav",
+      "status": 200,
+      "bytes": 860364,
+      "localSha256": "79270f68710ecff9aa00ffa73a1ef7e1e1afd5725f3d92a3e66a5fd51f267315",
+      "servedSha256": "79270f68710ecff9aa00ffa73a1ef7e1e1afd5725f3d92a3e66a5fd51f267315",
+      "match": true
+    },
+    {
+      "path": "voices/chatterbox/M2.wav",
+      "status": 200,
+      "bytes": 790152,
+      "localSha256": "f0f88ba997ca85f17beb392b4cb88ee3e8192c7501f47acf44cc1b5cc15b13e8",
+      "servedSha256": "f0f88ba997ca85f17beb392b4cb88ee3e8192c7501f47acf44cc1b5cc15b13e8",
+      "match": true
+    },
+    {
+      "path": "voices/chatterbox/NOTICE.md",
+      "status": 200,
+      "bytes": 821,
+      "localSha256": "d287cf4837f87101960307d441a85de0405d63f33128d23a6bf8297dde07137a",
+      "servedSha256": "d287cf4837f87101960307d441a85de0405d63f33128d23a6bf8297dde07137a",
+      "match": true
+    }
+  ]
+}
