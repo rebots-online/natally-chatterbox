@@ -136,7 +136,7 @@ let currentBufferSource: AudioBufferSourceNode | null = null;
 let generation = 0;
 let finishPlayback: ((completed?: boolean) => void) | null = null;
 let finishUtterance: ((completed?: boolean) => void) | null = null;
-let speechProgress: SpeechProgress = { phase: 'idle', message: '', turnId: 0, totalUnits: 0, readyUnits: 0, playedUnits: 0, startedAt: 0, confirmedAt: 0, maxGapMs: 0, final: false, playingUnit: null, generatingUnit: null, cueStage: null, gapCueCount: 0 };
+let speechProgress: SpeechProgress = { phase: 'idle', message: '', turnId: 0, totalUnits: 0, readyUnits: 0, playedUnits: 0, startedAt: 0, confirmedAt: 0, maxGapMs: 0, final: false, playingUnit: null, generatingUnit: null, cueStage: null, gapCueCount: 0, maxUncoveredGapMs: 0 };
 const speechListeners = new Set<(progress: SpeechProgress) => void>();
 export function publishSpeechProgress(update: Partial<SpeechProgress>): void {
   speechProgress = { ...speechProgress, ...update };
@@ -255,7 +255,7 @@ export function beginSpeechTurn(settings: VoiceSettings, callbacks: SpeechCallba
   publishSpeechProgress({ phase: acknowledgement ? 'thinking' : 'preparing', message: acknowledgement === 'interrupt' ? 'Interruption received · preparing your new reply' : acknowledgement ? 'Message received · preparing your reply' : 'Preparing voice',
     turnId: requestGeneration, totalUnits: 0, readyUnits: 0, playedUnits: 0, startedAt: Date.now(), submittedAt: acknowledgement ? Date.now() : undefined,
     confirmedAt: Date.now(), final: false, playingUnit: null, generatingUnit: null, maxGapMs: 0, cueStage: null, gapCueCount: 0,
-    gapCueStartedAt: undefined, gapCueEndedAt: undefined,
+    gapCueStartedAt: undefined, gapCueEndedAt: undefined, maxUncoveredGapMs: 0, lastAnswerStartedAt: undefined,
     ackStartedAt: undefined, ackEndedAt: undefined, bridgeStartedAt: undefined, bridgeEndedAt: undefined,
     firstTextAt: undefined, firstAudioAt: undefined, lastAudioEndAt: undefined });
   const acknowledge = async (stage: BackchannelStage, scheduled?: () => void): Promise<boolean> => {
@@ -294,6 +294,7 @@ export function beginSpeechTurn(settings: VoiceSettings, callbacks: SpeechCallba
   const bridgeGap = () => {
     if (!current() || !unitIndex || gapCueAfter === unitIndex || speechProgress.readyUnits > unitIndex) return;
     gapCueAfter = unitIndex;
+    publishSpeechProgress({ gapCueStartedAt: undefined, gapCueEndedAt: undefined });
     void acknowledge('continuation');
   };
   const pump = async () => {
@@ -319,8 +320,12 @@ export function beginSpeechTurn(settings: VoiceSettings, callbacks: SpeechCallba
         playing = true; prefetch();
         const played = await playAudio(result.audio!, settings, current, () => {
           const now = Date.now();
+          const gapStart = speechProgress.lastAudioEndAt ?? now;
+          const cueStart = gapCueAfter === unitIndex ? speechProgress.gapCueStartedAt : undefined;
+          const covered = cueStart === undefined ? 0 : Math.max(0, Math.min(now, speechProgress.gapCueEndedAt ?? now) - Math.max(gapStart, cueStart));
           publishSpeechProgress({ phase: 'speaking', message: `Speaking sentence ${unitIndex + 1}`, playingUnit: unitIndex + 1, cueStage: null,
             firstAudioAt: speechProgress.firstAudioAt ?? now,
+            lastAnswerStartedAt: now, maxUncoveredGapMs: Math.max(speechProgress.maxUncoveredGapMs, now - gapStart - covered),
             maxGapMs: Math.max(speechProgress.maxGapMs, speechProgress.lastAudioEndAt ? now - speechProgress.lastAudioEndAt : 0), confirmedAt: now });
           if (!started) { started = true; callbacks.onStart?.(); }
           callbacks.onPlaybackState?.(true);

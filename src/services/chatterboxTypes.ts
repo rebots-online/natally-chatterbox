@@ -16,6 +16,7 @@ export interface SpeechProgress {
   startedAt: number; confirmedAt: number; maxGapMs: number; final: boolean;
   playingUnit: number | null; generatingUnit: number | null;
   cueStage: BackchannelStage | null; gapCueCount: number; gapCueStartedAt?: number; gapCueEndedAt?: number;
+  maxUncoveredGapMs: number; lastAnswerStartedAt?: number;
   submittedAt?: number; ackStartedAt?: number; ackEndedAt?: number; bridgeStartedAt?: number; bridgeEndedAt?: number;
   firstTextAt?: number; firstAudioAt?: number; lastAudioEndAt?: number;
 }

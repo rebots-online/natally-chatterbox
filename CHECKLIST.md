@@ -21,6 +21,12 @@ remain separate; these visuals and later-pause cues are not in current deploymen
   ✅ TypeScript/diff pass. Independent race review/build/runtime are G04.
 - [ ] 🟫 G04 — Independent review, normal build, push/remote verification and
   deploy, followed by production-view generation-gap/interrupt observations.
+  ✅ Continuation scheduling and G07 coverage metadata independently reviewed;
+  TypeScript, normal production build and diff checks pass. Publication/deploy
+  and native production-view observations follow; no latency PASS inferred.
+- [ ] 🟫 G06 — Prepare animated timing waterfalls and before/after report demos.
+  Separate measured production boundaries from unknown intervals and design
+  simulations; show uncovered waits without changing the zero-latency criterion.
 - [ ] 🟪 G05 — Inspect Open Design's actual rendered result and retrieve its
   bundle; reconcile the candle-lit atelier and free scene direction, then close
   the exact animated-character/chart integration architecture before product code.

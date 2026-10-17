@@ -32,6 +32,7 @@ export function ConversationVoiceStatus() {
     data-last-audio-end-at={speech?.lastAudioEndAt} data-max-gap-ms={speech?.maxGapMs}
     data-cue-stage={speech?.cueStage} data-gap-cue-count={speech?.gapCueCount}
     data-gap-cue-started-at={speech?.gapCueStartedAt} data-gap-cue-ended-at={speech?.gapCueEndedAt}
+    data-max-uncovered-answer-gap-ms={speech?.maxUncoveredGapMs} data-last-answer-started-at={speech?.lastAnswerStartedAt}
     data-total-units={speech?.totalUnits} data-ready-units={speech?.readyUnits} data-played-units={speech?.playedUnits} data-final={speech?.final}>
     <div className="flex items-center justify-between gap-2">
       <span role="status" aria-live="polite" className={speech?.phase === 'error' ? 'text-amber-200' : 'text-[#f2ca50]'}>
