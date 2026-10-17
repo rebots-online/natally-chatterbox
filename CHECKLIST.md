@@ -37,11 +37,14 @@ do not even consider a model change unless Robin surfaces it in discussion.
   Complete-text preview/replay prevalidates all units and has no turn backchannel.
   ✅ TypeScript/diff check pass; queue/notification/late-promise paths reviewed.
   Actual concurrency, listening, beginnings/endings and latency remain CL09.
-- [ ] 🟦 CL05 — C20–C24: implement bounded SSE framing/server stream adaptation and
+- [X] 🟦 CL05 — C20–C24: implement bounded SSE framing/server stream adaptation and
   client partial callbacks/caller AbortSignal. Same backend/provider/model/auth/
   rate/tool limits. Preserve natural tool-round prefaces; reasoning/tool arguments
   never reach speech. Nonstream callers remain supported. Verify TypeScript and
   syntax; actual provider streaming is verified later through the real UI.
+  ✅ TypeScript, both changed server-module syntax checks and diff check pass.
+  Source review covers terminal validation, cancellation and tool-count limits;
+  these checks do not certify live provider streaming or conversation quality.
 - [ ] 🟪 CL06 — C30–C32: wire live message/speech ownership and ordinary-chat status.
   New submissions remain responsive in inference/TTS/playback; stale promises
   cannot restart old output. Preserve displayed context and exact beginning.

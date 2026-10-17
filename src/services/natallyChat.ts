@@ -243,7 +243,7 @@ export async function askNatally(
   chart: NatalChartResult,
   userLore: string[],
   imageAttachment?: { data: string; mimeType: string } | null,
-  options?: { isCurrentSession?: () => boolean; temperature?: number; model?: string; partnerChart?: NatalChartResult | null; calculationSession?: ReturnType<typeof createCalculationSession> },
+  options?: { isCurrentSession?: () => boolean; temperature?: number; model?: string; partnerChart?: NatalChartResult | null; calculationSession?: ReturnType<typeof createCalculationSession>; onPartial?: (result: NatallyChatResult) => void; signal?: AbortSignal },
 ): Promise<NatallyChatResult> {
   const { requestHostedInference } = await import('./hostedInference');
   const calculations = options?.calculationSession || createCalculationSession(chart, options?.partnerChart);
@@ -256,6 +256,13 @@ export async function askNatally(
     })),
     image: imageAttachment || undefined,
     temperature: options?.temperature ?? 1.18,
-  }, calculations.execute, options?.isCurrentSession);
+  }, calculations.execute, options?.isCurrentSession, options?.onPartial ? rawText => {
+    let visible = rawText;
+    const chartStart = visible.lastIndexOf('[[');
+    if (chartStart >= 0 && !visible.slice(chartStart).includes(']]')) visible = visible.slice(0, chartStart);
+    const delimiter = '---ASTROLOGICAL PROVENANCE---';
+    for (let length = delimiter.length - 1; length > 0; length--) if (visible.endsWith(delimiter.slice(0, length))) { visible = visible.slice(0, -length); break; }
+    options.onPartial!(parseNatallyResponse(visible, chart));
+  } : undefined, options?.signal);
   return { ...parseNatallyResponse(result.text, chart), model: result.model };
 }

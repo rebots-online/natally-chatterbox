@@ -1,4 +1,5 @@
 import { ASTROLOGY_TOOLS, validToolCall, validToolMessages, toolCallCount } from '../lib/astrology-tools.mjs';
+import { streamCompletion } from '../lib/event-stream.mjs';
 
 const windows = new Map();
 
@@ -38,6 +39,7 @@ export async function handleChat(request, { env = process.env, fetchImpl = fetch
     return respond(400, { error: 'Invalid chat input.' });
   }
   if (body.image) return respond(400, { error: 'Image inference is not enabled for this model.' });
+  if (body.stream !== undefined && typeof body.stream !== 'boolean') return respond(400, { error: 'Invalid stream option.' });
   if ((body.enableCalculations !== undefined && typeof body.enableCalculations !== 'boolean') ||
       (body.toolMessages !== undefined && (!body.enableCalculations || !validToolMessages(body.toolMessages)))) {
     return respond(400, { error: 'Invalid calculation continuation.' });
@@ -47,7 +49,7 @@ export async function handleChat(request, { env = process.env, fetchImpl = fetch
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ idToken: bearer.slice(7) }),
-      signal: AbortSignal.timeout(8000),
+      signal: AbortSignal.any([request.signal, AbortSignal.timeout(8000)]),
     });
     if (!identity.ok) return respond(identity.status >= 500 ? 503 : 401, { error: 'Unable to verify your session. Sign in again or retry.' });
     const account = await identity.json();
@@ -65,7 +67,7 @@ export async function handleChat(request, { env = process.env, fetchImpl = fetch
       ...(body.history || []).slice(-20).map(turn => ({ role: turn.role === 'model' ? 'assistant' : turn.role, content: turn.content })),
       { role: 'user', content: body.prompt },
       ...(body.toolMessages || []).map(turn => turn.role === 'assistant'
-        ? { role: 'assistant', content: null, tool_calls: turn.tool_calls.map(call => ({ id: call.id, type: 'function', function: { name: call.function.name, arguments: call.function.arguments } })) }
+        ? { role: 'assistant', content: typeof turn.content === 'string' && turn.content.length <= 20000 ? turn.content : null, tool_calls: turn.tool_calls.map(call => ({ id: call.id, type: 'function', function: { name: call.function.name, arguments: call.function.arguments } })) }
         : { role: 'tool', tool_call_id: turn.tool_call_id, content: turn.content }),
     ];
     const upstream = await fetchImpl('https://api.z.ai/api/coding/paas/v4/chat/completions', {
@@ -73,15 +75,17 @@ export async function handleChat(request, { env = process.env, fetchImpl = fetch
       headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + env.ZAI_API_KEY },
       body: JSON.stringify({
         model, messages, thinking: { type: 'disabled' }, max_tokens: 2048,
+        ...(body.stream ? { stream: true } : {}),
         ...(body.enableCalculations ? { tools: ASTROLOGY_TOOLS, tool_choice: toolCallCount(body.toolMessages) >= 6 ? 'none' : 'auto', parallel_tool_calls: false } : {}),
         temperature: typeof body.temperature === 'number' && Number.isFinite(body.temperature)
           ? Math.max(0, Math.min(1.5, body.temperature)) : 1.18,
       }),
-      signal: AbortSignal.timeout(45000),
+      signal: AbortSignal.any([request.signal, AbortSignal.timeout(45000)]),
     });
     if (!upstream.ok) return respond(upstream.status === 429 ? 429 : 502, {
       error: upstream.status === 429 ? 'The hosted model is rate limited. Please retry shortly.' : 'The hosted model rejected the request (HTTP ' + upstream.status + ').',
     });
+    if (body.stream) return streamCompletion(upstream, headers, model, request.signal, body.enableCalculations ? 6 - toolCallCount(body.toolMessages) : 0);
     const completion = await upstream.json();
     const toolCalls = completion.choices?.[0]?.message?.tool_calls;
     if (toolCalls?.length) {
@@ -91,7 +95,7 @@ export async function handleChat(request, { env = process.env, fetchImpl = fetch
           limitReached: toolCallCount(body.toolMessages) + toolCalls.length > 6,
         } });
       }
-      return respond(200, { toolCalls, model: completion.model || model, source: 'hosted' });
+      return respond(200, { toolCalls, text: typeof completion.choices?.[0]?.message?.content === 'string' ? completion.choices[0].message.content : '', model: completion.model || model, source: 'hosted' });
     }
     const text = completion.choices?.[0]?.message?.content;
     if (typeof text !== 'string' || !text.trim() || completion.choices?.[0]?.finish_reason === 'length') {
