@@ -13,6 +13,7 @@ export class BackchannelPool {
   private idleId: number | null = null;
   private clips = new Map<string, LocalSpeech>();
   private lastUsed = new Map<BackchannelStage, string>();
+  private recent: Array<{ key: string; hum: boolean }> = [];
   private refresh = new Set<string>();
   private failed = new Set<string>();
   private listeners = new Set<(snapshot: PoolSnapshot) => void>();
@@ -33,7 +34,7 @@ export class BackchannelPool {
     if (this.epoch && voice === this.voice) { this.schedule(); return; }
     this.pause(); this.voice = voice;
     const epoch = ++this.epoch;
-    this.clips.clear(); this.lastUsed.clear(); this.refresh.clear(); this.failed.clear(); this.error = null;
+    this.clips.clear(); this.lastUsed.clear(); this.recent = []; this.refresh.clear(); this.failed.clear(); this.error = null;
     this.notify();
     try {
       const cache = await caches.open('natally-chatterbox-backchannels-v' + BACKCHANNEL_POOL_VERSION);
@@ -76,9 +77,19 @@ export class BackchannelPool {
   }
   take(stage: BackchannelStage): LocalSpeech | null {
     const keys = [...this.clips.keys()].filter(key => key.startsWith(stage + ':'));
-    const choices = keys.filter(key => key !== this.lastUsed.get(stage));
-    const key = (choices.length ? choices : keys)[Math.floor(Math.random() * (choices.length || keys.length))];
+    const hum = (key: string) => {
+      const text = BACKCHANNEL_PALETTES[stage][Number(key.split(':')[1])].replace(/[^a-z]/gi, '').toLowerCase();
+      return ['mm', 'hmm', 'mmhm', 'mhm', 'hmmm'].includes(text);
+    };
+    const tail = this.recent.slice(-2);
+    const avoidHum = tail.length === 2 && tail.every(entry => entry.hum);
+    let choices = keys.filter(key => !tail.some(entry => entry.key === key) && (!avoidHum || !hum(key)));
+    if (!choices.length && avoidHum) choices = keys.filter(key => !hum(key));
+    if (!choices.length) choices = keys.filter(key => key !== this.lastUsed.get(stage));
+    if (!choices.length) choices = keys;
+    const key = choices[Math.floor(Math.random() * choices.length)];
     if (!key) return null;
+    this.recent.push({ key, hum: hum(key) }); this.recent = this.recent.slice(-3);
     this.lastUsed.set(stage, key); this.refresh.add(key);
     return this.clips.get(key)!;
   }
