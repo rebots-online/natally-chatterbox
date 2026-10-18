@@ -1,3 +1,23 @@
+# ANDROID CHATTERBOX INVESTIGATION — 18 October 2026
+
+- 🔴 Z Fold5 Chrome: operator reports repeated returns to about 87 MB. Supplied
+  canonical-domain screenshot shows a network-read error and a retained idle-cue
+  `GatherBlockQuantized` CPU kernel failure. Actual phone recovery remains open.
+- 🟪 Investigation complete: exact pinned ORT Web WASM probes reproduce the
+  missing kernel; ordinary Gather FP16 and narrow MatMulNBits controls pass.
+  All three affected graphs inspected by hash. Idle cue candidates can repeatedly
+  initialize the failed engine; 264.8 MB is the exact first-two-graph read boundary,
+  not proof of repeated network download. One pinned asset supports HTTP Range.
+- 🟪 Decision report and weighted alternatives:
+  `DOCS/ANDROID-CHATTERBOX-INVESTIGATION-20261018.md`; sanitized evidence/matrix
+  inputs in `DOCS/verification/android-chatterbox-20261018.json`. Preferred next
+  experiment preserves Chatterbox through targeted Gather export compatibility;
+  smaller mobile voice remains an explicit alternative. These are recommendations,
+  not released architecture/checklist entities or an implemented phone repair.
+- 🟫 Investigation publication is recorded in Git. Product code/model/runtime,
+  live deployment, real-phone performance/listening and Linux acceptance remain
+  separate; this documentation task changes no runtime acceptance status.
+
 # CHATTERBOX CONVERSATIONAL LATENCY — 17 October 2026
 
 Robin's subsequent instruction: commit/push and verify remote after every task.

@@ -1,0 +1,80 @@
+{
+  "date": "2026-10-18",
+  "baselineCommit": "c3513bc",
+  "purpose": "Investigation and decision support; no product fix or Android acceptance claim",
+  "reportedDevice": "Samsung Galaxy Z Fold5",
+  "androidVersion": null,
+  "chromeVersion": null,
+  "adbAttachedDevices": 0,
+  "runtime": {
+    "web": "1.31.0-dev.20260914-8d85527a0",
+    "common": "1.31.0-dev.20260911-2a43ec07e",
+    "import": "onnxruntime-web/webgpu",
+    "probeProvider": "wasm",
+    "numThreads": 1,
+    "probeHost": "Windows x64 Node",
+    "boundary": "Small in-memory operator graphs, not Android or browser full-pipeline execution"
+  },
+  "codegraph": { "files": 93, "nodes": 1694, "edges": 3862, "status": "up to date", "sqliteQuickCheck": "ok" },
+  "model": {
+    "id": "owensong/chatterbox-nano-ONNX",
+    "revision": "4a66d7dab72a9e98f24b515d49a1d7a81632df2e",
+    "packageBytes": 573393649,
+    "speechEncoderBoundaryBytes": 264799228,
+    "graphDefinitionsHashVerified": 4,
+    "externalWeightsDownloadedForInvestigation": false,
+    "gathers": [
+      { "graph": "speech_encoder_q4f16.onnx", "node": "/speech_emb/Gather_Q4", "weightType": "UINT4", "scaleType": "FLOAT16", "oldEmbeddingBytes": 2913972, "expandedEmbeddingBytes": 10080768 },
+      { "graph": "language_model_q4f16.onnx", "node": "/backbone/wpe/Gather_Q4", "weightType": "UINT4", "scaleType": "FLOAT16", "oldEmbeddingBytes": 3639024, "expandedEmbeddingBytes": 12589056 },
+      { "graph": "conditional_decoder_q4.onnx", "node": "/input_embedding/Gather_Quant", "weightType": "packed UINT8", "scaleType": "FLOAT", "oldEmbeddingBytes": 2152008, "expandedEmbeddingBytes": 13436928 }
+    ],
+    "gatherExpansionEstimateBytes": 27401748,
+    "portablePackageEstimateBytes": 600795397,
+    "estimateExcludes": "Graph metadata and external-data alignment; no export was produced",
+    "precomputedReferencesWithoutGatherRepairEstimateBytes": 395900645,
+    "precomputedReferencesWithRemainingGatherRepairsEstimateBytes": 416135597
+  },
+  "probes": [
+    { "name": "Gather FP32", "result": "PASS", "scope": "session and inference" },
+    { "name": "GatherBlockQuantized UINT8 FP32", "result": "FAIL", "error": "Could not find an implementation for GatherBlockQuantized(1)" },
+    { "name": "GatherBlockQuantized UINT8 FP16", "result": "FAIL", "error": "Failed to find kernel for com.microsoft.GatherBlockQuantized(1) (node:'/speech_emb/Gather_Q4' ep:'CPUExecutionProvider'). Kernel not found" },
+    { "name": "GatherBlockQuantized UINT4 FP16 matching graph types", "result": "FAIL", "error": "Failed to find kernel for com.microsoft.GatherBlockQuantized(1) (node:'/speech_emb/Gather_Q4' ep:'CPUExecutionProvider'). Kernel not found" },
+    { "name": "Gather FP16", "result": "PASS", "scope": "session and inference" },
+    { "name": "MatMulNBits FP32", "result": "PASS", "scope": "session and inference, one small shape" },
+    { "name": "MatMulNBits FP16", "result": "PASS", "scope": "session and inference, one small shape" }
+  ],
+  "rangeProbe": {
+    "asset": "onnx/embed_tokens_fp16.onnx_data",
+    "requestRange": "bytes=0-31",
+    "responseStatus": 206,
+    "contentRange": "bytes 0-31/87304704",
+    "sampleBytes": 32,
+    "acceptRanges": "bytes",
+    "etagObserved": true,
+    "allowOrigin": "*",
+    "exposeHeaders": "*",
+    "boundary": "One pinned asset request from Python; browser preflight and every redirected asset not tested"
+  },
+  "canonicalBundles": [
+    { "path": "assets/app-D8VC2Pee.js", "bytes": 1831995, "sha256": "76ca3ed2f254b91183e811f7bca2162c897f8f45f0c81a0236c2a2cbb8ca1629", "localMatch": true },
+    { "path": "assets/src-Bi7Wih0q.js", "bytes": 255196, "sha256": "44548ec2419d3eb5d23d303dc019d8d59921cc5e6817ea8603de302761cf2b53", "localMatch": true },
+    { "path": "assets/chatterbox.worker-CzBCh5tb.js", "bytes": 557414, "sha256": "1afe0afb9aa42912752f2dcc783fe2f2232b85c272d2243e55e695fc4e0354be", "localMatch": true }
+  ],
+  "decision": {
+    "scoreNature": "Subjective engineering judgments, not measured benchmarks or probabilities",
+    "criteria": ["Android robustness", "Voice continuity", "Latency", "Phone footprint", "Local privacy offline", "Ease", "Operations cost"],
+    "weights": [30, 25, 10, 10, 10, 10, 5],
+    "mobileFirstWeights": [35, 10, 15, 20, 10, 5, 5],
+    "alternatives": [
+      { "id": "A", "name": "Download repair only", "scores": [1, 5, 1, 1, 5, 4, 5], "weighted": 2.90, "mobileFirst": 2.15, "knownCompatibilityGate": "FAIL" },
+      { "id": "B", "name": "Repair and gate current WebGPU path", "scores": [3, 5, 3, 2, 5, 4, 5], "weighted": 3.80, "mobileFirst": 3.35 },
+      { "id": "C", "name": "Portable Chatterbox Gather export", "scores": [4, 5, 3, 2, 5, 2, 5], "weighted": 3.90, "mobileFirst": 3.60 },
+      { "id": "D", "name": "Smaller local Android engine", "scores": [4, 2, 4, 4, 5, 3, 5], "weighted": 3.55, "mobileFirst": 3.90 },
+      { "id": "E", "name": "Self-hosted Chatterbox", "scores": [4, 5, 2, 5, 1, 2, 1], "weighted": 3.50, "mobileFirst": 3.45 },
+      { "id": "F", "name": "System speech", "scores": [4, 1, 4, 5, 2, 5, 5], "weighted": 3.30, "mobileFirst": 3.80 },
+      { "id": "G", "name": "Native Android ORT", "scores": [4, 5, 3, 2, 5, 1, 3], "weighted": 3.70, "mobileFirst": 3.45 },
+      { "id": "H", "name": "Managed TTS API", "scores": [5, 2, 4, 5, 1, 3, 1], "weighted": 3.35, "mobileFirst": 3.85 },
+      { "id": "J", "name": "Custom ORT Web WASM build", "scores": [4, 5, 3, 2, 5, 1, 4], "weighted": 3.75, "mobileFirst": 3.50 }
+    ]
+  }
+}
