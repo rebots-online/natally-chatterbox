@@ -14,6 +14,12 @@
   experiment preserves Chatterbox through targeted Gather export compatibility;
   smaller mobile voice remains an explicit alternative. These are recommendations,
   not released architecture/checklist entities or an implemented phone repair.
+- 🟪 Upstream/Qwen follow-up: converter's device/streaming limitations and official
+  Nano ONNX discussion support architectural investigation. Qwen3-TTS Base supports
+  cloning, but the verified 0.6B native Q4 pair is 883.9 MB; official 0.6B is
+  2.516 GB. A native Android port is not Chrome acceptance. Report addendum records
+  sources, size arithmetic, speaker-drift reports and the revised recommendation;
+  a Gather repair remains a compatibility experiment, not latency acceptance.
 - 🟫 Investigation publication is recorded in Git. Product code/model/runtime,
   live deployment, real-phone performance/listening and Linux acceptance remain
   separate; this documentation task changes no runtime acceptance status.

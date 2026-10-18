@@ -7,6 +7,12 @@ provider or deployment configuration was changed for this investigation.
 
 ## Recommendation
 
+Follow-up after the upstream review below: a portable Gather export is a bounded
+compatibility experiment. Its matrix score does not establish a production
+architecture for the existing conversational-latency requirement. The upstream
+non-streaming warning strengthens the case for evaluating a streaming model and
+its complete runtime, rather than treating a kernel repair as the final solution.
+
 Preserve the working Windows Chatterbox experience. First address repeated
 engine initialization and capability reporting, then evaluate a narrowly scoped
 Chatterbox export that replaces **all three** `GatherBlockQuantized` nodes with
@@ -285,3 +291,102 @@ new model/runtime publication require the appropriate subsequent released scope.
 
 Machine-readable observations and decision inputs:
 `DOCS/verification/android-chatterbox-20261018.json`.
+
+## Upstream reports and Qwen follow-up — 18 October 2026
+
+Robin reports that multiple page refreshes reproduce the failure, asks whether
+this is architectural, and asks about "Qwen3.6 TTS" size and cloning competence.
+The verified official family is **Qwen3-TTS**, including **0.6B** and **1.7B**
+checkpoints. No official model named `Qwen3.6-TTS` was identified in this search;
+the comparison below assumes Qwen3-TTS 0.6B, while retaining the naming uncertainty.
+
+### What upstream posts establish
+
+- The [converter's model card](https://huggingface.co/owensong/chatterbox-nano-ONNX)
+  reports Windows Chrome/RTX 3060 browser execution, leaves a broader device matrix
+  unestablished, and warns about using its non-streaming acoustic path for
+  low-latency voice agents. Together with the local kernel reproduction, this
+  supports an export/runtime and latency-architecture problem. It does not prove
+  a universal Android hardware limitation or that Chatterbox can never be ported.
+- In the [official Nano discussion, opened 15 July](https://huggingface.co/ResembleAI/chatterbox-nano/discussions/1),
+  Resemble AI replied on 16 July that it did not plan an ONNX/quantized release;
+  the community converter posted its own release on 19 July. That is the dated
+  upstream support statement, not a guarantee of every future publisher decision.
+- [ORT issue 28895](https://github.com/microsoft/onnxruntime/issues/28895)
+  concerns a different, 2-bit GatherBlockQuantized WebGPU limitation. It illustrates
+  provider/quantization-specific coverage, but is not the cause of Natally's
+  4-bit CPU failure and must not be presented as the same bug.
+- No independently confirmed report matching this exact Z Fold5 deployment and
+  error was located. Refreshing cannot supply a missing compiled kernel. Its
+  repeatability is consistent with a deterministic incompatibility; it does not
+  identify the phone's initial WebGPU failure or the network error's chronology.
+
+### Qwen cloning is supported; model choice matters
+
+The [official usage documentation](https://github.com/QwenLM/Qwen3-TTS#voice-clone)
+provides reference-audio cloning through **Base** checkpoints, with audio plus an
+accurate transcript. An embedding-only mode omits the transcript at a documented
+quality tradeoff. Reusable clone prompts avoid repeating reference extraction.
+CustomVoice uses preset speakers; VoiceDesign creates a voice from a description.
+
+The [technical report](https://arxiv.org/html/2601.15621v1) supplies cloning and
+speaker-similarity evaluation and a streaming architecture. This makes Qwen a
+credible cloning candidate; it does not establish Natally's voice match, a
+quantized port's quality, or Android-browser speed. The 0.6B model does not lose
+every published similarity metric to 1.7B. Avoid a blanket bigger-is-always-better
+claim and compare the actual target reference by listening.
+
+[Upstream issue 80](https://github.com/QwenLM/Qwen3-TTS/issues/80) contains reports
+of reference-speaker drift, including English use. These are user observations
+under particular references/serving configurations, not measured population
+failure rates. They justify checking short acknowledgements, first words,
+sentence-to-sentence identity and long turns before selecting a persistent voice.
+
+### Actual download sizes, not parameter-count arithmetic
+
+The official Hugging Face file metadata and the model repository used by the
+native Android project were read without downloading weights. Decimal units:
+
+| Package | Verified bytes | Approximate size | Compared with current Chatterbox |
+|---|---:|---:|---:|
+| Current pinned Chatterbox package | 573,393,649 | 573.4 MB | 1.00x |
+| Qwen3-TTS 0.6B Base, official repository including speech tokenizer/support files | 2,516,106,051 | 2.516 GB | 4.39x |
+| Qwen 0.6B Base Q4_K_M talker + Q4_K_M speech tokenizer | 883,879,808 | 883.9 MB | 1.54x |
+| Qwen 1.7B Base Q4_K_M talker + Q4_K_M speech tokenizer | 1,474,220,000 | 1.474 GB | 2.57x |
+
+The GGUF constituent sizes are 628,905,056 B for the 0.6B talker,
+1,219,245,248 B for the 1.7B talker, and 254,974,752 B for the tokenizer.
+These are selected model-file downloads, excluding application/runtime files,
+KV cache, intermediate buffers and memory overhead. They are not peak RAM figures.
+The entire multi-variant GGUF repository is not a required download.
+
+Sources: [official 0.6B files](https://huggingface.co/Qwen/Qwen3-TTS-12Hz-0.6B-Base/tree/main),
+[quantized GGUF files](https://huggingface.co/Serveurperso/Qwen3-TTS-GGUF/tree/main).
+
+### Android evidence and decision effect
+
+The [Danmoreng Android project](https://github.com/Danmoreng/qwen3-tts-android)
+documents on-device cloning and synthesis using a native C++ CPU runtime, the
+0.6B Q4 pair above, ARM64 and Android 12+. This is a useful native feasibility
+reference, not evidence of Chrome/WebGPU/WASM execution or a Fold5 latency result.
+
+The [community INT8 ONNX conversion](https://huggingface.co/sivasub987/Qwen3-TTS-0.6B-ONNX-INT8)
+does not supply a smaller verified browser solution: its current file tree lists
+about 2.08 GB, while its README carries older size/test information and describes
+native preprocessing/DLL and operator limitations. Neither its tag nor its
+native CPU examples establish Android-browser compatibility.
+
+| Qwen role | Decision from the evidence |
+|---|---|
+| Smaller replacement inside Android Chrome | Not supported: inspected complete packages are larger and no target-browser acceptance was found. |
+| Private desktop voice authoring/cloning | Credible audition candidate, using Base and the actual Natally reference. |
+| Native Android voice engine | Concrete community implementation exists; requires device performance and identity tests. |
+| Streaming backend on approved infrastructure | Architecturally relevant; needs an actual streaming runtime and approved hosting/capacity, not the paper's first-packet number reused as an app promise. |
+
+The proposed direction is therefore to treat the current Chatterbox browser
+fallback and non-streaming latency as architectural work; evaluate Qwen for
+cloning/streaming on a suitable native or server runtime, rather than select it
+on the assumption that "0.6B" means a smaller phone download. A substantially
+smaller browser voice that preserves cloning remains a separate candidate search.
+No Qwen runtime was installed, no weights downloaded, and no synthesis/listening
+or physical-device acceptance was performed in this research follow-up.
